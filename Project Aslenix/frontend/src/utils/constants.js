@@ -1,0 +1,51 @@
+export const products = [
+  {
+    id: 1,
+    name: "Turmeric Powder",
+    desc: "Pure Himalayan turmeric with rich aroma",
+    price: "Rs. 250",
+    image: "/products/turmeric.png",
+  },
+  {
+    id: 2,
+    name: "Chilli Powder",
+    desc: "Bold heat & deep natural red color",
+    price: "Rs. 260",
+    image: "/products/chilli.png",
+  },
+  {
+    id: 3,
+    name: "Coriander Powder",
+    desc: "Freshly ground coriander seeds",
+    price: "Rs. 230",
+    image: "/products/coriander.png",
+  },
+  {
+    id: 4,
+    name: "Cumin Powder",
+    desc: "Warm earthy flavor for Nepali dishes",
+    price: "Rs. 280",
+    image: "/products/cumin.png",
+  },
+  {
+    id: 5,
+    name: "Garam Masala",
+    desc: "Traditional Nepali spice blend",
+    price: "Rs. 320",
+    image: "/products/garam.png",
+  },
+  {
+    id: 6,
+    name: "Meat Masala",
+    desc: "Perfect blend for meat curries",
+    price: "Rs. 340",
+    image: "/products/meat.png",
+  },
+  {
+    id: 7,
+    name: "Mixed Masala",
+    desc: "Everyday Nepali kitchen essential",
+    price: "Rs. 300",
+    image: "/products/mix.png",
+  },
+];

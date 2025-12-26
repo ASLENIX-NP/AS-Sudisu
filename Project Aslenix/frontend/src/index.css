@@ -1,0 +1,35 @@
+:root {
+  --bg-main: #0a0b0f;
+  --bg-soft: #11131a;
+  --card-bg: #151824;
+
+  --text-main: #ffffff;
+  --text-muted: #a9afc3;
+
+  --gold: #d4af37;
+  --red: #b71c1c;
+
+  --border: rgba(255,255,255,0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: linear-gradient(180deg, #0a0b0f, #0f1220);
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

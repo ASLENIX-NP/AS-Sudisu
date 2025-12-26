@@ -1,0 +1,49 @@
+.hero {
+  height: 90vh;
+  background: url("/spices-bg.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+.hero-overlay {
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.5), #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  color: white;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: #f5c542;
+}
+
+.hero p {
+  color: #ddd;
+  font-size: 18px;
+  max-width: 620px;
+  margin: 20px 0 30px;
+}
+
+.hero-btn {
+  padding: 14px 38px;
+  font-size: 16px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f5c542, #d4a017);
+  color: #000;
+  font-weight: 700;
+  transition: transform 0.3s ease;
+}
+
+.hero-btn:hover {
+  transform: scale(1.08);
+}
