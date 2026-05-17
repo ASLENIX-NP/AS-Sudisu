@@ -1,12 +1,3 @@
-export function notFound(req, res) {
-  res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
-}
-
-export function errorHandler(err, req, res, next) {
-  console.error("❌ Error:", err);
-
-  const status = err.statusCode || 500;
-  const message = err.message || "Server error";
-
-  res.status(status).json({ message });
-}
+export const errorHandler = (err, req, res, next) => {
+  res.status(500).json({ message: err.message });
+};

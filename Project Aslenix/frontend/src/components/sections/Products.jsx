@@ -1,40 +1,84 @@
-import "Products.css";
+import { useState } from "react";
+import "./Products.css";
+import ProductModal from "./ProductModal";
 
-import meat from "../../assets/products/meat-masala.png";
-import garam from "../../assets/products/garam-masala.png";
-import coriander from "../../assets/products/coriander.png";
-import cumin from "../../assets/products/cumin.png";
-import chilli from "../../assets/products/chilli.png";
-import mix from "../../assets/products/mix-masala.png";
-import turmeric from "../../assets/products/turmeric.png";
-
-const products = [
-  { name: "Meat Masala", img: meat },
-  { name: "Garam Masala", img: garam },
-  { name: "Coriander Powder", img: coriander },
-  { name: "Cumin Powder", img: cumin },
-  { name: "Chilli Powder", img: chilli },
-  { name: "Mix Masala", img: mix },
-  { name: "Turmeric Powder", img: turmeric },
-];
+import turmeric from "../../assets/spice/turmeric.jpg";
+import chilli from "../../assets/spice/chilli.jpg";
+import coriander from "../../assets/spice/dhaniya.jpg";
+import cumin from "../../assets/spice/cumin.jpg";
+import garam from "../../assets/spice/garam.jpg";
 
 const Products = () => {
-  return (
-    <section className="products">
-      <div className="products__header">
-        <h2>Our Products</h2>
-        <p>Carefully blended for consistent taste and quality</p>
-      </div>
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-      <div className="products__grid">
-        {products.map((p, i) => (
-          <div className="product-card" key={i}>
-            <img src={p.img} alt={p.name} />
-            <h3>{p.name}</h3>
-          </div>
-        ))}
-      </div>
-    </section>
+  const products = [
+    {
+      img: turmeric,
+      name: "Himalayan Turmeric",
+      description: "High curcumin, stone-ground for purity",
+      weight: "200g",
+      origin: "Eastern Nepal",
+    },
+    {
+      img: chilli,
+      name: "Kashmiri Chilli",
+      description: "Bright color with mild heat",
+      weight: "200g",
+      origin: "Kashmir Region",
+    },
+    {
+      img: coriander,
+      name: "Coriander Powder",
+      description: "Freshly ground aromatic seeds",
+      weight: "200g",
+      origin: "Terai, Nepal",
+    },
+    {
+      img: cumin,
+      name: "Cumin Powder",
+      description: "Warm, earthy flavor for daily cooking",
+      weight: "200g",
+      origin: "Western Nepal",
+    },
+    {
+      img: garam,
+      name: "Garam Masala",
+      description: "Classic blend of premium spices",
+      weight: "200g",
+      origin: "Nepal",
+    },
+  ];
+
+  return (
+    <>
+      <section className="products-section">
+        <h2 className="products-title">Signature Spices</h2>
+
+        <div className="products-grid">
+          {products.map((item, index) => (
+            <div className="product-card" key={index}>
+              <img src={item.img} alt={item.name} />
+              <h3>{item.name}</h3>
+
+              <button
+                className="details-btn"
+                onClick={() => setSelectedProduct(item)}
+              >
+                View Details
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ✅ MODAL OUTSIDE GRID */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
   );
 };
 

@@ -1,25 +1,34 @@
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
 
-export default function Navbar() {
-  useEffect(() => {
-    const handleScroll = () => {
-      const nav = document.querySelector(".navbar");
-      if (window.scrollY > 12) {
-        nav.classList.add("scrolled");
-      } else {
-        nav.classList.remove("scrolled");
-      }
-    };
+// ✅ Logo import (your correct path & filename)
+import logo from "../../assets/logo/sudiisu-logo.png";
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+const Navbar = () => {
   return (
-    <nav className="navbar">
-      <div className="navbar-inner">
-        {/* logo + links */}
-      </div>
-    </nav>
+    <>
+      {/* 🔴 OPTIONAL TOP STRIP (remove if not needed) */}
+      <div className="top-red-bar"></div>
+
+      <nav className="navbar">
+        {/* LOGO */}
+        <div className="nav-logo">
+          <Link to="/">
+            <img src={logo} alt="Sudiisu Logo" />
+          </Link>
+        </div>
+
+        {/* NAV LINKS */}
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/products">Products</Link></li>
+          <li><Link to="/about">About Us</Link></li>
+          <li><Link to="/blog">Blog</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+        </ul>
+      </nav>
+    </>
   );
-}
+};
+
+export default Navbar;

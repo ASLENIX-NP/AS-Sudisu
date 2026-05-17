@@ -1,16 +1,30 @@
 import "./Hero.css";
+import heroBg from "../../assets/images/hero-bg.jpg";
 
 const Hero = () => {
   return (
-    <section className="hero">
-      <div className="hero__overlay"></div>
+    <section
+      className="hero"
+      style={{ backgroundImage: `url(${heroBg})` }}
+    >
+      <div className="hero-overlay"></div>
 
-      <div className="hero__content">
-        <h1>Premium Nepali Masala</h1>
-        <p>
-          Crafted in Nepal. Inspired by tradition.  
-          Trusted for purity, hygiene, and authentic taste.
+      <div className="hero-content">
+        <p className="hero-subtitle">
+          Welcome to Sudiisu Pride
         </p>
+
+        <h1 className="hero-title">
+          The New Taste of <br /> Nepal
+        </h1>
+
+        <p className="hero-desc">
+          Premium Nepali spices crafted with tradition, purity, and care.
+        </p>
+
+        <button className="hero-btn">
+          Discover Now
+        </button>
       </div>
     </section>
   );

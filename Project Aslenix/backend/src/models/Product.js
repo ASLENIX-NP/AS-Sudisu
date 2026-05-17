@@ -2,13 +2,10 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true },
-    slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    description: { type: String, default: "" },
-    price: { type: Number, required: true },
-    imageUrl: { type: String, default: "" }, // later you can store Cloudinary or local URL
-    isActive: { type: Boolean, default: true },
-    category: { type: String, default: "Spices" }
+    name: String,
+    price: Number,
+    image: String,
+    description: String
   },
   { timestamps: true }
 );

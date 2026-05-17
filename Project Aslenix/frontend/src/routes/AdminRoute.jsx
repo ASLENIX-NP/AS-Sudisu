@@ -1,7 +1,7 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+const AdminRoute = ({ children }) => {
+  const isAdmin = true; // later from AuthContext
 
-export default function AdminRoute({ children }) {
-  const { user } = useAuth();
-  return user.role === "admin" ? children : <Navigate to="/" />;
-}
+  return isAdmin ? children : <h2>Access Denied</h2>;
+};
+
+export default AdminRoute;

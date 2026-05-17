@@ -1,24 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-
-import Navbar from "./components/common/Navbar";
-import Footer from "./components/common/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/public/Home";
 import Products from "./pages/public/Products";
 import Contact from "./pages/public/Contact";
+import About from "./pages/public/About";
+import Blog from "./pages/public/Blog";
 
-export default function App() {
+function App() {
   return (
-    <>
-      <Navbar />
-
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
-
-      <Footer />
-    </>
+    </Router>
   );
 }
+
+export default App;

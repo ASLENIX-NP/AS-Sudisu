@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 
 const noticeSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, trim: true },
-    message: { type: String, required: true },
-    isActive: { type: Boolean, default: true }
+    title: String,
+    message: String
   },
   { timestamps: true }
 );

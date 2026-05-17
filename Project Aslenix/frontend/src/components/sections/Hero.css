@@ -1,43 +1,98 @@
 .hero {
-  height: 100vh;
-  background: url("../../assets/images/spices-bg.jpg") center/cover no-repeat;
   position: relative;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 0 8%;
 }
 
-.hero__overlay {
+.hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.55),
-    rgba(0,0,0,0.9)
+    to right,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.35)
   );
 }
 
-.hero__content {
+.hero-content {
   position: relative;
-  text-align: center;
-  max-width: 900px;
-  padding: 0 24px;
+  z-index: 2;
+  max-width: 650px;
+  color: #fff;
 }
 
-.hero__content h1 {
-  font-size: 56px;
+.hero-subtitle {
   letter-spacing: 3px;
-  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #d4af37;
+  margin-bottom: 16px;
 }
 
-.hero__content p {
-  margin-top: 18px;
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero-desc {
   font-size: 18px;
-  color: #d2d6df;
+  color: #ddd;
+  max-width: 520px;
+  margin-bottom: 35px;
 }
 
+.hero-btn {
+  padding: 14px 36px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #d4af37;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #d4af37;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+
+.hero-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.hero-btn:hover {
+  color: #000;
+}
+
+
+/* Responsive */
 @media (max-width: 768px) {
-  .hero__content h1 {
-    font-size: 38px;
+  .hero {
+    padding: 0 6%;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
   }
 }
