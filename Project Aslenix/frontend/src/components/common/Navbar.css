@@ -1,115 +1,90 @@
-/* RESET OVERFLOW ISSUES */
-nav,
-.navbar,
-.nav-logo {
-  overflow: visible;
-}
-
 /* =========================
    NAVBAR
    ========================= */
+
 .navbar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  height: 85px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  height: 85px;
-  padding: 0 28px;
+  padding: 0 60px;
 
   background: linear-gradient(
     90deg,
     #d97706,
-    #f59e0b,
-    #fbbf24
+    #bc9c48
   );
 
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  z-index: 99999;
+
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25);
 }
 
 /* =========================
    LOGO
    ========================= */
-.nav-logo {
-  display: flex;
-  align-items: center;
-}
 
 .nav-logo img {
-  height: 115px;
-  width: auto;
-
-  object-fit: contain;
-  display: block;
-
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+  height: 68px;
 }
 
 /* =========================
-   NAV LINKS
+   LINKS
    ========================= */
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+
+  gap: 32px;
 
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-links a {
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 700;
+  color: white;
+
   text-decoration: none;
-  position: relative;
 
-  transition: all 0.3s ease;
-}
+  font-size: 17px;
+  font-weight: 700;
 
-/* =========================
-   HOVER EFFECT
-   ========================= */
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-
-  width: 0%;
-  height: 2px;
-
-  background-color: #3b1f00;
-
-  transition: width 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: #3b1f00;
-}
-
-.nav-links a:hover::after {
-  width: 100%;
+  color: #e0b17b;
 }
 
 /* =========================
-   MOBILE RESPONSIVE
+   MOBILE
    ========================= */
+
 @media (max-width: 768px) {
+
   .navbar {
-    height: 70px;
-    padding: 0 16px;
+    padding: 0 20px;
+    height: 75px;
   }
 
   .nav-logo img {
-    height: 70px;
+    height: 56px;
   }
 
   .nav-links {
-    gap: 14px;
+    gap: 16px;
   }
 
   .nav-links a {
-    font-size: 13px;
+    font-size: 14px;
   }
 }

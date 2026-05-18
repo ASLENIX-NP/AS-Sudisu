@@ -4,16 +4,14 @@
 
 .hero {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 
-  position: relative;
-
-  background:
+  background-image:
     linear-gradient(
-      rgba(25, 12, 0, 0.72),
-      rgba(25, 12, 0, 0.78)
+      rgba(0, 0, 0, 0.58),
+      rgba(0, 0, 0, 0.58)
     ),
-    url("/spices-bg.jpg");
+    url("../../assets/images/hero-bg.jpg");
 
   background-size: cover;
   background-position: center;
@@ -22,8 +20,7 @@
   display: flex;
   align-items: center;
 
-  margin: 0;
-  padding: 0;
+  overflow: hidden;
 }
 
 /* =========================
@@ -32,18 +29,12 @@
 
 .hero-overlay {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
 
   display: flex;
   align-items: center;
 
-  padding: 0 8%;
-
-  background: linear-gradient(
-    90deg,
-    rgba(40, 18, 0, 0.55),
-    rgba(0, 0, 0, 0.18)
-  );
+  padding-left: 8%;
 }
 
 /* =========================
@@ -71,37 +62,33 @@
 }
 
 /* =========================
-   MAIN TITLE
+   HEADING
    ========================= */
 
 .hero h1 {
-  font-size: 82px;
-  line-height: 1.05;
+  color: white;
 
-  color: #ffffff;
+  font-size: 88px;
+  line-height: 1.02;
 
   font-weight: 800;
 
-  margin-bottom: 24px;
-}
-
-.hero h1 span {
-  color: #fbbf24;
+  margin-bottom: 26px;
 }
 
 /* =========================
-   DESCRIPTION
+   PARAGRAPH
    ========================= */
 
 .hero p {
   color: #f5f5f5;
 
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.8;
 
-  max-width: 640px;
+  margin-bottom: 42px;
 
-  margin-bottom: 40px;
+  max-width: 650px;
 }
 
 /* =========================
@@ -114,8 +101,6 @@
   border: none;
   border-radius: 50px;
 
-  cursor: pointer;
-
   background: linear-gradient(
     135deg,
     #d97706,
@@ -124,12 +109,14 @@
 
   color: white;
 
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
 
-  transition: all 0.35s ease;
+  cursor: pointer;
 
-  box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+  transition: all 0.3s ease;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
 }
 
 .hero-btn:hover {
@@ -140,40 +127,24 @@
     #f59e0b,
     #fde68a
   );
-
-  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
-}
-
-/* =========================
-   REMOVE DEFAULT SPACING
-   ========================= */
-
-section,
-.hero,
-.hero-overlay {
-  margin: 0;
 }
 
 /* =========================
    RESPONSIVE
    ========================= */
 
-@media (max-width: 992px) {
-
-  .hero h1 {
-    font-size: 58px;
-  }
-
-  .hero p {
-    font-size: 18px;
-  }
-}
-
 @media (max-width: 768px) {
+
+  .hero {
+    min-height: 100vh;
+    height: auto;
+  }
 
   .hero-overlay {
     justify-content: center;
     text-align: center;
+
+    padding: 120px 24px;
   }
 
   .hero-content {
@@ -181,12 +152,7 @@ section,
   }
 
   .hero h1 {
-    font-size: 44px;
-  }
-
-  .hero-subtitle {
-    font-size: 14px;
-    letter-spacing: 2px;
+    font-size: 48px;
   }
 
   .hero p {
@@ -194,7 +160,6 @@ section,
   }
 
   .hero-btn {
-    padding: 14px 32px;
-    font-size: 15px;
+    padding: 14px 30px;
   }
 }
