@@ -68,7 +68,7 @@
 .hero h1 {
   color: white;
 
-  font-size: 88px;
+  font-size: 70px;
   line-height: 1.02;
 
   font-weight: 800;
@@ -103,7 +103,7 @@
 
   background: linear-gradient(
     135deg,
-    #d97706,
+    #e4963c,
     #fbbf24
   );
 
