@@ -1,104 +1,92 @@
-/* RESET OVERFLOW ISSUES */
-nav,
-.navbar,
-.nav-logo {
-  overflow: visible;
-}
-
-/* =========================
-   NAVBAR (FINAL HEIGHT)
-   ========================= */
 .navbar {
+  position: fixed;
+  top: 20px;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 1700px;
+
+  height: 60px;
+
+  background: rgba(247, 190, 86, 0.615);
+
+  border: 1px solid rgba(240, 232, 208, 0.325);
+
+
+  border-radius: 16px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  height: 100px;                 /* balanced, not tall */
-  padding: 0 56px;
+  padding: 0 40px;
 
-  background-color: #8b0000;    /* Deep red */
+  z-index: 1000;
+
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 6px 30px rgba(225, 57, 57, 0.35);
 }
 
-/* =========================
-   LOGO (MAX SAFE SIZE)
-   ========================= */
-.nav-logo {
-  display: flex;
-  align-items: center;          /* perfect vertical centering */
-}
+/* LOGO */
 
 .nav-logo img {
-  height: 160px;                 /* 🔥 maximum safe size */
+  height: 95px;
   width: auto;
 
-  object-fit:contain;
-  display: block;
+  object-fit: contain;
 
-  margin-top: 8px;              /* prevents top cut */
-  margin-bottom: 4px;
-
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45));
+  transform: scale(1.12);
 }
 
-/* =========================
-   NAV LINKS
-   ========================= */
+/* NAV LINKS */
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 36px;
+
+  gap: 32px;
 
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-links a {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
   text-decoration: none;
-  position: relative;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  transition: 0.3s ease;
 }
 
-/* =========================
-   HOVER UNDERLINE EFFECT
-   ========================= */
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -8px;
-
-  width: 0%;
-  height: 2px;
-  background-color: #ffc107;
-
-  transition: width 0.3s ease;
+.nav-links a:hover {
+  color: #f3d112;
 }
 
-.nav-links a:hover::after {
-  width: 100%;
-}
+/* RESPONSIVE */
 
-/* =========================
-   MOBILE RESPONSIVE
-   ========================= */
 @media (max-width: 768px) {
   .navbar {
-    height: 80px;
-    padding: 0 24px;
-  }
+    width: 97%;
 
-  .nav-logo img {
-    height: 64px;
+    height: 55px;
+
+    padding: 0 20px;
   }
 
   .nav-links {
-    gap: 20px;
+    gap: 16px;
   }
 
   .nav-links a {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .nav-logo img {
+    height: 50px;
   }
 }

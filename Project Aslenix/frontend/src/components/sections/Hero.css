@@ -2,19 +2,26 @@
   position: relative;
   height: 100vh;
   width: 100%;
+
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   align-items: center;
+
   padding: 0 8%;
+
+  transition: background-image 1s ease-in-out;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
+
   background: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.75),
+    rgba(149, 14, 14, 0.75),
     rgba(0, 0, 0, 0.35)
   );
 }
@@ -22,6 +29,7 @@
 .hero-content {
   position: relative;
   z-index: 2;
+
   max-width: 650px;
   color: #fff;
 }
@@ -29,47 +37,66 @@
 .hero-subtitle {
   letter-spacing: 3px;
   text-transform: uppercase;
+
   font-size: 14px;
   color: #d4af37;
+
   margin-bottom: 16px;
 }
 
 .hero-title {
   font-family: "Playfair Display", serif;
+
   font-size: 64px;
   font-weight: 700;
+
   line-height: 1.1;
+
   margin-bottom: 20px;
 }
 
 .hero-desc {
   font-size: 18px;
   color: #ddd;
+
   max-width: 520px;
+
   margin-bottom: 35px;
 }
 
 .hero-btn {
   padding: 14px 36px;
+
   font-size: 15px;
   letter-spacing: 1px;
+
   background: transparent;
+
   color: #fff;
+
   border: 1px solid #d4af37;
+
   cursor: pointer;
+
   transition: all 0.35s ease;
+
   position: relative;
   overflow: hidden;
 }
 
 .hero-btn::before {
   content: "";
+
   position: absolute;
   inset: 0;
+
   background: #d4af37;
+
   transform: scaleX(0);
   transform-origin: left;
+
   transition: transform 0.35s ease;
+
   z-index: -1;
 }
 
@@ -81,8 +108,26 @@
   color: #000;
 }
 
+/* SLIDE ANIMATION */
 
-/* Responsive */
+.fade-animation {
+  animation: fadeSlide 1s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+
 @media (max-width: 768px) {
   .hero {
     padding: 0 6%;

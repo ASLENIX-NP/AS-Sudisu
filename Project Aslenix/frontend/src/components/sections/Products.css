@@ -36,14 +36,13 @@
 .product-card {
   background: linear-gradient(
     180deg,
-    #f5c86a 0%,
-    #e2b457 50%,
-    #c89a3b 100%
+  #d1261dac,
+  #f3b656b7
   );
   border-radius: 18px;
   padding: 28px 22px;
   text-align: center;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
@@ -75,7 +74,7 @@
 ================================ */
 .product-card h3 {
   font-size: 18px;
-  color: #1a1a1a;
+  color: #f8f5f0;;
   font-weight: 600;
   margin-bottom: 14px;
 }
@@ -95,8 +94,8 @@
 }
 
 .product-card button:hover {
-  background: #1a1a1a;
-  color: #f5c86a;
+background: #dbb73e;
+color: #111;
 }
 
 /* ===============================
