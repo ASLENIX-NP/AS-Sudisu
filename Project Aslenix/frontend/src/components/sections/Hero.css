@@ -1,7 +1,7 @@
 .hero {
   position: relative;
-  height: 100vh;
   width: 100%;
+  min-height: 100vh;
 
   background-size: cover;
   background-position: center;
@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
 
-  padding: 0 8%;
+  padding: 0 7%;
 
   transition: background-image 1s ease-in-out;
 }
@@ -21,7 +21,7 @@
 
   background: linear-gradient(
     to right,
-    rgba(149, 14, 14, 0.75),
+    rgba(0, 0, 0, 0.75),
     rgba(0, 0, 0, 0.35)
   );
 }
@@ -30,49 +30,54 @@
   position: relative;
   z-index: 2;
 
-  max-width: 650px;
-  color: #fff;
+  max-width: 700px;
+
+  color: #ffffff;
 }
 
 .hero-subtitle {
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 
-  font-size: 14px;
+  font-size: 15px;
+
   color: #d4af37;
 
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .hero-title {
   font-family: "Playfair Display", serif;
 
-  font-size: 64px;
+  font-size: 76px;
   font-weight: 700;
 
-  line-height: 1.1;
+  line-height: 1.08;
 
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .hero-desc {
-  font-size: 18px;
-  color: #ddd;
+  font-size: 21px;
 
-  max-width: 520px;
+  color: #f1f1f1;
 
-  margin-bottom: 35px;
+  line-height: 1.7;
+
+  max-width: 620px;
+
+  margin-bottom: 38px;
 }
 
 .hero-btn {
-  padding: 14px 36px;
+  padding: 15px 42px;
 
   font-size: 15px;
   letter-spacing: 1px;
 
   background: transparent;
 
-  color: #fff;
+  color: #ffffff;
 
   border: 1px solid #d4af37;
 
@@ -81,6 +86,7 @@
   transition: all 0.35s ease;
 
   position: relative;
+
   overflow: hidden;
 }
 
@@ -93,6 +99,7 @@
   background: #d4af37;
 
   transform: scaleX(0);
+
   transform-origin: left;
 
   transition: transform 0.35s ease;
@@ -105,10 +112,8 @@
 }
 
 .hero-btn:hover {
-  color: #000;
+  color: #000000;
 }
-
-/* SLIDE ANIMATION */
 
 .fade-animation {
   animation: fadeSlide 1s ease;
@@ -134,10 +139,18 @@
   }
 
   .hero-title {
-    font-size: 42px;
+    font-size: 48px;
   }
 
   .hero-desc {
     font-size: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+  }
+
+  .hero-btn {
+    padding: 13px 30px;
   }
 }

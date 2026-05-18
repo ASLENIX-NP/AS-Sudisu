@@ -50,7 +50,7 @@ const Hero = () => {
     >
       <div className="hero-overlay"></div>
 
-      <div key={currentSlide} className="hero-content fade-animation">
+      <div className="hero-content fade-animation">
         <p className="hero-subtitle">{slides[currentSlide].subtitle}</p>
 
         <h1 className="hero-title">{slides[currentSlide].title}</h1>
