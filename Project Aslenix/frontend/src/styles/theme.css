@@ -1,49 +1,183 @@
+/* =========================
+   HERO SECTION
+   ========================= */
+
 .hero {
-  height: 90vh;
-  background: url("/spices-bg.jpg") center/cover no-repeat;
+  height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(20, 10, 0, 0.65),
+      rgba(20, 10, 0, 0.78)
+    ),
+    url("/spices-bg.jpg");
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
   position: relative;
+
+  display: flex;
+  align-items: center;
 }
+
+/* =========================
+   HERO OVERLAY
+   ========================= */
 
 .hero-overlay {
-  height: 100%;
-  background: radial-gradient(circle, rgba(0,0,0,0.5), #000);
+  width: 100%;
+  padding: 0 8%;
+
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  padding: 20px;
 }
 
+/* =========================
+   HERO CONTENT
+   ========================= */
+
+.hero-content {
+  max-width: 720px;
+}
+
+/* =========================
+   SMALL TITLE
+   ========================= */
+
+.hero-subtitle {
+  color: #fbbf24;
+
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 4px;
+
+  margin-bottom: 18px;
+
+  text-transform: uppercase;
+}
+
+/* =========================
+   MAIN HEADING
+   ========================= */
+
 .hero h1 {
-  font-size: 64px;
-  color: white;
+  font-size: 78px;
+  line-height: 1.05;
+
+  color: #ffffff;
+
   font-weight: 800;
+
+  margin-bottom: 24px;
 }
 
 .hero h1 span {
-  color: #f5c542;
+  color: #fbbf24;
 }
+
+/* =========================
+   DESCRIPTION
+   ========================= */
 
 .hero p {
-  color: #ddd;
-  font-size: 18px;
-  max-width: 620px;
-  margin: 20px 0 30px;
+  color: #f3f0ea;
+
+  font-size: 20px;
+  line-height: 1.8;
+
+  max-width: 650px;
+
+  margin-bottom: 40px;
 }
 
+/* =========================
+   BUTTON
+   ========================= */
+
 .hero-btn {
-  padding: 14px 38px;
-  font-size: 16px;
-  border-radius: 40px;
+  padding: 16px 42px;
+
   border: none;
+  border-radius: 50px;
+
   cursor: pointer;
-  background: linear-gradient(135deg, #f5c542, #d4a017);
-  color: #000;
+
+  background: linear-gradient(
+    135deg,
+    #d97706,
+    #fbbf24
+  );
+
+  color: #ffffff;
+
+  font-size: 16px;
   font-weight: 700;
-  transition: transform 0.3s ease;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+
+  transition: all 0.35s ease;
 }
 
 .hero-btn:hover {
-  transform: scale(1.08);
+  transform: translateY(-4px) scale(1.03);
+
+  background: linear-gradient(
+    135deg,
+    #f59e0b,
+    #fde68a
+  );
+
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 992px) {
+
+  .hero {
+    height: auto;
+    padding: 120px 0;
+  }
+
+  .hero h1 {
+    font-size: 58px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .hero-overlay {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .hero-btn {
+    padding: 14px 32px;
+    font-size: 15px;
+  }
 }
