@@ -6,14 +6,22 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #000;
 
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   justify-content: center;
+=======
+  transition: background-image 1.5s ease-in-out;
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
 
-  overflow: hidden;
+  animation: zoomEffect 8s ease-in-out infinite alternate;
+
+  z-index: 1;
 }
 
+<<<<<<< HEAD
 .hero-content {
   position: relative;
 
@@ -47,9 +55,52 @@
 .hero p {
   margin-top: 25px;
 
-  font-size: 22px;
-  line-height: 1.8;
+=======
+.hero-bg::after {
+  content: "";
 
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 720px;
+
+  color: white;
+}
+
+.hero-subtitle {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+
+  font-size: 15px;
+
+  color: #d4af37;
+
+  margin-bottom: 18px;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+
+  font-size: 88px;
+  font-weight: 700;
+
+  line-height: 1.05;
+
+  margin-bottom: 24px;
+}
+
+.hero-desc {
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
+  font-size: 22px;
+
+<<<<<<< HEAD
   color: #f1f1f1;
 }
 
@@ -69,9 +120,27 @@
     #f5b82e,
     #ffcc4d
   );
+=======
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  max-width: 620px;
+
+  max-width: 650px;
+}
+
+.hero-btn {
+  padding: 15px 42px;
+
+  background: transparent;
+
+  border: 1px solid #d4af37;
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
 
   color: black;
 
+<<<<<<< HEAD
   font-weight: 700;
   font-size: 17px;
 
@@ -91,11 +160,56 @@
 
   .hero p {
     font-size: 18px;
+=======
+  font-size: 15px;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition: all 0.35s ease;
+}
+
+.hero-btn:hover {
+  background: #d4af37;
+
+  color: black;
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
+}
+
+.fade-animation {
+  animation: fadeSlide 1s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomEffect {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
   }
 }
 
 @media (max-width: 768px) {
   .hero {
+<<<<<<< HEAD
     height: 85vh;
     padding: 0 20px;
   }
@@ -111,5 +225,24 @@
   .hero-btn {
     padding: 14px 32px;
     font-size: 15px;
+=======
+    padding: 0 6%;
+  }
+
+  .hero-title {
+    font-size: 52px;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+  }
+
+  .hero-btn {
+    padding: 13px 30px;
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
   }
 }
