@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./Hero.css";
-<<<<<<< HEAD
 
 import herobg from "../../assets/images/herobg.jpg";
 
@@ -51,8 +50,6 @@ const slides = [
     button: "View Collection",
   },
 ];
-=======
->>>>>>> 70b3205690c2696426ab868b177ba9f0b4123f51
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -66,20 +63,15 @@ const Hero = () => {
   }, []);
 
   return (
-<<<<<<< HEAD
     <section
       className="hero"
       style={{
-        backgroundImage: `
-          linear-gradient(
-            rgba(0,0,0,0.60),
-            rgba(0,0,0,0.60)
-          ),
-          url(${slides[currentSlide].image})
-        `,
+        backgroundImage: `url(${slides[currentSlide].image})`,
       }}
     >
-      <div className="hero-content fade-animation">
+      <div className="hero-overlay"></div>
+
+      <div className="hero-content">
         <p className="hero-subtitle">{slides[currentSlide].subtitle}</p>
 
         <h1 className="hero-title">{slides[currentSlide].title}</h1>
@@ -87,33 +79,6 @@ const Hero = () => {
         <p className="hero-desc">{slides[currentSlide].description}</p>
 
         <button className="hero-btn">{slides[currentSlide].button}</button>
-=======
-    <section className="hero">
-      <div className="hero-overlay">
-
-        <div className="hero-content">
-
-          <h4 className="hero-subtitle">
-            PURE NEPALI FLAVOR
-          </h4>
-
-          <h1>
-            Spices Made <br />
-            for Daily Cooking
-          </h1>
-
-          <p>
-            Stone-ground powders with rich aroma,
-            natural color and honest taste.
-          </p>
-
-          <button className="hero-btn">
-            Discover Now
-          </button>
-
-        </div>
-
->>>>>>> 70b3205690c2696426ab868b177ba9f0b4123f51
       </div>
     </section>
   );
