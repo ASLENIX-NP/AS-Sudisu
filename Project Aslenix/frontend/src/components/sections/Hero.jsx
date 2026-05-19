@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./Hero.css";
 
 import herobg from "../../assets/images/herobg.jpg";
-
 import hero2 from "../../assets/images/hero2.jpg";
 import hero3 from "../../assets/images/hero3.png";
 import hero4 from "../../assets/images/hero4.jpg";
@@ -24,6 +23,8 @@ const slides = [
     title: "Crafted With Care",
     description: "Experience the true essence of Nepal in every dish.",
     button: "Shop Now",
+
+    /* DOUBLE ZOOM EFFECT */
   },
 
   {
@@ -47,31 +48,48 @@ const slides = [
     subtitle: "TRADITIONAL NEPALI SPICES",
     title: "Crafted With Excellence",
     description: "Delivering freshness and purity from Nepal to your kitchen.",
-    button: "View Collection",
+    button: "Learn More",
   },
 ];
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 3000);
+  /* AUTO SLIDER */
 
-    return () => clearInterval(slideInterval);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3500);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <section
-      className="hero"
-      style={{
-        backgroundImage: `url(${slides[currentSlide].image})`,
-      }}
-    >
+    <section className="hero">
+      {/* BACKGROUND SLIDES */}
+
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`hero-slide ${
+            currentSlide === index ? "active-slide" : ""
+          }`}
+          style={{
+            backgroundImage: `url(${slide.image})`,
+            backgroundSize: slide.imageSize,
+            backgroundPosition: slide.imagePosition,
+          }}
+        />
+      ))}
+
+      {/* DARK OVERLAY */}
+
       <div className="hero-overlay"></div>
 
-      <div className="hero-content">
+      {/* CONTENT */}
+
+      <div className="hero-content" key={currentSlide}>
         <p className="hero-subtitle">{slides[currentSlide].subtitle}</p>
 
         <h1 className="hero-title">{slides[currentSlide].title}</h1>
@@ -80,6 +98,10 @@ const Hero = () => {
 
         <button className="hero-btn">{slides[currentSlide].button}</button>
       </div>
+
+      {/* DOTS */}
+
+  
     </section>
   );
 };
