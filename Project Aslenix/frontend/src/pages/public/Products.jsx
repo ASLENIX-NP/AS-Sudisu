@@ -22,7 +22,7 @@ const ProductsPage = () => {
 
       <button
         className="nav-float nav-right"
-        onClick={() => navigate("/contact")}
+        onClick={() => navigate("/about")}
       >
         Next →
       </button>

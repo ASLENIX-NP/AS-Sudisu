@@ -6,15 +6,22 @@ import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
 
+/* Admin Dashboard */
+import Dashboard from "./pages/admin/Dashboard";
+
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Pages */}
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/* Admin Panel */}
+        <Route path="/admin" element={<Dashboard />} />
       </Routes>
     </Router>
   );
