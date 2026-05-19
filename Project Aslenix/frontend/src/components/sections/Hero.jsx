@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Hero.css";
+import heroBg from "../../assets/images/hero-bg.jpg";
 
 import herobg from "../../assets/images/herobg.jpg";
 import hero2 from "../../assets/images/hero2.jpg";
@@ -66,6 +67,7 @@ const Hero = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <section className="hero">
       {/* BACKGROUND SLIDES */}
 
@@ -85,6 +87,43 @@ const Hero = () => {
 
       {/* DARK OVERLAY */}
 
+=======
+    <section
+      className="hero"
+      style={{
+<<<<<<< HEAD
+        backgroundImage: `
+          linear-gradient(
+            rgba(0, 0, 0, 0.45),
+            rgba(0, 0, 0, 0.75)
+          ),
+          url(${heroBg})
+        `,
+      }}
+    >
+      <div className="hero-content">
+
+        <h4>PURE NEPALI FLAVOR</h4>
+
+        <h1>
+          Spices Made
+          <br />
+          for Daily Cooking
+        </h1>
+
+        <p>
+          Stone-ground powders with rich aroma,
+          natural color and honest taste.
+        </p>
+
+        <button className="hero-btn">
+          Discover Now
+        </button>
+=======
+        backgroundImage: `url(${slides[currentSlide].image})`,
+      }}
+    >
+>>>>>>> 20b5ca95969307ee95b5b1d3bec44e9c447cbbca
       <div className="hero-overlay"></div>
 
       {/* CONTENT */}
@@ -95,6 +134,7 @@ const Hero = () => {
         <h1 className="hero-title">{slides[currentSlide].title}</h1>
 
         <p className="hero-desc">{slides[currentSlide].description}</p>
+>>>>>>> a0d86c544a6f0f7ac7711d82e69a62030c35ef03
 
         <button className="hero-btn">{slides[currentSlide].button}</button>
       </div>

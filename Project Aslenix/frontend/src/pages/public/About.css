@@ -146,4 +146,41 @@
   .nav-right {
     right: 10px;
   }
+}@media (max-width: 768px) {
+  .nav-float {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .nav-left {
+    left: 10px;
+  }
+
+  .nav-right {
+    right: 10px;
+  }
+}/* FIX STRETCHED BUTTON ISSUE */
+
+.nav-float {
+  width: auto !important;
+  min-width: unset !important;
+  max-width: unset !important;
+
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  padding: 14px 28px !important;
+}
+
+.nav-left {
+  left: 20px !important;
+  right: auto !important;
+}
+
+.nav-right {
+  right: 20px !important;
+  left: auto !important;
 }
