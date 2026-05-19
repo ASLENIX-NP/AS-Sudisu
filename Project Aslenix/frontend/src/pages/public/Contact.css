@@ -10,8 +10,8 @@
   background:
     linear-gradient(
       to bottom,
-      rgb(212, 50, 50),
-      rgb(238, 182, 28)
+      rgb(252, 251, 253),
+      rgb(247, 249, 249)
     ),
     radial-gradient(
       circle at top right,
@@ -50,8 +50,8 @@
   background:
     linear-gradient(
       145deg,
-      #3b4a1a,
-      #3a1717
+      #d9180e,
+      #9e0606
     );
 
   border: 1px solid rgba(212, 175, 55, 0.15);

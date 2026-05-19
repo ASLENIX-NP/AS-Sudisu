@@ -5,17 +5,17 @@
 }
 
 body {
-<<<<<<< HEAD
-  background: #140404;
-  color: #f8f5f0;
+
+  background: #ae5e5e;
+  color: #c2923e;
   font-family: "Poppins", sans-serif;
-=======
+
   background-color: var(--bg-light);
   color: var(--text-dark);
 
   font-family: Arial, Helvetica, sans-serif;
 
->>>>>>> 0c67a69e444e1c97e03409ab5d4b7dbc45b87722
+
   overflow-x: hidden;
 }
 
@@ -36,7 +36,7 @@ button {
     var(--accent-color)
   );
 
-  color: white;
+  color: rgb(168, 129, 129);
 
   padding: 12px 24px;
 
