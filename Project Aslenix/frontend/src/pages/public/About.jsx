@@ -1,13 +1,32 @@
 import "./About.css";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
+import { useNavigate } from "react-router-dom";
 
 import cookingWomen from "../../assets/images/cooking women.jpg";
 
 const About = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
+
+      {/* FLOATING BUTTONS */}
+
+      <button
+        className="nav-float nav-left"
+        onClick={() => navigate("/products")}
+      >
+        ← Back
+      </button>
+
+      <button
+        className="nav-float nav-right"
+        onClick={() => navigate("/blog")}
+      >
+        Next →
+      </button>
 
       <section
         className="about-section"

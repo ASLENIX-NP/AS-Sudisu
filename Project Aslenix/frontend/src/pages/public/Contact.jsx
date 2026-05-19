@@ -1,9 +1,12 @@
-import Navbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
-import "./Contact.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Navbar from "../../components/common/Navbar";
+import "./Contact.css";
+
 const Contact = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   const navigate = useNavigate();
 
   return (
@@ -11,77 +14,150 @@ const Contact = () => {
       {/* NAVBAR */}
       <Navbar />
 
-      {/* FLOATING NAV BUTTONS */}
+      {/* BACK BUTTON */}
+
       <button
         className="nav-float nav-left"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/blog")}
       >
         ← Back
       </button>
 
-      <button
-        className="nav-float nav-right"
-        onClick={() => navigate("/products")}
-      >
-        Next →
-      </button>
+      {/* HERO SECTION */}
 
-      {/* CONTACT PAGE */}
-      <section className="contact-page">
-        <h1 className="contact-title">Contact Us</h1>
+      <section className="contact-hero">
+        <div className="contact-overlay"></div>
 
-        <div className="contact-card">
-          {/* LEFT: CONTACT FORM */}
-          <div className="contact-form">
-            <h2>Get In Touch</h2>
-            <p>We are here for you. How can we help?</p>
+        <div className="contact-container">
 
-            <input type="text" placeholder="Full Name *" />
-            <input type="email" placeholder="Email *" />
-            <input type="text" placeholder="Phone Number *" />
-            <input type="text" placeholder="Subject *" />
-            <textarea placeholder="Message *"></textarea>
+          {/* LEFT */}
 
-            <button className="contact-btn">Submit</button>
+          <div className="contact-left">
+
+            <span className="contact-tag">
+              PREMIUM SUPPORT
+            </span>
+
+            <h1>
+              Let’s Build
+              <br />
+              Something
+              <br />
+              Extraordinary
+              <br />
+              Together.
+            </h1>
+
+            <p>
+              We help brands grow with premium digital
+              experiences, strategy, and innovation.
+            </p>
+
+            <div className="contact-buttons">
+
+              <button
+                className="primary-btn"
+                onClick={() => setShowPopup(true)}
+              >
+                Start Conversation
+              </button>
+
+              <button className="secondary-btn">
+                View Services
+              </button>
+
+            </div>
+
           </div>
 
-          {/* RIGHT: CONTACT INFO */}
-          <div className="contact-info">
-            <h3>Our Contact Details</h3>
+          {/* RIGHT */}
 
-            <div className="info-row">
-              <span className="info-label">📍 Address</span>
-              <span className="info-value">
-                Manahari-07, Makawanpur, Nepal
-              </span>
+          <div className="contact-right">
+
+            <div className="info-card">
+
+              <h3>Contact Information</h3>
+
+              <div className="info-item">
+                <span>📍</span>
+                <p>Manahari-07, Makawanpur, Nepal</p>
+              </div>
+
+              <div className="info-item">
+                <span>📞</span>
+                <p>+977 57-590436</p>
+              </div>
+
+              <div className="info-item">
+                <span>✉️</span>
+                <p>info@fortunegroup.com.np</p>
+              </div>
+
+              <div className="info-item">
+                <span>🕒</span>
+                <p>Monday – Friday (9AM – 6PM)</p>
+              </div>
+
             </div>
 
-            <div className="info-row">
-              <span className="info-label">📞 Phone</span>
-              <span className="info-value">
-                +977 57-590436
-              </span>
-            </div>
-
-            <div className="info-row">
-              <span className="info-label">✉️ Email</span>
-              <span className="info-value">
-                info@fortunegroup.com.np
-              </span>
-            </div>
-
-            <div className="info-row">
-              <span className="info-label">🌐 Instagram</span>
-              <span className="info-value">
-                instagram.com/fortunegroupofind
-              </span>
-            </div>
           </div>
+
         </div>
       </section>
 
-      {/* FOOTER */}
-      <Footer />
+      {/* POPUP */}
+
+      {showPopup && (
+        <div className="popup-overlay">
+
+          <div className="popup-box">
+
+            <button
+              className="close-btn"
+              onClick={() => setShowPopup(false)}
+            >
+              ✕
+            </button>
+
+            <h2>Start Your Project</h2>
+
+            <form className="popup-form">
+
+              <input
+                type="text"
+                placeholder="Your Name"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder="Your Email"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Phone Number"
+              />
+
+              <textarea
+                rows="5"
+                placeholder="Tell us about your project..."
+              ></textarea>
+
+              <button
+                type="submit"
+                className="submit-btn"
+              >
+                Send Message
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+      )}
     </>
   );
 };

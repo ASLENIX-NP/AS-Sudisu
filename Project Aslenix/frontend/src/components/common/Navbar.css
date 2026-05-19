@@ -33,7 +33,7 @@
 }
 
 .nav-logo img {
-  height: 55px;
+  height: 70px;
   width: auto;
   object-fit: contain;
 }
@@ -57,7 +57,7 @@
 }
 
 .nav-links a:hover {
-  color: #2b1200;
+  color: #8c8885;
 }
 
 
@@ -193,7 +193,7 @@
   }
 
   .nav-logo img {
-    height: 80px;
+    height: 100px;
   }
 
   .nav-links {

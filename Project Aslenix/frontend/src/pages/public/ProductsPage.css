@@ -48,3 +48,59 @@
     font-size: 14px;
   }
 }
+/* Floating Navigation Buttons */
+
+.nav-float {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 14px 28px;
+
+  border: none;
+  border-radius: 50px;
+
+  background: #d40000;
+  color: white;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  z-index: 999;
+
+  transition: 0.3s ease;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.nav-float:hover {
+  background: #ff1a1a;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.nav-left {
+  left: 20px;
+}
+
+.nav-right {
+  right: 20px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .nav-float {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .nav-left {
+    left: 10px;
+  }
+
+  .nav-right {
+    right: 10px;
+  }
+}
