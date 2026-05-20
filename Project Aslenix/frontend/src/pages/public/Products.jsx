@@ -3,7 +3,8 @@ import Footer from "../../components/common/Footer";
 import ProductsSection from "../../components/sections/Products";
 import { useNavigate } from "react-router-dom";
 import "./ProductsPage.css";
-
+import { useEffect, useState } from "react";
+import { getProducts } from "../../services/productService";
 const ProductsPage = () => {
   const navigate = useNavigate();
 

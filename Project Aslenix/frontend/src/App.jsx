@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { useEffect } from "react";
+import { supabase } from "./lib/supabase";
+
 import Home from "./pages/public/Home";
 import Products from "./pages/public/Products";
 import Contact from "./pages/public/Contact";
@@ -10,6 +13,11 @@ import Blog from "./pages/public/Blog";
 import Dashboard from "./pages/admin/Dashboard";
 
 function App() {
+
+  useEffect(() => {
+    console.log("Supabase Connected:", supabase);
+  }, []);
+
   return (
     <Router>
       <Routes>
