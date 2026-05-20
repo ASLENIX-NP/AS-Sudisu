@@ -20,7 +20,7 @@
   background:
     linear-gradient(
       135deg,
-      rgba(65, 0, 0, 0.95),
+      rgba(226, 150, 100, 0.95),
       rgba(20, 0, 0, 0.98)
     );
 
@@ -256,4 +256,27 @@
     text-align: center;
   }
 
+}
+.social-link {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: white;
+
+  text-decoration: none;
+
+  margin-bottom: 18px;
+
+  font-size: 20px;
+
+  transition: 0.3s ease;
+}
+
+.social-link:hover {
+  color: #ffcc33;
+
+  transform: translateX(6px);
 }

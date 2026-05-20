@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Products.css";
 import ProductModal from "./ProductModal";
+import { useNavigate } from "react-router-dom";
 
 import turmeric from "../../assets/spice/turmeric.jpg";
 import chilli from "../../assets/spice/chilli.jpg";
@@ -10,6 +11,8 @@ import garam from "../../assets/spice/garam.jpg";
 
 const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -59,17 +62,20 @@ const Products = () => {
             <div className="product-card" key={index}>
               <img src={item.img} alt={item.name} />
               <h3>{item.name}</h3>
-
-              <button
-                className="details-btn"
-                onClick={() => setSelectedProduct(item)}
-              >
-                View Details
-              </button>
             </div>
           ))}
         </div>
       </section>
+
+      <button
+        className="nav-float nav-right"
+        onClick={() => navigate("/about")}
+      >
+        Next →
+      </button>
+      <button className="nav-float nav-left" onClick={() => navigate("/")}>
+        Back ←
+      </button>
 
       {/* ✅ MODAL OUTSIDE GRID */}
       {selectedProduct && (
