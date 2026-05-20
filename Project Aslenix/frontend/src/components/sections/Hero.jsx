@@ -100,8 +100,11 @@ const Hero = () => {
       </div>
 
       {/* DOTS */}
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
     </section>
   );
 };

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/common/Navbar";
+import Footer from "../../components/common/Footer";
+
 import "./Contact.css";
 
 const Contact = () => {
@@ -15,28 +17,18 @@ const Contact = () => {
       <Navbar />
 
       {/* BACK BUTTON */}
-
-      <button
-        className="nav-float nav-left"
-        onClick={() => navigate("/blog")}
-      >
+      <button className="nav-float nav-left" onClick={() => navigate("/blog")}>
         ← Back
       </button>
 
       {/* HERO SECTION */}
-
       <section className="contact-hero">
         <div className="contact-overlay"></div>
 
         <div className="contact-container">
-
-          {/* LEFT */}
-
+          {/* LEFT SIDE */}
           <div className="contact-left">
-
-            <span className="contact-tag">
-              PREMIUM SUPPORT
-            </span>
+            <span className="contact-tag">PREMIUM SUPPORT</span>
 
             <h1>
               Let’s Build
@@ -49,12 +41,12 @@ const Contact = () => {
             </h1>
 
             <p>
-              We help brands grow with premium digital
-              experiences, strategy, and innovation.
+              We help brands grow with premium digital experiences, strategy,
+              and innovation.
             </p>
 
             <div className="contact-buttons">
-
+              {/* START CONVERSATION */}
               <button
                 className="primary-btn"
                 onClick={() => setShowPopup(true)}
@@ -62,102 +54,93 @@ const Contact = () => {
                 Start Conversation
               </button>
 
-              <button className="secondary-btn">
+              {/* VIEW SERVICES */}
+              <button
+                className="secondary-btn"
+                onClick={() => navigate("/products")}
+              >
                 View Services
               </button>
-
             </div>
-
           </div>
 
-          {/* RIGHT */}
-
+          {/* RIGHT SIDE */}
           <div className="contact-right">
-
             <div className="info-card">
-
               <h3>Contact Information</h3>
 
+              {/* LOCATION */}
               <div className="info-item">
                 <span>📍</span>
-                <p>Manahari-07, Makawanpur, Nepal</p>
+
+                <a
+                  href="https://maps.app.goo.gl/azF4zHRdJEBgkDYs8"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Manahari-07, Makawanpur, Nepal
+                </a>
               </div>
 
+              {/* PHONE */}
               <div className="info-item">
                 <span>📞</span>
-                <p>+977 57-590436</p>
+
+                <a href="tel:+97757590436">+977 57-590436</a>
               </div>
 
+              {/* EMAIL */}
               <div className="info-item">
                 <span>✉️</span>
-                <p>info@fortunegroup.com.np</p>
+
+                <a href="mailto:info@fortunegroup.com.np">
+                  info@fortunegroup.com.np
+                </a>
               </div>
 
+              {/* TIME */}
               <div className="info-item">
                 <span>🕒</span>
+
                 <p>Monday – Friday (9AM – 6PM)</p>
               </div>
-
             </div>
-
           </div>
-
         </div>
       </section>
 
       {/* POPUP */}
-
       {showPopup && (
         <div className="popup-overlay">
-
           <div className="popup-box">
-
-            <button
-              className="close-btn"
-              onClick={() => setShowPopup(false)}
-            >
+            <button className="close-btn" onClick={() => setShowPopup(false)}>
               ✕
             </button>
 
             <h2>Start Your Project</h2>
 
             <form className="popup-form">
+              <input type="text" placeholder="Your Name" required />
 
-              <input
-                type="text"
-                placeholder="Your Name"
-                required
-              />
+              <input type="email" placeholder="Your Email" required />
 
-              <input
-                type="email"
-                placeholder="Your Email"
-                required
-              />
-
-              <input
-                type="text"
-                placeholder="Phone Number"
-              />
+              <input type="text" placeholder="Phone Number" />
 
               <textarea
                 rows="5"
                 placeholder="Tell us about your project..."
               ></textarea>
 
-              <button
-                type="submit"
-                className="submit-btn"
-              >
+              <button type="submit" className="submit-btn">
                 Send Message
               </button>
-
             </form>
-
           </div>
-
         </div>
       )}
+
+      {/* FOOTER */}
+      <Footer />
     </>
   );
 };

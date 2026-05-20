@@ -16,7 +16,7 @@ const ProductsPage = () => {
       {/* FLOATING NAV BUTTONS */}
       <button
         className="nav-float nav-left"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/Home")}
       >
         ← Back
       </button>

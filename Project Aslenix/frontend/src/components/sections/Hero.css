@@ -12,8 +12,11 @@
 
   justify-content: flex-start;
 
+<<<<<<< HEAD
   padding-left: 6%;
 
+=======
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   background: #000;
 }
 
@@ -51,7 +54,11 @@
   z-index: 1;
 }
 
+<<<<<<< HEAD
 /* DARK OVERLAY */
+=======
+/* OVERLAY */
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 
 .hero-overlay {
   position: absolute;
@@ -60,20 +67,30 @@
 
   background: linear-gradient(
     90deg,
+<<<<<<< HEAD
     rgba(0, 0, 0, 0.82) 0%,
     rgba(0, 0, 0, 0.55) 45%,
     rgba(0, 0, 0, 0.25) 100%
+=======
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.38) 45%,
+    rgba(0, 0, 0, 0.12) 100%
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   );
 
   z-index: 2;
 }
 
+<<<<<<< HEAD
 /* CONTENT */
+=======
+/* HERO CONTENT */
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 
 .hero-content {
-  position: relative;
-  z-index: 2;
+  position: absolute;
 
+<<<<<<< HEAD
   max-width: 620px;
 
   margin-left: 70px;
@@ -82,17 +99,40 @@
   flex-direction: column;
   align-items: flex-start;
 
+=======
+  top: 50%;
+  left: 70px;
+
+  transform: translateY(-50%);
+
+  z-index: 3;
+
+  width: 620px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   text-align: left;
 }
 
 /* SUBTITLE */
 
 .hero-subtitle {
+<<<<<<< HEAD
   color: #d4af37;
+=======
+  color: #ffcc4d;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 
   text-transform: uppercase;
 
   letter-spacing: 5px;
+<<<<<<< HEAD
 
   font-size: 15px;
 
@@ -104,18 +144,45 @@
 }
 
 /* TITLE */
+=======
+
+  font-size: 14px;
+
+  margin-bottom: 18px;
+
+  font-weight: 600;
+
+  text-align: left;
+}
+
+/* TITLE */
+
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 .hero-title {
   font-family: "Playfair Display", serif;
 
   font-size: 88px;
+<<<<<<< HEAD
 
   line-height: 1.02;
 
+=======
+
+  line-height: 0.95;
+
+  font-weight: 700;
+
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   color: white;
 
   margin-bottom: 24px;
 
   text-align: left;
+<<<<<<< HEAD
+=======
+
+  max-width: 700px;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 }
 
 /* DESCRIPTION */
@@ -125,18 +192,31 @@
 
   line-height: 1.7;
 
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
 
   margin-bottom: 42px;
 
   text-align: left;
 
+<<<<<<< HEAD
+  margin-bottom: 42px;
+
+  text-align: left;
+
+=======
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   max-width: 620px;
 }
 /* BUTTON */
 
+/* BUTTON */
+
 .hero-btn {
+<<<<<<< HEAD
   padding: 16px 42px;
+=======
+  padding: 18px 44px;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 
   border: 1px solid #d4af37;
 
@@ -144,7 +224,11 @@
 
   color: white;
 
+<<<<<<< HEAD
   font-size: 15px;
+=======
+  font-size: 17px;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 
   font-weight: 600;
 
@@ -152,7 +236,13 @@
 
   transition: all 0.35s ease;
 
+<<<<<<< HEAD
   animation: fadeSlide 0.9s ease;
+=======
+  border-radius: 0;
+
+  align-self: flex-start;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
 }
 
 .hero-btn:hover {
@@ -162,9 +252,10 @@
 
   transform: translateY(-5px);
 
-  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.35);
 }
 
+<<<<<<< HEAD
 /* DOTS */
 
 /* TEXT ANIMATION */
@@ -202,17 +293,39 @@
 
   .hero-desc {
     font-size: 18px;
+=======
+
+/* RESPONSIVE */
+
+@media (max-width: 602px) {
+  .hero-title {
+    font-size: 64px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   }
 }
 
 @media (max-width: 768px) {
   .hero {
+<<<<<<< HEAD
     padding-left: 8%;
+=======
+    padding-left: 5%;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
     padding-right: 8%;
   }
 
   .hero-content {
+<<<<<<< HEAD
     max-width: 100%;
+=======
+    width: 90%;
+
+    left: 5%;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   }
 
   .hero-title {
@@ -220,11 +333,19 @@
   }
 
   .hero-desc {
+<<<<<<< HEAD
     font-size: 16px;
+=======
+    font-size: 15px;
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
   }
 
   .hero-subtitle {
     font-size: 12px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
     letter-spacing: 3px;
   }
 
