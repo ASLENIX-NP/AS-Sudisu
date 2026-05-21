@@ -3,7 +3,7 @@ import "./ProductsSection.css";
 import spices from "../../assets/images/sudisuuPH.jpg";
 import meat from "../../assets/images/Sudisuu2.jpg";
 import momo from "../../assets/images/sudisuPH3.jpg";
-import lineup from "../../assets/images/hero1.jpeg";
+
 
 export default function ProductsSection() {
   return (
@@ -75,9 +75,7 @@ export default function ProductsSection() {
 
       {/* BOTTOM BANNER */}
 
-      <div className="products-banner">
-        <img src={lineup} alt="Sudisu Spices Banner" />
-      </div>
+    
     </section>
   );
 }

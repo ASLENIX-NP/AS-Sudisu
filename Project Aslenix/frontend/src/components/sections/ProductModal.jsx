@@ -7,8 +7,10 @@ const ProductModal = ({ product, onClose }) => {
         className="modal-box"
         onClick={(e) => e.stopPropagation()}
       >
-        <img src={product.img} alt={product.name} />
-
+ <img
+  src={product.image || "/products/turmeric.png"}
+  alt={product.name}
+/>
         <h2>{product.name}</h2>
         <p className="modal-desc">{product.description}</p>
 

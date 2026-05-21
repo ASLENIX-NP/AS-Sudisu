@@ -23,8 +23,6 @@ const slides = [
     title: "Crafted With Care",
     description: "Experience the true essence of Nepal in every dish.",
     button: "Shop Now",
-
-    /* DOUBLE ZOOM EFFECT */
   },
 
   {
@@ -59,7 +57,9 @@ const Hero = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+      setCurrentSlide((prev) =>
+        prev === slides.length - 1 ? 0 : prev + 1
+      );
     }, 3500);
 
     return () => clearInterval(interval);
@@ -90,21 +90,24 @@ const Hero = () => {
       {/* CONTENT */}
 
       <div className="hero-content" key={currentSlide}>
-        <p className="hero-subtitle">{slides[currentSlide].subtitle}</p>
+        <p className="hero-subtitle">
+          {slides[currentSlide].subtitle}
+        </p>
 
-        <h1 className="hero-title">{slides[currentSlide].title}</h1>
+        <h1 className="hero-title">
+          {slides[currentSlide].title}
+        </h1>
 
-        <p className="hero-desc">{slides[currentSlide].description}</p>
+        <p className="hero-desc">
+          {slides[currentSlide].description}
+        </p>
 
-        <button className="hero-btn">{slides[currentSlide].button}</button>
+        <button className="hero-btn">
+          {slides[currentSlide].button}
+        </button>
       </div>
 
       {/* DOTS */}
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> 9782a1ecb372dc5c1d50031ae064300936cbc9fd
     </section>
   );
 };
