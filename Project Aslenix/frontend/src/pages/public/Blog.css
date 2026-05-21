@@ -1,0 +1,287 @@
+/* =========================================
+   BLOG PAGE
+========================================= */
+
+.sudisu-blog-section {
+  width: 100%;
+
+  min-height: 100vh;
+
+  background: linear-gradient(to bottom, #180000, #2a0000);
+
+  padding: 130px 8% 90px;
+
+  overflow: hidden;
+
+  color: white;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.sudisu-blog-container {
+  display: grid;
+
+  grid-template-columns: 1.1fr 0.9fr;
+
+  align-items: center;
+
+  gap: 60px;
+}
+
+/* =========================================
+   LEFT CONTENT
+========================================= */
+
+.sudisu-blog-text {
+  max-width: 700px;
+}
+
+/* TAG */
+
+.blog-tag {
+  display: inline-block;
+
+  padding: 10px 22px;
+
+  border-radius: 50px;
+
+  background: rgba(255,255,255,0.08);
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  color: #ffcc4d;
+
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  font-weight: 600;
+
+  margin-bottom: 24px;
+
+  font-family: "Poppins", sans-serif;
+}
+
+/* HEADING */
+
+.sudisu-blog-text h1 {
+  font-size: 64px;
+
+  line-height: 1.05;
+
+  margin-bottom: 30px;
+
+  font-weight: 800;
+
+  color: white;
+
+  font-family: "Poppins", sans-serif;
+}
+
+/* PARAGRAPH */
+
+.sudisu-blog-text p {
+  font-size: 18px;
+
+  line-height: 1.8;
+
+  color: rgba(255,255,255,0.86);
+
+  margin-bottom: 22px;
+
+  font-family: "Poppins", sans-serif;
+}
+
+/* =========================================
+   IMAGE SECTION
+========================================= */
+
+.sudisu-blog-image {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.sudisu-blog-image img {
+  width: 100%;
+
+  max-width: 520px;
+
+  border-radius: 18px;
+
+  object-fit: cover;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+}
+
+/* =========================================
+   BOTTOM CARD
+========================================= */
+
+.sudisu-blog-bottom {
+  margin-top: 80px;
+
+  display: flex;
+
+  justify-content: center;
+}
+
+.bottom-card {
+  width: 100%;
+
+  max-width: 950px;
+
+  background: rgba(255,255,255,0.05);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 24px;
+
+  padding: 50px;
+
+  text-align: center;
+
+  backdrop-filter: blur(10px);
+}
+
+.bottom-card h2 {
+  font-size: 42px;
+
+  margin-bottom: 20px;
+
+  color: #ffcc4d;
+
+  font-family: "Poppins", sans-serif;
+}
+
+.bottom-card p {
+  font-size: 18px;
+
+  line-height: 1.9;
+
+  color: rgba(255,255,255,0.85);
+
+  font-family: "Poppins", sans-serif;
+}
+
+/* =========================================
+   FLOATING BUTTONS
+========================================= */
+
+.nav-float {
+  position: fixed;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  padding: 14px 30px;
+
+  border: none;
+
+  border-radius: 50px;
+
+  background: #e00000;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  z-index: 999;
+
+  transition: 0.3s ease;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.nav-float:hover {
+  background: #ff1a1a;
+
+  transform: translateY(-50%) scale(1.05);
+}
+
+.nav-left {
+  left: 20px;
+}
+
+.nav-right {
+  right: 20px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+
+  .sudisu-blog-container {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+  }
+
+  .sudisu-blog-text h1 {
+    font-size: 46px;
+  }
+
+  .sudisu-blog-image img {
+    max-width: 450px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .sudisu-blog-section {
+    padding: 110px 6% 70px;
+  }
+
+  .sudisu-blog-text h1 {
+    font-size: 36px;
+  }
+
+  .sudisu-blog-text p {
+    font-size: 16px;
+  }
+
+  .bottom-card {
+    padding: 35px 25px;
+  }
+
+  .bottom-card h2 {
+    font-size: 30px;
+  }
+
+  .bottom-card p {
+    font-size: 16px;
+  }
+
+  .nav-left {
+    left: 10px;
+  }
+
+  .nav-right {
+    right: 10px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .sudisu-blog-text h1 {
+    font-size: 30px;
+  }
+
+  .blog-tag {
+    font-size: 11px;
+  }
+
+}

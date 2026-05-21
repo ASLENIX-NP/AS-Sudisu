@@ -4,51 +4,49 @@
   padding: 80px 6%;
 }
 
+/* PAGE TITLE */
+
 .page-title {
   font-size: 42px;
   font-weight: 700;
   color: #fff;
   margin-bottom: 40px;
+  text-align: center;
+}
+/* =========================================
+   PRODUCTS HEADER
+========================================= */
+
+.products-header {
+  text-align: center;
+
+  margin-bottom: 60px;
 }
 
-/* FLOATING NAV BUTTONS (same as Contact) */
-.nav-float {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #b30000;
+.products-header h1 {
+  font-size: 56px;
+
   color: #fff;
-  padding: 14px 20px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  z-index: 999;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transition: all 0.3s ease;
+
+  font-weight: 800;
+
+  margin-bottom: 20px;
 }
 
-.nav-float:hover {
-  background: #ff1f1f;
-  transform: translateY(-50%) scale(1.05);
-}
+.products-header p {
+  color: rgba(255, 255, 255, 0.8);
 
-.nav-left {
-  left: 20px;
-}
+  font-size: 22px;
 
-.nav-right {
-  right: 20px;
-}
+  max-width: 850px;
 
-/* Mobile safe */
-@media (max-width: 768px) {
-  .nav-float {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
+  margin: auto;
+
+  line-height: 1.7;
 }
-/* Floating Navigation Buttons */
+/* =========================================
+   FLOATING NAVIGATION BUTTONS
+========================================= */
 
 .nav-float {
   position: fixed;
@@ -70,14 +68,21 @@
 
   z-index: 999;
 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
   transition: 0.3s ease;
 
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  width: auto !important;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
 }
 
 .nav-float:hover {
   background: #ff1a1a;
-  transform: translateY(-50%) scale(1.05);
 }
 
 .nav-left {
@@ -88,12 +93,77 @@
   right: 20px;
 }
 
-/* Responsive */
+/* =========================================
+   SUDISU HERO SECTION
+========================================= */
+
+.sudisu-hero-banner {
+  width: 100vw;
+  height: 100vh;
+
+  background: #efefef00;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+/* PRODUCT SHOWCASE */
+
+.sudisu-product-showcase {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+/* MAIN HERO IMAGE */
+
+.sudisu-main-products {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+/* REMOVE UNUSED ELEMENTS */
+
+.splash-left,
+.splash-right,
+.sudisu-top-logo,
+.sudisu-slogan {
+  display: none;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+  .page-title {
+    font-size: 34px;
+  }
+
+  .nav-float {
+    padding: 12px 22px;
+    font-size: 15px;
+  }
+}
 
 @media (max-width: 768px) {
-  .nav-float {
-    padding: 12px 20px;
-    font-size: 14px;
+  .products-page {
+    padding: 60px 5%;
   }
 
   .nav-left {
@@ -103,28 +173,72 @@
   .nav-right {
     right: 10px;
   }
-}/* FIX STRETCHED BUTTON ISSUE */
 
-.nav-float {
-  width: auto !important;
-  min-width: unset !important;
-  max-width: unset !important;
+  .sudisu-hero-banner {
+    height: auto;
+    min-height: 50vh;
+  }
 
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
+  .sudisu-main-products {
+    width: 100%;
+    height: auto;
 
-  white-space: nowrap;
-
-  padding: 14px 28px !important;
+    object-fit: contain;
+  }
 }
 
-.nav-left {
-  left: 20px !important;
-  right: auto !important;
+@media (max-width: 600px) {
+  .page-title {
+    font-size: 28px;
+  }
+
+  .nav-float {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+}
+/* =========================================
+   PREMIUM PRODUCTS HEADER
+========================================= */
+
+.products-header {
+  text-align: center;
+
+  margin-bottom: 70px;
 }
 
-.nav-right {
-  right: 20px !important;
-  left: auto !important;
+.products-header h1 {
+  font-size: 58px;
+
+  color: #ffffff;
+
+  font-weight: 800;
+
+  margin-bottom: 20px;
+
+  letter-spacing: 1px;
+}
+
+.products-header p {
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 20px;
+
+  line-height: 1.6;
+
+  max-width: 850px;
+
+  margin: auto;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .products-header h1 {
+    font-size: 38px;
+  }
+
+  .products-header p {
+    font-size: 16px;
+  }
 }

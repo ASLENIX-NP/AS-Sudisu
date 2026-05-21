@@ -12,7 +12,7 @@ export default function Footer() {
       <footer className="footer">
         {/* TOP CTA */}
         <div className="footer-top">
-          <h2>Let’s connect and turn your vision into reality.</h2>
+          <h2>Bringing Pure Flavor to Your Kitchen</h2>
 
           <p>Available Monday – Friday (9:00 AM – 6:00 PM)</p>
 

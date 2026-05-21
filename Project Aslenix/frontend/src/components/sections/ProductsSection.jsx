@@ -1,17 +1,21 @@
 import "./ProductsSection.css";
+import { useNavigate } from "react-router-dom";
 
 import spices from "../../assets/images/sudisuuPH.jpg";
-import meat from "../../assets/images/Sudisuu2.jpg";
+import meat from "../../assets/images/Sudiisu2.png";
 import momo from "../../assets/images/sudisuPH3.jpg";
-import lineup from "../../assets/images/hero1.jpeg";
 
 export default function ProductsSection() {
+  const navigate = useNavigate();
+
   return (
     <section className="products-section">
       {/* SECTION HEADER */}
 
       <div className="section-header">
-        <span>OUR PRODUCTS</span>
+        <span className="products-link" onClick={() => navigate("/products")}>
+          OUR PRODUCTS
+        </span>
 
         <h2>Featured Masalas</h2>
 
@@ -58,7 +62,7 @@ export default function ProductsSection() {
         {/* CARD 3 */}
 
         <div className="product-card">
-          <img src={meat} alt="" />
+          <img src={meat} alt="Premium Spice Range" />
 
           <div className="product-content">
             <h3>Premium Spice Range</h3>
@@ -71,12 +75,6 @@ export default function ProductsSection() {
             <button>Explore More</button>
           </div>
         </div>
-      </div>
-
-      {/* BOTTOM BANNER */}
-
-      <div className="products-banner">
-        <img src={lineup} alt="Sudisu Spices Banner" />
       </div>
     </section>
   );

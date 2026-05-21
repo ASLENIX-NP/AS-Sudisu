@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Products.css";
 import ProductModal from "./ProductModal";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 import turmeric from "../../assets/spice/turmeric.jpg";
 import chilli from "../../assets/spice/chilli.jpg";

@@ -1,79 +1,162 @@
+/* =========================================
+   PREMIUM PRODUCTS SECTION - SUDISU
+========================================= */
 .products-section {
-  padding: 110px 8%;
+  width: 100%;
 
-  background: linear-gradient(180deg, #120000 0%, #1a0000 100%);
+  min-height: 100vh;
 
-  color: white;
+  padding: 120px 8%;
+
+  background:
+    radial-gradient(circle at top left, rgba(255, 180, 0, 0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 60, 0, 0.12), transparent 30%),
+    linear-gradient(
+      to bottom,
+      #120000,
+      #220000,
+      #320000
+    );
+
+  position: relative;
+
+  overflow: hidden;
+}
+.products-section {
+  width: 100%;
+
+  min-height: 100vh;
+
+  padding: 120px 8%;
+
+  background:
+    radial-gradient(circle at top left, rgba(255, 180, 0, 0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 60, 0, 0.12), transparent 30%),
+    linear-gradient(
+      to bottom,
+      #120000,
+      #220000,
+      #320000
+    );
+
+  position: relative;
+
+  overflow: hidden;
 }
 
-/* HEADER */
+/* =========================================
+   SECTION HEADER
+========================================= */
 
 .section-header {
   text-align: center;
 
-  margin-bottom: 70px;
+  margin-bottom: 90px;
 }
 
-.section-header span {
-  color: #f0b429;
+/* OUR PRODUCTS */
 
-  letter-spacing: 4px;
+.section-header span {
+  display: inline-block;
+
+  color: #f0b429;
 
   font-size: 14px;
 
-  font-weight: 600;
+  font-weight: 700;
+
+  letter-spacing: 5px;
+
+  margin-bottom: 18px;
+
+  transition: 0.3s ease;
 }
+
+/* CLICK EFFECT */
+
+.products-link {
+  cursor: pointer;
+}
+
+.products-link:hover {
+  color: #c6a759;
+
+  transform: scale(1.05);
+}
+
+/* MAIN TITLE */
 
 .section-header h2 {
-  font-size: 60px;
+  font-size: 68px;
 
-  margin-top: 18px;
-  margin-bottom: 20px;
+  color: #dedede;
 
   font-family: "Playfair Display", serif;
+
+  font-weight: 700;
+
+  margin-bottom: 28px;
+
+  line-height: 1.1;
 }
 
+/* SUBTITLE */
+
 .section-header p {
-  max-width: 700px;
+  max-width: 760px;
 
   margin: auto;
 
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(196, 18, 18, 0.82);
 
-  line-height: 1.8;
+  font-size: 20px;
 
-  font-size: 18px;
+  line-height: 1.9;
+
+  font-weight: 300;
 }
 
-/* GRID */
+/* =========================================
+   PRODUCTS GRID
+========================================= */
 
 .products-grid {
   display: grid;
 
   grid-template-columns: repeat(3, 1fr);
 
-  gap: 35px;
+  gap: 40px;
 }
 
-/* CARD */
+/* =========================================
+   PRODUCT CARD
+========================================= */
 
 .product-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.06);
 
-  border-radius: 24px;
+  border-radius: 28px;
 
   overflow: hidden;
 
-  transition: 0.35s ease;
+  backdrop-filter: blur(12px);
 
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  transition: all 0.35s ease;
+
+  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
 }
 
 .product-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-12px);
 
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.45);
 }
+
+/* =========================================
+   PRODUCT IMAGE
+========================================= */
 
 .product-card img {
   width: 100%;
@@ -81,72 +164,140 @@
   height: 340px;
 
   object-fit: cover;
+
+  display: block;
 }
 
-/* CONTENT */
+/* =========================================
+   PRODUCT CONTENT
+========================================= */
 
 .product-content {
-  padding: 28px;
+  padding: 32px;
 }
 
 .product-content h3 {
   font-size: 30px;
 
-  margin-bottom: 16px;
-
   color: #f0b429;
+
+  margin-bottom: 18px;
+
+  font-weight: 700;
 }
 
 .product-content p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255,255,255,0.82);
 
-  line-height: 1.7;
+  font-size: 17px;
 
-  margin-bottom: 28px;
+  line-height: 1.8;
+
+  margin-bottom: 30px;
 }
 
+/* =========================================
+   BUTTON
+========================================= */
+
 .product-content button {
-  padding: 14px 28px;
+  padding: 14px 30px;
 
   border: none;
 
+  border-radius: 40px;
+
   background: #f0b429;
 
-  color: black;
+  color: #000;
+
+  font-size: 15px;
 
   font-weight: 700;
 
-  border-radius: 40px;
-
   cursor: pointer;
 
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .product-content button:hover {
+  background: #ffcc4d;
+
   transform: scale(1.05);
 }
 
-/* RESPONSIVE */
+/* =========================================
+   BANNER
+========================================= */
 
-@media (max-width: 992px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-header h2 {
-    font-size: 42px;
-  }
-}
 .products-banner {
-  margin-top: 60px;
+  margin-top: 80px;
+
   width: 100%;
-  border-radius: 24px;
+
+  border-radius: 28px;
+
   overflow: hidden;
 }
 
 .products-banner img {
   width: 100%;
+
   display: block;
+
   object-fit: cover;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 992px) {
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header h2 {
+    font-size: 50px;
+  }
+
+  .section-header p {
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .products-section {
+    padding: 100px 6%;
+  }
+
+  .section-header h2 {
+    font-size: 38px;
+  }
+
+  .section-header p {
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  .product-content h3 {
+    font-size: 26px;
+  }
+
+  .product-card img {
+    height: 280px;
+  }
+
 }
