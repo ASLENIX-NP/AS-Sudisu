@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="footer-top">
           <h2>Bringing Pure Flavor to Your Kitchen</h2>
 
-          <p>Available Monday – Friday (9:00 AM – 6:00 PM)</p>
+         
 
           <button className="cta-btn" onClick={() => setOpenPopup(true)}>
             Let’s Start Conversation

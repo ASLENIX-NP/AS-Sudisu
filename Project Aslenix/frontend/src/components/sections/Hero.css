@@ -85,15 +85,15 @@
 
   align-items: flex-start;
 
-  justify-content: center;
-
+  
+justify-content: center;
   text-align: left;
 }
 
 /* SUBTITLE */
 
 .hero-subtitle {
-  color: #ffcc4d;
+  color: #ce6006;
 
   text-transform: uppercase;
 
@@ -171,7 +171,7 @@
 .hero-btn:hover {
   background: #d4af37;
 
-  color: rgb(215, 9, 9);
+  color: rgb(246, 231, 17);
 
   transform: translateY(-4px);
 

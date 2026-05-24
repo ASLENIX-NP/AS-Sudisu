@@ -1,145 +1,222 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import {
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaRegClock,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
 import "./Contact.css";
 
-const Contact = () => {
-  const [showPopup, setShowPopup] = useState(false);
+import heroImg from "../../assets/images/finalContact.png";
 
+const Contact = () => {
   const navigate = useNavigate();
+
+  const southAsianCountries = [
+    { name: "Nepal", code: "+977" },
+    { name: "India", code: "+91" },
+    { name: "Bangladesh", code: "+880" },
+    { name: "Pakistan", code: "+92" },
+    { name: "Sri Lanka", code: "+94" },
+    { name: "Bhutan", code: "+975" },
+    { name: "Maldives", code: "+960" },
+    { name: "Afghanistan", code: "+93" },
+  ];
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    country: "",
+    province: "",
+    district: "",
+    phoneCode: "+977",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const handleCountryChange = (e) => {
+    const selectedCountry = southAsianCountries.find(
+      (country) => country.name === e.target.value,
+    );
+
+    setFormData({
+      ...formData,
+      country: selectedCountry.name,
+      phoneCode: selectedCountry.code,
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+  };
 
   return (
     <>
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* BACK BUTTON */}
       <button className="nav-float nav-left" onClick={() => navigate("/blog")}>
-        ← Back
+        Back
       </button>
 
-      {/* HERO SECTION */}
       <section className="contact-hero">
-        <div className="contact-overlay"></div>
+        <div className="hero-image-wrapper">
+          <img src={heroImg} alt="Sudisu Spices" className="hero-image" />
+        </div>
 
-        <div className="contact-container">
-          {/* LEFT SIDE */}
-          <div className="contact-left">
-            <span className="contact-tag">PREMIUM SUPPORT</span>
+        <div className="contact-content">
+          <span className="contact-tag">AUTHENTIC NEPALI SPICES</span>
 
-            <h1>
-              Let’s Build
-              <br />
-              Something
-              <br />
-              Extraordinary
-              <br />
-              Together.
-            </h1>
+          <h1>Connect With Sudisu Spices</h1>
 
-            <p>
-              We help brands grow with premium digital experiences, strategy,
-              and innovation.
-            </p>
+          <p className="contact-description">
+            Bringing authentic Nepali taste to every kitchen with premium
+            handcrafted spices made from pure ingredients and traditional
+            recipes.
+          </p>
 
-            <div className="contact-buttons">
-              {/* START CONVERSATION */}
-              <button
-                className="primary-btn"
-                onClick={() => setShowPopup(true)}
-              >
-                Start Conversation
-              </button>
+          <div className="info-card">
+            <h2>Contact Information</h2>
 
-              {/* VIEW SERVICES */}
-              <button
-                className="secondary-btn"
-                onClick={() => navigate("/products")}
-              >
-                View Services
-              </button>
-            </div>
-          </div>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              {/* NAME */}
 
-          {/* RIGHT SIDE */}
-          <div className="contact-right">
-            <div className="info-card">
-              <h3>Contact Information</h3>
+              <div className="form-group">
+                <label>Full Name</label>
 
-              {/* LOCATION */}
-              <div className="info-item">
-                <span>📍</span>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                />
+              </div>
 
-                <a
-                  href="https://maps.app.goo.gl/azF4zHRdJEBgkDYs8"
-                  target="_blank"
-                  rel="noreferrer"
+              {/* COUNTRY */}
+
+              <div className="form-group">
+                <label>Country</label>
+
+                <select
+                  name="country"
+                  value={formData.country}
+                  onChange={handleCountryChange}
                 >
-                  Manahari-07, Makawanpur, Nepal
-                </a>
+                  <option value="">Select Country</option>
+
+                  {southAsianCountries.map((country) => (
+                    <option key={country.name} value={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* PROVINCE */}
+
+              <div className="form-group">
+                <label>Province / State</label>
+
+                <input
+                  type="text"
+                  name="province"
+                  placeholder="Enter your province"
+                  value={formData.province}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* DISTRICT */}
+
+              <div className="form-group">
+                <label>District / City</label>
+
+                <input
+                  type="text"
+                  name="district"
+                  placeholder="Enter your district"
+                  value={formData.district}
+                  onChange={handleChange}
+                />
               </div>
 
               {/* PHONE */}
-              <div className="info-item">
-                <span>📞</span>
 
-                <a href="tel:+97757590436">+977 57-590436</a>
+              <div className="form-group">
+                <label>Phone Number</label>
+
+                <div className="phone-wrapper">
+                  <input
+                    type="text"
+                    value={formData.phoneCode}
+                    readOnly
+                    className="phone-code"
+                  />
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="98XXXXXXXX"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
 
               {/* EMAIL */}
-              <div className="info-item">
-                <span>✉️</span>
 
-                <a href="mailto:info@fortunegroup.com.np">
-                  info@fortunegroup.com.np
-                </a>
+              <div className="form-group">
+                <label>Email Address</label>
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
               </div>
 
-              {/* TIME */}
-              <div className="info-item">
-                <span>🕒</span>
+              {/* MESSAGE */}
 
-                <p>Monday – Friday (9AM – 6PM)</p>
+              <div className="form-group full-width">
+                <label>Your Message</label>
+
+                <textarea
+                  rows="5"
+                  name="message"
+                  placeholder="Write your message here..."
+                  value={formData.message}
+                  onChange={handleChange}
+                ></textarea>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* POPUP */}
-      {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-box">
-            <button className="close-btn" onClick={() => setShowPopup(false)}>
-              ✕
-            </button>
+              {/* BUTTON */}
 
-            <h2>Start Your Project</h2>
-
-            <form className="popup-form">
-              <input type="text" placeholder="Your Name" required />
-
-              <input type="email" placeholder="Your Email" required />
-
-              <input type="text" placeholder="Phone Number" />
-
-              <textarea
-                rows="5"
-                placeholder="Tell us about your project..."
-              ></textarea>
-
-              <button type="submit" className="submit-btn">
+              <button type="submit" className="contact-submit-btn">
                 Send Message
               </button>
             </form>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* FOOTER */}
       <Footer />
     </>
   );
