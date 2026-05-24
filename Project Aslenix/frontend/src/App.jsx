@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { supabase } from "./lib/supabase";
 
 import Login from "./pages/admin/Login";
-
+import AdminRoute from "./routes/AdminRoute";
 /* Public Pages */
 import Home from "./pages/public/Home";
 import Products from "./pages/public/Products";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
-
+import ProductsManager from "./pages/admin/ProductsManager";
 /* Admin Pages */
 import Dashboard from "./pages/admin/Dashboard";
 
@@ -38,10 +38,23 @@ function App() {
         <Route path="/admin" element={<Login />} />
 
         {/* Admin Dashboard */}
-        <Route
-          path="/admin/dashboard"
-          element={<Dashboard />}
-        />
+       <Route
+  path="/admin/dashboard"
+  element={
+    <AdminRoute>
+      <Dashboard />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/products"
+  element={
+    <AdminRoute>
+      <ProductsManager />
+    </AdminRoute>
+  }
+/>
       </Routes>
     </Router>
   );

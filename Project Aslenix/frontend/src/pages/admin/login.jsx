@@ -16,8 +16,8 @@ const Login = () => {
       email === "admin@aslenix.com" &&
       password === "admin123"
     ) {
-      localStorage.setItem("admin", "true");
-      navigate("/admin/dashboard");
+      localStorage.setItem("adminLoggedIn", "true");
+        navigate("/admin/dashboard");
     } else {
       alert("Invalid admin credentials");
     }
