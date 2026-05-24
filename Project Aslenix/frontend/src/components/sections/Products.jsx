@@ -1,88 +1,106 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Products.css";
 import ProductModal from "./ProductModal";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 
+import { getProducts } from "../../services/productService";
+
+/* LOCAL IMAGES */
 import turmeric from "../../assets/spice/turmeric.jpg";
 import chilli from "../../assets/spice/chilli.jpg";
-import coriander from "../../assets/spice/dhaniya.jpg";
+import dhaniya from "../../assets/spice/dhaniya.jpg";
 import cumin from "../../assets/spice/cumin.jpg";
 import garam from "../../assets/spice/garam.jpg";
+import meat from "../../assets/spice/meat.jpg";
+import mix from "../../assets/spice/mix.jpg";
 
 const Products = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] =
+    useState(null);
 
-  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
 
-  const products = [
-    {
-      img: turmeric,
-      name: "Himalayan Turmeric",
-      description: "High curcumin, stone-ground for purity",
-      weight: "200g",
-      origin: "Eastern Nepal",
-    },
-    {
-      img: chilli,
-      name: "Kashmiri Chilli",
-      description: "Bright color with mild heat",
-      weight: "200g",
-      origin: "Kashmir Region",
-    },
-    {
-      img: coriander,
-      name: "Coriander Powder",
-      description: "Freshly ground aromatic seeds",
-      weight: "200g",
-      origin: "Terai, Nepal",
-    },
-    {
-      img: cumin,
-      name: "Cumin Powder",
-      description: "Warm, earthy flavor for daily cooking",
-      weight: "200g",
-      origin: "Western Nepal",
-    },
-    {
-      img: garam,
-      name: "Garam Masala",
-      description: "Classic blend of premium spices",
-      weight: "200g",
-      origin: "Nepal",
-    },
-  ];
+  /* IMAGE MAP */
+  const imageMap = {
+    "turmeric powder": turmeric,
+    "chilli powder": chilli,
+    "coriander powder": dhaniya,
+    "cumin powder": cumin,
+    "garam masala": garam,
+    "meat masala": meat,
+    "mix masala": mix,
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const data = await getProducts();
+
+      /* ATTACH LOCAL IMAGE */
+      const updatedProducts = data.map((item) => ({
+        ...item,
+        image:
+          imageMap[item.name.toLowerCase()] || turmeric,
+      }));
+
+      setProducts(updatedProducts);
+
+      console.log(
+        "Supabase Products:",
+        updatedProducts
+      );
+    } catch (error) {
+      console.error(
+        "Error fetching products:",
+        error
+      );
+    }
+  };
 
   return (
     <>
       <section className="products-section">
-        <h2 className="products-title">Signature Spices</h2>
+        <h2 className="products-title">
+          Signature Spices
+        </h2>
 
         <div className="products-grid">
           {products.map((item, index) => (
-            <div className="product-card" key={index}>
-              <img src={item.img} alt={item.name} />
+            <div
+              className="product-card"
+              key={item.id || index}
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+              />
+
               <h3>{item.name}</h3>
+
+              <button
+                className="details-btn"
+                onClick={() =>
+                  setSelectedProduct(item)
+                }
+              >
+                View Details
+              </button>
             </div>
           ))}
         </div>
       </section>
 
-      <button
-        className="nav-float nav-right"
-        onClick={() => navigate("/about")}
-      >
-        Next →
-      </button>
-      <button className="nav-float nav-left" onClick={() => navigate("/")}>
-        Back ←
-      </button>
-
-      {/* ✅ MODAL OUTSIDE GRID */}
+      {/* MODAL */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
+          onClose={() =>
+            setSelectedProduct(null)
+          }
         />
       )}
     </>

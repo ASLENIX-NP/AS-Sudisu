@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import adminAuthRoutes from "./routes/adminAuthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
@@ -59,6 +60,9 @@ app.get("/api/test", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 app.use("/api/products", productRoutes);
+
+/* ADMIN AUTH ROUTE */
+app.use("/api/admin", adminAuthRoutes);
 
 /* =========================
    404 HANDLER

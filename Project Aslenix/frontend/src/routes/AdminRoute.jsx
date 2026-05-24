@@ -1,7 +1,13 @@
-const AdminRoute = ({ children }) => {
-  const isAdmin = true; // later from AuthContext
+import { Navigate } from "react-router-dom";
 
-  return isAdmin ? children : <h2>Access Denied</h2>;
+const AdminRoute = ({ children }) => {
+  const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
+
+  if (!isAdminLoggedIn) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  return children;
 };
 
 export default AdminRoute;

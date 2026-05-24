@@ -3,7 +3,7 @@ import {
   FaUsers,
   FaMoneyBillWave,
   FaShoppingCart,
-  FaCapsules,
+  FaPepperHot,
 } from "react-icons/fa";
 
 const Dashboard = () => {
@@ -49,7 +49,7 @@ const Dashboard = () => {
               marginBottom: "10px",
             }}
           >
-            Admin Dashboard
+            SUDIISU Admin Dashboard
           </h1>
 
           <p
@@ -58,7 +58,7 @@ const Dashboard = () => {
               fontSize: "16px",
             }}
           >
-            Welcome back, Admin 👋
+            Welcome to SUDIISU Spice Management 🌶️
           </p>
         </div>
 
@@ -70,17 +70,17 @@ const Dashboard = () => {
             flexWrap: "wrap",
           }}
         >
-          {/* Users */}
+          {/* Customers */}
           <div style={cardStyle}>
             <FaUsers size={35} color="#38bdf8" />
             <h2 style={{ marginTop: "15px" }}>1,250</h2>
-            <p style={{ color: "#cbd5e1" }}>Total Users</p>
+            <p style={{ color: "#cbd5e1" }}>Total Customers</p>
           </div>
 
-          {/* Sales */}
+          {/* Revenue */}
           <div style={cardStyle}>
             <FaMoneyBillWave size={35} color="#22c55e" />
-            <h2 style={{ marginTop: "15px" }}>$12,400</h2>
+            <h2 style={{ marginTop: "15px" }}>Rs. 12,400</h2>
             <p style={{ color: "#cbd5e1" }}>Total Revenue</p>
           </div>
 
@@ -91,11 +91,11 @@ const Dashboard = () => {
             <p style={{ color: "#cbd5e1" }}>Orders</p>
           </div>
 
-          {/* Medicines */}
+          {/* Spice Products */}
           <div style={cardStyle}>
-            <FaCapsules size={35} color="#e879f9" />
-            <h2 style={{ marginTop: "15px" }}>540</h2>
-            <p style={{ color: "#cbd5e1" }}>Medicines</p>
+            <FaPepperHot size={35} color="#e879f9" />
+            <h2 style={{ marginTop: "15px" }}>7</h2>
+            <p style={{ color: "#cbd5e1" }}>Spice Products</p>
           </div>
         </div>
 
@@ -109,7 +109,9 @@ const Dashboard = () => {
             color: "white",
           }}
         >
-          <h2 style={{ marginBottom: "20px" }}>Recent Activity</h2>
+          <h2 style={{ marginBottom: "20px" }}>
+            Recent Activity
+          </h2>
 
           <div
             style={{
@@ -125,7 +127,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              ✅ New Order Received
+              🛒 New Spice Order Received
             </div>
 
             <div
@@ -135,7 +137,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              💊 Medicine Stock Updated
+              🌶️ Chilli Powder Stock Updated
             </div>
 
             <div
@@ -145,7 +147,17 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              👤 New User Registered
+              📦 Turmeric Powder Added
+            </div>
+
+            <div
+              style={{
+                background: "#334155",
+                padding: "15px",
+                borderRadius: "10px",
+              }}
+            >
+              👤 New Customer Registered
             </div>
           </div>
         </div>

@@ -143,6 +143,7 @@ justify-content: center;
 
   max-width: 620px;
 }
+/* BUTTON */
 
 /* BUTTON */
 
@@ -173,7 +174,7 @@ justify-content: center;
 
   color: rgb(246, 231, 17);
 
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 
   box-shadow: 0 10px 30px rgba(212, 175, 55, 0.35);
 }
@@ -213,7 +214,6 @@ justify-content: center;
 
   .hero-subtitle {
     font-size: 12px;
-
     letter-spacing: 3px;
   }
 

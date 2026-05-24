@@ -76,6 +76,10 @@ export default function ProductsSection() {
           </div>
         </div>
       </div>
+
+      {/* BOTTOM BANNER */}
+
+    
     </section>
   );
 }
