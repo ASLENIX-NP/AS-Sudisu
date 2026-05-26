@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useEffect } from "react";
 import { supabase } from "./lib/supabase";
-
+import Inquiries from "./pages/admin/Inquiries";
 import Login from "./pages/admin/Login";
 import AdminRoute from "./routes/AdminRoute";
+import Analytics from "./pages/admin/Analytics";
+import Settings from "./pages/admin/Settings";
 /* Public Pages */
 import Home from "./pages/public/Home";
 import Products from "./pages/public/Products";
@@ -52,6 +54,31 @@ function App() {
   element={
     <AdminRoute>
       <ProductsManager />
+    </AdminRoute>
+  }
+  
+/>
+<Route
+  path="/admin/inquiries"
+  element={
+    <AdminRoute>
+      <Inquiries />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/analytics"
+  element={
+    <AdminRoute>
+      <Analytics />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/settings"
+  element={
+    <AdminRoute>
+      <Settings />
     </AdminRoute>
   }
 />

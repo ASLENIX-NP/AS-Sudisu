@@ -3,10 +3,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import InquiryPopup from "./InquiryPopup";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
   const [openPopup, setOpenPopup] = useState(false);
-
+const [settings, setSettings] = useState({
+  companyName: "",
+  email: "",
+  phone: "",
+  address: "",
+  facebook: "",
+  instagram: "",
+  tiktok: "",
+});
   return (
     <>
       <footer className="footer">

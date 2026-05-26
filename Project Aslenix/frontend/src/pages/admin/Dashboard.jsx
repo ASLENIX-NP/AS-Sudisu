@@ -1,4 +1,4 @@
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminLayout from "../../layouts/AdminLayout";
 import {
   FaUsers,
   FaMoneyBillWave,
@@ -19,17 +19,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        background: "#0f172a",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Sidebar */}
-      <AdminSidebar />
-
-      {/* Main Content */}
+    <AdminLayout>
       <div
         style={{
           flex: 1,
@@ -162,7 +152,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

@@ -60,12 +60,49 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log(formData);
-  };
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/inquiries",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: `${formData.phoneCode} ${formData.phone}`,
+          message: formData.message,
+        }),
+      },
+    );
 
+    const data = await response.json();
+
+    if (data.success) {
+      alert("Inquiry sent successfully");
+
+      setFormData({
+        fullName: "",
+        country: "",
+        province: "",
+        district: "",
+        phoneCode: "+977",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    } else {
+      alert("Failed to send inquiry");
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Server error");
+  }
+};
   return (
     <>
       <Navbar />
