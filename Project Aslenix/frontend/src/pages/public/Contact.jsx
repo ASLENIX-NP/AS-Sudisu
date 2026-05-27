@@ -91,7 +91,7 @@ const Contact = () => {
           </p>
 
           <div className="info-card">
-            <h2>Contact Information</h2>
+            <h2>Your Feedback Matters</h2>
 
             <form className="contact-form" onSubmit={handleSubmit}>
               {/* NAME */}

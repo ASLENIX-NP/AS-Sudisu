@@ -17,7 +17,7 @@ export default function Footer() {
          
 
           <button className="cta-btn" onClick={() => setOpenPopup(true)}>
-            Let’s Start Conversation
+            Connect With Sudisu
           </button>
         </div>
 

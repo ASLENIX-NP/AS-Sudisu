@@ -21,15 +21,10 @@ body {
 
   margin: 0;
   padding: 0;
-
+  padding-top: px;
   background:
     radial-gradient(circle at top, rgba(212, 154, 19, 0.12), transparent 35%),
-    linear-gradient(
-      180deg,
-      #2d0500 0%,
-      #4d0900 45%,
-      #260300 100%
-    );
+    linear-gradient(180deg, #2d0500 0%, #4d0900 45%, #260300 100%);
 
   color: white;
   overflow: hidden;
@@ -70,7 +65,6 @@ body {
    CONTENT SECTION
 ================================ */
 
-
 .contact-content {
   width: 100%;
 
@@ -82,35 +76,33 @@ body {
 
 /* TAG */
 .contact-tag {
+  display: inline-block;
 
-display: inline-block;
+  margin-bottom: 16px;
 
-margin-bottom: 16px;
+  color: #ffc61b;
 
-color: #ffc61b;
+  font-size: 14px;
 
-font-size: 14px;
+  font-weight: 800;
 
-font-weight: 800;
+  letter-spacing: 7px;
 
-letter-spacing: 7px;
-
-text-transform: uppercase;
-
+  text-transform: uppercase;
 }
 
 /* HEADING */
 
 .contact-content h1 {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 
   color: #ffffff;
 
-  font-size: 60px;
-  font-weight: 900;
+  font-size: 37px;
+  font-weight: 800;
 
-  line-height: 1.1;
-
+  line-height: 1.15;
+  text-align: center;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
@@ -159,15 +151,18 @@ text-transform: uppercase;
 /* HEADING */
 
 .info-card h2 {
-  margin-bottom: 38px;
+  grid-column: 1 / -1;
 
-  color: #ffc31a;
+  margin: 0 0 16px;
 
-  font-size: 64px;
+  color: #ffc61b;
 
-  font-weight: 900;
+  font-size: 29px;
+  font-weight: 800;
 
-  line-height: 1;
+  white-space: normal;
+
+  text-align: center;
 }
 
 /* FORM */
@@ -264,11 +259,7 @@ text-transform: uppercase;
 
   border-radius: 999px;
 
-  background: linear-gradient(
-    135deg,
-    #ffbf00d7,
-    #ff7b00
-  );
+  background: linear-gradient(135deg, #ffbf00d7, #ff7b00);
 
   color: #240300;
 
@@ -277,7 +268,7 @@ text-transform: uppercase;
   font-weight: 800;
 
   cursor: pointer;
-    display: block;
+  display: block;
   margin: 40px auto 0 auto;
 
   transition: 0.3s ease;
@@ -294,7 +285,6 @@ text-transform: uppercase;
 /* MOBILE */
 
 @media (max-width: 768px) {
-
   .info-card {
     padding: 32px 24px;
     border-radius: 24px;
@@ -461,7 +451,9 @@ text-transform: uppercase;
   }
 
   .info-card h2 {
-    font-size: 38px;
+    font-size: 29px !important;
+
+    text-align: center !important;
 
     white-space: normal;
   }
@@ -493,10 +485,10 @@ body {
   padding: 0 25px;
 
   background: #7e595949;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
 
-  color: white;
+  color: rgb(148, 134, 134);
   font-size: 18px;
   font-weight: 600;
 
@@ -521,10 +513,10 @@ body {
   height: 60px !important;
 
   background: #741616;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
 
-  color: white;
+  color: rgba(139, 123, 123, 0.482);
   font-size: 20px;
   font-weight: 700;
 
@@ -537,4 +529,16 @@ body {
 .phone-wrapper input[type="tel"] {
   flex: 1;
   height: 60px !important;
+}
+@media (max-width: 768px) {
+  .next-btn,
+  .back-btn,
+  .nav-float,
+  .nav-left,
+  .nav-right {
+    display: none !important;
+  }
+}.info-card h2 {
+  font-size: 35px !important;
+  text-align: center !important;
 }

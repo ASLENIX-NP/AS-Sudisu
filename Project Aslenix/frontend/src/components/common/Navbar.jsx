@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-
+import { useState } from "react";
 // ✅ Logo import (your correct path & filename)
 import logo from "../../assets/logo/sudiisu-logo.png";
 
+
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
       {/* 🔴 OPTIONAL TOP STRIP (remove if not needed) */}
@@ -17,9 +19,11 @@ const Navbar = () => {
             <img src={logo} alt="Sudiisu Logo" />
           </Link>
         </div>
-
+        <div className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </div>
         {/* NAV LINKS */}
-        <ul className="nav-links">
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
             <Link to="/">Home</Link>
           </li>

@@ -34,9 +34,8 @@ const ProductsPage = () => {
       </div>
 
       {/* SLOGAN */}
-
       {/* FLOATING NAV BUTTONS */}
-      <button className="nav-float nav-left" onClick={() => navigate("/Home")}>
+      <button className="nav-float nav-left" onClick={() => navigate("/")}>
         ← Back
       </button>
 
@@ -52,13 +51,11 @@ const ProductsPage = () => {
         <div className="products-header">
           <h1>Our Products</h1>
 
-
-            <p>
-              Authentic Nepali spices crafted with purity, freshness, and
-              unforgettable traditional flavor.
-            </p>
-          </div>
-
+          <p>
+            Authentic Nepali spices crafted with purity, freshness, and
+            unforgettable traditional flavor.
+          </p>
+        </div>
 
         <ProductsSection />
       </section>
