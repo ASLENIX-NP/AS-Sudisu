@@ -1,31 +1,48 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "../../services/productService";
+import { useCart } from "../../context/CartContext";
+
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
-import ProductsSection from "../../components/sections/Products";
-import { useNavigate } from "react-router-dom";
+
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";;
+
 import "./ProductsPage.css";
+
 import heroProducts from "../../assets/images/Sudiisu2.png";
 
 const ProductsPage = () => {
+  const { addToCart } = useCart();
+
   const navigate = useNavigate();
+
+  // PRODUCTS STATE
+  const [products, setProducts] = useState([]);
+
+  // FETCH PRODUCTS
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    const data = await getProducts();
+    setProducts(data);
+  };
 
   return (
     <>
       {/* NAVBAR */}
       <Navbar />
 
-      {/* =================================
-    SUDISU PREMIUM HERO SECTION
-================================= */}
-
-      {/* PRODUCT SHOWCASE */}
+      {/* HERO SECTION */}
       <div className="sudisu-product-showcase">
-        {/* LEFT SPLASH */}
         <div className="splash-left"></div>
 
-        {/* RIGHT SPLASH */}
         <div className="splash-right"></div>
 
-        {/* PRODUCT IMAGE */}
         <img
           src={heroProducts}
           alt="Sudisu Products"
@@ -33,10 +50,11 @@ const ProductsPage = () => {
         />
       </div>
 
-      {/* SLOGAN */}
-
-      {/* FLOATING NAV BUTTONS */}
-      <button className="nav-float nav-left" onClick={() => navigate("/Home")}>
+      {/* FLOATING BUTTONS */}
+      <button
+        className="nav-float nav-left"
+        onClick={() => navigate("/Home")}
+      >
         ← Back
       </button>
 
@@ -47,20 +65,52 @@ const ProductsPage = () => {
         Next →
       </button>
 
-      {/* PAGE CONTENT */}
+      {/* PRODUCTS PAGE */}
       <section className="products-page">
         <div className="products-header">
           <h1>Our Products</h1>
 
+          <p>
+            Authentic Nepali spices crafted with purity,
+            freshness, and unforgettable traditional flavor.
+          </p>
+        </div>
 
-            <p>
-              Authentic Nepali spices crafted with purity, freshness, and
-              unforgettable traditional flavor.
-            </p>
-          </div>
+        {/* DYNAMIC PRODUCTS */}
+        <div className="products-grid">
+          {products.map((product) => (
+            <div
+              className="product-card"
+              key={product.id}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+              />
 
+              <h3>{product.name}</h3>
 
-        <ProductsSection />
+              <p className="product-price">
+                Rs. {product.price}
+              </p>
+
+              <span className="product-weight">
+                {product.weight}
+              </span>
+
+              {/* ADD TO CART BUTTON */}
+              <button
+                className="add-cart-btn"
+                onClick={() =>
+                  addToCart(product)
+                }
+              >
+                Add To Cart
+              </button>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* FOOTER */}

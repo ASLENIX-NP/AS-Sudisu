@@ -1,0 +1,46 @@
+.checkout-page {
+  min-height: 100vh;
+  padding: 120px 8%;
+  background: #f8f8f8;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
+}
+
+.checkout-left,
+.checkout-right {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.checkout-left h1,
+.checkout-right h2 {
+  margin-bottom: 30px;
+}
+
+.checkout-left input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.place-order-btn {
+  margin-top: 30px;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: #d62828;
+  color: white;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
