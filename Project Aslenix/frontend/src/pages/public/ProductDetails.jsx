@@ -9,14 +9,12 @@ import { supabase } from "../../lib/supabase";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
-import { useCart } from "../../context/CartContext";
 
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
 
-  const { addToCart } = useCart();
 
   const [product, setProduct] =
     useState(null);
@@ -91,14 +89,6 @@ const ProductDetails = () => {
             flavor.
           </p>
 
-          <button
-            className="details-cart-btn"
-            onClick={() =>
-              addToCart(product)
-            }
-          >
-            Add To Cart
-          </button>
         </div>
       </div>
 

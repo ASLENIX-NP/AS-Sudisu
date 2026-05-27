@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/productService";
-import { useCart } from "../../context/CartContext";
 
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
@@ -8,21 +7,18 @@ import Footer from "../../components/common/Footer";
 import {
   useNavigate,
   Link,
-} from "react-router-dom";;
+} from "react-router-dom";
 
 import "./ProductsPage.css";
 
 import heroProducts from "../../assets/images/Sudiisu2.png";
 
 const ProductsPage = () => {
-  const { addToCart } = useCart();
-
   const navigate = useNavigate();
 
-  // PRODUCTS STATE
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] =
+    useState([]);
 
-  // FETCH PRODUCTS
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -34,10 +30,9 @@ const ProductsPage = () => {
 
   return (
     <>
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO SECTION */}
+      {/* HERO */}
       <div className="sudisu-product-showcase">
         <div className="splash-left"></div>
 
@@ -50,36 +45,42 @@ const ProductsPage = () => {
         />
       </div>
 
-      {/* FLOATING BUTTONS */}
+      {/* FLOAT BUTTONS */}
       <button
         className="nav-float nav-left"
-        onClick={() => navigate("/Home")}
+        onClick={() =>
+          navigate("/")
+        }
       >
         ← Back
       </button>
 
       <button
         className="nav-float nav-right"
-        onClick={() => navigate("/about")}
+        onClick={() =>
+          navigate("/about")
+        }
       >
         Next →
       </button>
 
-      {/* PRODUCTS PAGE */}
+      {/* PRODUCTS */}
       <section className="products-page">
         <div className="products-header">
           <h1>Our Products</h1>
 
           <p>
-            Authentic Nepali spices crafted with purity,
-            freshness, and unforgettable traditional flavor.
+            Authentic Nepali spices
+            crafted with purity,
+            freshness, and traditional
+            flavor.
           </p>
         </div>
 
-        {/* DYNAMIC PRODUCTS */}
         <div className="products-grid">
           {products.map((product) => (
-            <div
+            <Link
+              to={`/products/${product.id}`}
               className="product-card"
               key={product.id}
             >
@@ -98,22 +99,11 @@ const ProductsPage = () => {
               <span className="product-weight">
                 {product.weight}
               </span>
-
-              {/* ADD TO CART BUTTON */}
-              <button
-                className="add-cart-btn"
-                onClick={() =>
-                  addToCart(product)
-                }
-              >
-                Add To Cart
-              </button>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* FOOTER */}
       <Footer />
     </>
   );

@@ -13,9 +13,7 @@ import Products from "./pages/public/Products";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
-import Cart from "./pages/public/Cart";
 import ProductsManager from "./pages/admin/ProductsManager";
-import Checkout from "./pages/public/Checkout";
 import ProductDetails from "./pages/public/ProductDetails";
 /* Admin Pages */
 import Dashboard from "./pages/admin/Dashboard";
@@ -38,8 +36,6 @@ function App() {
         <Route path="/about" element={<About />} />
 
         <Route path="/blog" element={<Blog />} />
-
-        <Route path="/cart" element={<Cart />} />
 
         <Route path="/products" element={<Products />} />
         
@@ -88,10 +84,6 @@ function App() {
       <Settings />
     </AdminRoute>
   }
-/>
-<Route
-  path="/checkout"
-  element={<Checkout />}
 />
 <Route
   path="/products/:id"

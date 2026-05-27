@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
-import "./Navbar.css";
 
-import { useCart } from "../../context/CartContext";
+import "./Navbar.css";
 
 // LOGO
 import logo from "../../assets/logo/sudiisu-logo.png";
 
 const Navbar = () => {
-  const { cartItems } = useCart();
-
   return (
     <>
       {/* TOP BAR */}
@@ -54,17 +51,6 @@ const Navbar = () => {
           <li>
             <Link to="/contact">
               Contact
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to="/cart"
-              className="cart-link"
-            >
-              Cart (
-              {cartItems.length}
-              )
             </Link>
           </li>
         </ul>
