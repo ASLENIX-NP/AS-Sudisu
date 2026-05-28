@@ -6,6 +6,8 @@ import morgan from "morgan";
 import adminAuthRoutes from "./routes/adminAuthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import inquiryRoutes from "./routes/inquiryRoutes.js";
+import settingsRoutes from "./routes/settingsRoutes.js";
 
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 
@@ -61,9 +63,12 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/products", productRoutes);
 
+app.use("/api/settings", settingsRoutes);
+
 /* ADMIN AUTH ROUTE */
 app.use("/api/admin", adminAuthRoutes);
-
+/* INQUIRY ROUTE */
+app.use("/api/inquiries", inquiryRoutes);
 /* =========================
    404 HANDLER
 ========================= */

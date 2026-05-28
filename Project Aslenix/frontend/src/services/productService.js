@@ -1,20 +1,49 @@
 import { supabase } from "../lib/supabase";
 
+// GET PRODUCTS
 export const getProducts = async () => {
   const { data, error } = await supabase
     .from("products")
-    .select("*");
+    .select("*")
+    .order("id", { ascending: false });
 
   if (error) {
     console.error("Error fetching products:", error);
-
-    // fallback products if database fails
-    return [
-      { id: 1, name: "Turmeric Powder", price: 120 },
-      { id: 2, name: "Chilli Powder", price: 150 },
-      { id: 3, name: "Garam Masala", price: 180 },
-    ];
+    return [];
   }
 
   return data;
+};
+
+// DELETE PRODUCT
+export const deleteProduct = async (id) => {
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Delete error:", error);
+    return false;
+  }
+
+  return true;
+};
+
+// UPDATE PRODUCT
+export const updateProduct = async (
+  id,
+  updatedData
+) => {
+  const { error } = await supabase
+    .from("products")
+    .update(updatedData)
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
+  return true;
 };

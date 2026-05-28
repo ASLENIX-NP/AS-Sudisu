@@ -50,7 +50,7 @@ const slides = [
   },
 ];
 
-const Hero = () => {
+const Hero = ({ heroTitle, heroSubtitle }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   /* AUTO SLIDER */
@@ -90,24 +90,28 @@ const Hero = () => {
       {/* CONTENT */}
 
       <div className="hero-content" key={currentSlide}>
+        {/* DYNAMIC SUBTITLE */}
         <p className="hero-subtitle">
-          {slides[currentSlide].subtitle}
+          {heroSubtitle ||
+            slides[currentSlide].subtitle}
         </p>
 
+        {/* DYNAMIC TITLE */}
         <h1 className="hero-title">
-          {slides[currentSlide].title}
+          {heroTitle ||
+            slides[currentSlide].title}
         </h1>
 
+        {/* SLIDE DESCRIPTION */}
         <p className="hero-desc">
           {slides[currentSlide].description}
         </p>
 
+        {/* BUTTON */}
         <button className="hero-btn">
           {slides[currentSlide].button}
         </button>
       </div>
-
-      {/* DOTS */}
     </section>
   );
 };

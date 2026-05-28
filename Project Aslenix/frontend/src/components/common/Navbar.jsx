@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
-import "./Navbar.css";
 import { useState } from "react";
-// ✅ Logo import (your correct path & filename)
+import { Link } from "react-router-dom";
+
+import "./Navbar.css";
+
+// LOGO
 import logo from "../../assets/logo/sudiisu-logo.png";
 
 
@@ -9,14 +11,17 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
-      {/* 🔴 OPTIONAL TOP STRIP (remove if not needed) */}
+      {/* TOP BAR */}
       <div className="top-red-bar"></div>
 
       <nav className="navbar">
         {/* LOGO */}
         <div className="nav-logo">
           <Link to="/">
-            <img src={logo} alt="Sudiisu Logo" />
+            <img
+              src={logo}
+              alt="Sudiisu Logo"
+            />
           </Link>
         </div>
         <div className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
@@ -25,19 +30,33 @@ const Navbar = () => {
         {/* NAV LINKS */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              Home
+            </Link>
           </li>
+
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/products">
+              Products
+            </Link>
           </li>
+
           <li>
-            <Link to="/about">About Us</Link>
+            <Link to="/about">
+              About Us
+            </Link>
           </li>
+
           <li>
-            <Link to="/blog">Blog</Link>
+            <Link to="/blog">
+              Blog
+            </Link>
           </li>
+
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/contact">
+              Contact
+            </Link>
           </li>
         </ul>
       </nav>

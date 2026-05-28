@@ -70,7 +70,7 @@
   width: 100%;
   min-height: 100vh;
 
-  background: url("../assets/images/hero-bg.jpg") center/cover no-repeat;
+  background: url("../../assets/images/herobg.jpg") center/cover no-repeat;
 
   display: flex;
   align-items: center;

@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 
 const AdminRoute = ({ children }) => {
-  const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
+  const isAdmin = localStorage.getItem("adminLoggedIn");
 
-  if (!isAdminLoggedIn) {
+  if (!isAdmin) {
     return <Navigate to="/admin" replace />;
   }
 

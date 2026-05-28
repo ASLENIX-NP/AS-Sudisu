@@ -1,29 +1,76 @@
 import "./Footer.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaFacebook,
+  FaWhatsapp,
+} from "react-icons/fa";
+
 import InquiryPopup from "./InquiryPopup";
 
 export default function Footer() {
   const [openPopup, setOpenPopup] = useState(false);
 
+  /* =========================
+     SETTINGS STATE
+  ========================= */
+
+  const [settings, setSettings] = useState({
+    companyName: "",
+    email: "",
+    phone: "",
+    address: "",
+    facebook: "",
+    instagram: "",
+    tiktok: "",
+  });
+
+  /* =========================
+     FETCH SETTINGS
+  ========================= */
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/settings"
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSettings(data.settings);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <footer className="footer">
         {/* TOP CTA */}
+
         <div className="footer-top">
-          <h2>Bringing Pure Flavor to Your Kitchen</h2>
+          <h2>{settings.heroSubtitle}</h2>
 
-         
-
-          <button className="cta-btn" onClick={() => setOpenPopup(true)}>
-            Connect With Sudisu
+          <button
+            className="cta-btn"
+            onClick={() => setOpenPopup(true)}
+          >
+            Let’s Start Conversation
           </button>
         </div>
 
         {/* FOOTER GRID */}
+
         <div className="footer-grid">
           {/* QUICK LINKS */}
+
           <div>
             <h4>Quick Links</h4>
 
@@ -35,13 +82,16 @@ export default function Footer() {
           </div>
 
           {/* CONTACT */}
+
           <div>
             <h4>Contact</h4>
 
-            <a href="tel:057-590436">📞 057-590436</a>
+            <a href={`tel:${settings.phone}`}>
+              📞 {settings.phone}
+            </a>
 
-            <a href="mailto:info@fortunegroup.com.np">
-              ✉️ info@fortunegroup.com.np
+            <a href={`mailto:${settings.email}`}>
+              ✉️ {settings.email}
             </a>
 
             <a
@@ -49,16 +99,17 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
             >
-              📍 Sudiisu Factory, Manahari-07, Makawanpur
+              📍 {settings.address}
             </a>
           </div>
 
           {/* SOCIAL LINKS */}
+
           <div>
             <h4>Follow Us</h4>
 
             <a
-              href="https://www.instagram.com/sudisu_spices/"
+              href={settings.instagram}
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -67,7 +118,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://www.facebook.com/sudisuspice/"
+              href={settings.facebook}
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -76,7 +127,10 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://wa.me/9779816259642"
+              href={`https://wa.me/${settings.phone.replace(
+                /\s+/g,
+                ""
+              )}`}
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -87,13 +141,19 @@ export default function Footer() {
         </div>
 
         {/* COPYRIGHT */}
+
         <div className="footer-bottom">
-          © 2026 Sudiisu Pride. All Rights Reserved.
+          © 2026 {settings.companyName}. All Rights
+          Reserved.
         </div>
       </footer>
 
       {/* POPUP */}
-      <InquiryPopup isOpen={openPopup} onClose={() => setOpenPopup(false)} />
+
+      <InquiryPopup
+        isOpen={openPopup}
+        onClose={() => setOpenPopup(false)}
+      />
     </>
   );
 }

@@ -2,7 +2,7 @@
   position: relative;
   height: 90vh;
 
-  background: url("/spices-bg.jpg") center/cover no-repeat;
+  background: url("../../assets/images/herobg.jpg") center/cover no-repeat;
 
   display: flex;
   align-items: center;

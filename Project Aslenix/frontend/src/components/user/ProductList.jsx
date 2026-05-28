@@ -19,7 +19,7 @@ export default function ProductList() {
 
             <div className="product-footer">
               <span className="price">{p.price}</span>
-              <button>Add to Cart</button>
+              
             </div>
           </div>
         ))}

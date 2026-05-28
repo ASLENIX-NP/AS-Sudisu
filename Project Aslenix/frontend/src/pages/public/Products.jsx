@@ -1,31 +1,43 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "../../services/productService";
+
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
-import ProductsSection from "../../components/sections/Products";
-import { useNavigate } from "react-router-dom";
+
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
+
 import "./ProductsPage.css";
+
 import heroProducts from "../../assets/images/Sudiisu2.png";
 
 const ProductsPage = () => {
   const navigate = useNavigate();
 
+  const [products, setProducts] =
+    useState([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    const data = await getProducts();
+    setProducts(data);
+  };
+
   return (
     <>
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* =================================
-    SUDISU PREMIUM HERO SECTION
-================================= */}
-
-      {/* PRODUCT SHOWCASE */}
+      {/* HERO */}
       <div className="sudisu-product-showcase">
-        {/* LEFT SPLASH */}
         <div className="splash-left"></div>
 
-        {/* RIGHT SPLASH */}
         <div className="splash-right"></div>
 
-        {/* PRODUCT IMAGE */}
         <img
           src={heroProducts}
           alt="Sudisu Products"
@@ -41,26 +53,53 @@ const ProductsPage = () => {
 
       <button
         className="nav-float nav-right"
-        onClick={() => navigate("/about")}
+        onClick={() =>
+          navigate("/about")
+        }
       >
         Next →
       </button>
 
-      {/* PAGE CONTENT */}
+      {/* PRODUCTS */}
       <section className="products-page">
         <div className="products-header">
           <h1>Our Products</h1>
 
           <p>
-            Authentic Nepali spices crafted with purity, freshness, and
-            unforgettable traditional flavor.
+            Authentic Nepali spices
+            crafted with purity,
+            freshness, and traditional
+            flavor.
           </p>
         </div>
 
-        <ProductsSection />
+        <div className="products-grid">
+          {products.map((product) => (
+            <Link
+              to={`/products/${product.id}`}
+              className="product-card"
+              key={product.id}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+              />
+
+              <h3>{product.name}</h3>
+
+              <p className="product-price">
+                Rs. {product.price}
+              </p>
+
+              <span className="product-weight">
+                {product.weight}
+              </span>
+            </Link>
+          ))}
+        </div>
       </section>
 
-      {/* FOOTER */}
       <Footer />
     </>
   );
