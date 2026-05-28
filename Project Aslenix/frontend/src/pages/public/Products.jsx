@@ -4,6 +4,8 @@ import { getProducts } from "../../services/productService";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
+import ProductModal from "../../components/sections/ProductModal";
+
 import {
   useNavigate,
   Link,
@@ -16,8 +18,10 @@ import heroProducts from "../../assets/images/Sudiisu2.png";
 const ProductsPage = () => {
   const navigate = useNavigate();
 
-  const [products, setProducts] =
-    useState([]);
+  const [products, setProducts] = useState([]);
+
+  const [selectedProduct, setSelectedProduct] =
+    useState(null);
 
   useEffect(() => {
     fetchProducts();
@@ -32,12 +36,7 @@ const ProductsPage = () => {
     <>
       <Navbar />
 
-      {/* HERO */}
       <div className="sudisu-product-showcase">
-        <div className="splash-left"></div>
-
-        <div className="splash-right"></div>
-
         <img
           src={heroProducts}
           alt="Sudisu Products"
@@ -45,38 +44,33 @@ const ProductsPage = () => {
         />
       </div>
 
-      {/* SLOGAN */}
-      {/* FLOATING NAV BUTTONS */}
-      <button className="nav-float nav-left" onClick={() => navigate("/")}>
+      <button
+        className="nav-float nav-left"
+        onClick={() => navigate("/")}
+      >
         ← Back
       </button>
 
       <button
         className="nav-float nav-right"
-        onClick={() =>
-          navigate("/about")
-        }
+        onClick={() => navigate("/about")}
       >
         Next →
       </button>
 
-      {/* PRODUCTS */}
       <section className="products-page">
         <div className="products-header">
           <h1>Our Products</h1>
 
           <p>
-            Authentic Nepali spices
-            crafted with purity,
-            freshness, and traditional
-            flavor.
+            Authentic Nepali spices crafted with purity,
+            freshness and traditional flavor.
           </p>
         </div>
 
         <div className="products-grid">
           {products.map((product) => (
-            <Link
-              to={`/products/${product.id}`}
+            <div
               className="product-card"
               key={product.id}
             >
@@ -88,17 +82,26 @@ const ProductsPage = () => {
 
               <h3>{product.name}</h3>
 
-              <p className="product-price">
-                Rs. {product.price}
-              </p>
-
-              <span className="product-weight">
-                {product.weight}
-              </span>
-            </Link>
+              <button
+                onClick={() =>
+                  setSelectedProduct(product)
+                }
+              >
+                View Details
+              </button>
+            </div>
           ))}
         </div>
       </section>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() =>
+            setSelectedProduct(null)
+          }
+        />
+      )}
 
       <Footer />
     </>

@@ -1,41 +1,32 @@
 import { useEffect, useState } from "react";
 
-import {
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { supabase } from "../../lib/supabase";
+import { getProducts } from "../../services/productService";
 
 import Navbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
 
+import Footer from "../../components/common/Footer";
 
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
 
-
-  const [product, setProduct] =
-    useState(null);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     fetchProduct();
   }, []);
 
   const fetchProduct = async () => {
-    const { data, error } =
-      await supabase
-        .from("products")
-        .select("*")
-        .eq("id", id)
-        .single();
+    const products = await getProducts();
 
-    if (error) {
-      console.log(error);
-    } else {
-      setProduct(data);
-    }
+    const selectedProduct = products.find(
+      (item) => item.id == id
+    );
+
+    setProduct(selectedProduct);
   };
 
   if (!product) {
@@ -47,6 +38,7 @@ const ProductDetails = () => {
       <Navbar />
 
       <div className="details-page">
+        {/* IMAGE */}
         <div className="details-image">
           <img
             src={product.image}
@@ -54,6 +46,7 @@ const ProductDetails = () => {
           />
         </div>
 
+        {/* DETAILS */}
         <div className="details-content">
           <h1>{product.name}</h1>
 
@@ -62,33 +55,23 @@ const ProductDetails = () => {
           </h2>
 
           <p>
-            <strong>
-              Weight:
-            </strong>{" "}
-            {product.weight}
-          </p>
-
-          <p>
-            <strong>
-              Origin:
-            </strong>{" "}
+            <strong>Origin:</strong>{" "}
             {product.origin}
           </p>
 
           <p>
-            <strong>
-              Stock:
-            </strong>{" "}
+            <strong>Weight:</strong>{" "}
+            {product.weight}
+          </p>
+
+          <p>
+            <strong>Stock:</strong>{" "}
             {product.stock}
           </p>
 
           <p className="product-desc">
-            Premium quality Nepali spice
-            crafted with authentic
-            ingredients and traditional
-            flavor.
+            {product.description}
           </p>
-
         </div>
       </div>
 

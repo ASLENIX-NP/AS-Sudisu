@@ -11,6 +11,9 @@
   width: 100%;
   border-radius: 30px;
   object-fit: cover;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .details-content {
@@ -22,31 +25,40 @@
 .details-content h1 {
   font-size: 48px;
   margin-bottom: 20px;
+  color: #111;
 }
 
 .details-content h2 {
   color: #d62828;
   margin-bottom: 25px;
+  font-size: 38px;
 }
 
 .details-content p {
   margin-bottom: 15px;
   font-size: 18px;
+  color: #333;
 }
 
 .product-desc {
   margin-top: 20px;
-  line-height: 1.7;
+  line-height: 1.8;
+  color: #555;
 }
 
-.details-cart-btn {
-  margin-top: 30px;
-  width: 220px;
-  padding: 15px;
-  border: none;
-  border-radius: 14px;
-  background: #d62828;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .details-page {
+    grid-template-columns: 1fr;
+    padding: 100px 5%;
+  }
+
+  .details-content h1 {
+    font-size: 36px;
+  }
+
+  .details-content h2 {
+    font-size: 30px;
+  }
 }

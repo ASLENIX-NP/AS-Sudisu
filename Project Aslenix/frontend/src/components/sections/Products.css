@@ -1,112 +1,167 @@
 /* ===============================
-   FULL PRODUCTS SECTION (RED)
+   FULL PRODUCTS SECTION
 ================================ */
+
 .products-section {
-  background: linear-gradient(180deg, #e8dcdc 0%, #fbf7f7 50%, #f7f2f2 100%);
+  background: linear-gradient(
+    180deg,
+    #e8dcdc 0%,
+    #fbf7f7 50%,
+    #f7f2f2 100%
+  );
+
   padding: 90px 6%;
+
   min-height: 100vh;
 }
 
-/* Section title */
+/* SECTION TITLE */
+
 .products-section h2 {
   color: #090909;
+
   font-size: 32px;
+
   margin-bottom: 40px;
+
   font-weight: 600;
-}
-
-.nav-btn:hover {
-  background: #ff2a2a;
-
-  transform: translateY(-3px);
 }
 
 /* ===============================
    PRODUCTS GRID
 ================================ */
+
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
   gap: 32px;
+
   align-items: stretch;
 }
 
 /* ===============================
-   PRODUCT CARD (YELLOW / GOLD)
+   PRODUCT CARD
 ================================ */
+
 .product-card {
-  background: linear-gradient(180deg, #d1261dac, #f3b656b7);
+  background: linear-gradient(
+    180deg,
+    #d1261dac,
+    #f3b656b7
+  );
+
   border-radius: 18px;
+
   padding: 28px 22px;
+
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35);
+
   transition: all 0.4s ease;
+
   position: relative;
+
   overflow: hidden;
+
+  text-decoration: none;
 }
 
-/* ===============================
-   HOVER EFFECT (YOUR REQUEST)
-================================ */
+/* HOVER */
+
 .product-card:hover {
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 35px 80px rgba(255, 193, 7, 0.35);
+
+  box-shadow:
+    0 35px 80px rgba(255, 193, 7, 0.35);
 }
 
 /* ===============================
-   PRODUCT IMAGE (FIXED SIZE)
+   PRODUCT IMAGE
 ================================ */
+
 .product-card img {
-  width: 150px;
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto 18px;
-  display: block;
+  width: 170px;
+
+  height: 230px;
+
   object-fit: contain;
-  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.4));
+
+  margin: 0 auto 18px;
+
+  display: block;
+
+  border-radius: 12px;
+
+  filter: drop-shadow(
+    0 10px 25px rgba(0, 0, 0, 0.4)
+  );
 }
 
 /* ===============================
    PRODUCT NAME
 ================================ */
+
 .product-card h3 {
-  font-size: 18px;
+  font-size: 22px;
+
   color: #1f1f1e;
-  font-weight: 600;
+
+  font-weight: 700;
+
   margin-bottom: 14px;
+}
+
+/* ===============================
+   PRODUCT PRICE
+================================ */
+
+.product-price {
+  font-size: 28px;
+
+  font-weight: 800;
+
+  color: #8b0000;
+
+  margin-bottom: 18px;
 }
 
 /* ===============================
    VIEW DETAILS BUTTON
 ================================ */
+
 .product-card button {
   background: transparent;
+
   border: 1.5px solid #1a1a1a;
+
   color: #1a1a1a;
-  padding: 8px 18px;
+
+  padding: 10px 20px;
+
   font-size: 14px;
+
   cursor: pointer;
-  border-radius: 6px;
+
+  border-radius: 8px;
+
   transition: all 0.3s ease;
 }
 
 .product-card button:hover {
   background: #dbb73e;
+
   color: #111;
 }
 
 /* ===============================
-   REMOVE ANY BIG IMAGE / BUGS
+   RESPONSIVE
 ================================ */
-.product-details,
-.big-image,
-.details-image {
-  display: none !important;
-}
 
-/* ===============================
-   RESPONSIVE FIX
-================================ */
 @media (max-width: 768px) {
   .products-section {
     padding: 70px 5%;
@@ -115,10 +170,10 @@
   .products-section h2 {
     font-size: 26px;
   }
-}
-.modal-price {
-  font-size: 24px;
-  font-weight: 700;
-  color: #8b0000;
-  margin-top: 12px;
+
+  .product-card img {
+    width: 140px;
+
+    height: 190px;
+  }
 }

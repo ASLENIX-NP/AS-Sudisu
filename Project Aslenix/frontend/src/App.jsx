@@ -2,20 +2,23 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useEffect } from "react";
 import { supabase } from "./lib/supabase";
+
 import Inquiries from "./pages/admin/Inquiries";
 import Login from "./pages/admin/Login";
 import AdminRoute from "./routes/AdminRoute";
 import Analytics from "./pages/admin/Analytics";
 import Settings from "./pages/admin/Settings";
+
 /* Public Pages */
 import Home from "./pages/public/Home";
 import Products from "./pages/public/Products";
+import ProductDetails from "./pages/public/ProductDetails";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
-import ProductsManager from "./pages/admin/ProductsManager";
-import ProductDetails from "./pages/public/ProductDetails";
+
 /* Admin Pages */
+import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
 
 function App() {
@@ -26,10 +29,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Pages */}
+        {/* PUBLIC PAGES */}
+
         <Route path="/" element={<Home />} />
 
         <Route path="/products" element={<Products />} />
+
+        <Route
+          path="/products/:id"
+          element={<ProductDetails />}
+        />
 
         <Route path="/contact" element={<Contact />} />
 
@@ -37,58 +46,56 @@ function App() {
 
         <Route path="/blog" element={<Blog />} />
 
-        <Route path="/products" element={<Products />} />
-        
-        {/* Admin Login */}
+        {/* ADMIN LOGIN */}
+
         <Route path="/admin" element={<Login />} />
 
-        {/* Admin Dashboard */}
-       <Route
-  path="/admin/dashboard"
-  element={
-    <AdminRoute>
-      <Dashboard />
-    </AdminRoute>
-  }
-/>
+        {/* ADMIN ROUTES */}
 
-<Route
-  path="/admin/products"
-  element={
-    <AdminRoute>
-      <ProductsManager />
-    </AdminRoute>
-  }
-  
-/>
-<Route
-  path="/admin/inquiries"
-  element={
-    <AdminRoute>
-      <Inquiries />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/analytics"
-  element={
-    <AdminRoute>
-      <Analytics />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/settings"
-  element={
-    <AdminRoute>
-      <Settings />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/products/:id"
-  element={<ProductDetails />}
-/>
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <ProductsManager />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/inquiries"
+          element={
+            <AdminRoute>
+              <Inquiries />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/analytics"
+          element={
+            <AdminRoute>
+              <Analytics />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/settings"
+          element={
+            <AdminRoute>
+              <Settings />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </Router>
   );
