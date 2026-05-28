@@ -285,3 +285,12 @@
   }
 
 }
+@media (max-width: 768px) {
+  .next-btn,
+  .back-btn,
+  .nav-float,
+  .nav-left,
+  .nav-right {
+    display: none !important;
+  }
+}

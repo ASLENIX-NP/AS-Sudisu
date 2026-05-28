@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./Navbar.css";
@@ -5,7 +6,9 @@ import "./Navbar.css";
 // LOGO
 import logo from "../../assets/logo/sudiisu-logo.png";
 
+
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
       {/* TOP BAR */}
@@ -21,9 +24,11 @@ const Navbar = () => {
             />
           </Link>
         </div>
-
+        <div className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </div>
         {/* NAV LINKS */}
-        <ul className="nav-links">
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
             <Link to="/">
               Home

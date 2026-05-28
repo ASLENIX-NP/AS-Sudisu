@@ -31,24 +31,10 @@ export default function ProductsSection() {
         {/* CARD 1 */}
 
         <div className="product-card">
-          <img src={momo} alt="Momo Masala" />
-
-          <div className="product-content">
-            <h3>Flavour Masala</h3>
-
-            <p>Authentic Nepali flavor with rich aroma and balanced spices.</p>
-
-            <button>View Product</button>
-          </div>
-        </div>
-
-        {/* CARD 2 */}
-
-        <div className="product-card">
           <img src={spices} alt="Meat Masala" />
 
           <div className="product-content">
-            <h3>Meat Masala</h3>
+            <h1>Meat Masala</h1>
 
             <p>
               Premium blend for delicious meat curries and traditional Nepali
@@ -59,13 +45,13 @@ export default function ProductsSection() {
           </div>
         </div>
 
-        {/* CARD 3 */}
+        {/* CARD 2*/}
 
         <div className="product-card">
           <img src={meat} alt="Premium Spice Range" />
 
           <div className="product-content">
-            <h3>Premium Spice Range</h3>
+            <h2>Premium Spice Range</h2>
 
             <p>
               Explore our complete range of handcrafted Nepali masalas and
@@ -75,11 +61,22 @@ export default function ProductsSection() {
             <button>Explore More</button>
           </div>
         </div>
+
+        {/* CARD 3*/}
+
+        <div className="product-card">
+          <img src={momo} alt="Momo Masala" />
+
+          <div className="product-content">
+            <h3>Flavour Masala</h3>
+
+            <p>Authentic Nepali flavor with rich aroma and balanced spices.</p>
+
+            <button>Order Now</button>
+          </div>
+        </div>
       </div>
-
       {/* BOTTOM BANNER */}
-
-    
     </section>
   );
 }

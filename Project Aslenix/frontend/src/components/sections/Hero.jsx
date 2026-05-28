@@ -22,7 +22,7 @@ const slides = [
     subtitle: "AUTHENTIC NEPALI FLAVORS",
     title: "Crafted With Care",
     description: "Experience the true essence of Nepal in every dish.",
-    button: "Shop Now",
+    button: "Explore more",
   },
 
   {
@@ -38,7 +38,7 @@ const slides = [
     subtitle: "PREMIUM MASALA COLLECTION",
     title: "Rich Aroma & Flavor",
     description: "Handpicked Nepali spices blended for authentic taste.",
-    button: "Explore Products",
+    button: "learn more",
   },
 
   {

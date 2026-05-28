@@ -12,8 +12,8 @@
   /* slim navbar */
   height: 56px;
 
-  background: linear-gradient(to right, #c88408, #d8b24b);
-
+  background: linear-gradient(90deg, #ed7b09, #e0b13b);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,11 +29,12 @@
 
 .nav-logo {
   display: flex;
+  height:100px;
   align-items: center;
 }
 
 .nav-logo img {
-  height: 70px;
+  height: 80px;
   width: auto;
   object-fit: contain;
 }
@@ -44,12 +45,12 @@
   display: flex;
   align-items: center;
   gap: 28px;
-   list-style: none;
+  list-style: none;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: white;
+  color: rgb(255, 222, 5);
 
   font-size: 15px;
   font-weight: 600;
@@ -58,10 +59,8 @@
 }
 
 .nav-links a:hover {
-  color: #dc550d;
+  color: #f8f7f7;
 }
-
-
 
 /* =========================
    HERO SECTION
@@ -71,8 +70,7 @@
   width: 100%;
   min-height: 100vh;
 
-  background: url("../assets/images/hero-bg.jpg")
-    center/cover no-repeat;
+  background: url("../../assets/images/herobg.jpg") center/cover no-repeat;
 
   display: flex;
   align-items: center;
@@ -98,7 +96,7 @@
   max-width: 620px;
 
   padding-left: 120px;
-  padding-top: 40px;
+  padding-top: 50px;
 
   color: white;
 }
@@ -111,7 +109,7 @@
   font-size: 17px;
   font-weight: 700;
 
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 
   text-transform: uppercase;
 }
@@ -119,13 +117,15 @@
 /* MAIN HEADING */
 
 .hero-content h1 {
-  font-size: 50px;
+  font-size: 40px;
   line-height: 1.05;
-
+  max-width: 760px;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  letter-spacing: -2px;
   font-weight: 800;
-
-  margin-top: 12px;
-  margin-bottom: 18px;
+  color: #c88408;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* PARAGRAPH */
@@ -133,7 +133,7 @@
 .hero-content p {
   font-size: 18px;
   line-height: 1.5;
-
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
   max-width: 540px;
 
   margin-bottom: 30px;
@@ -159,6 +159,13 @@
   cursor: pointer;
 
   transition: 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-btn a {
+  color: white;
+  text-decoration: none;
 }
 
 .hero-btn:hover {
@@ -167,23 +174,28 @@
   transform: translateY(-2px);
 }
 
-
-
 /* =========================
    RESPONSIVE
 ========================= */
 
 @media (max-width: 1024px) {
+  .hero {
+    justify-content: flex-start;
+  }
+
   .hero-content {
     padding-left: 70px;
+    max-width: 620px;
   }
 
   .hero-content h1 {
-    font-size: 42px;
+    font-size: 58px;
+    line-height: 1.05;
   }
 
   .hero-content p {
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 1.7;
   }
 }
 
@@ -194,31 +206,115 @@
   }
 
   .nav-logo img {
-    height: 100px;
+    height: 80px;
   }
 
-  .nav-links {
-    gap: 18px;
-  }
+  .hero {
+    height: 100vh;
 
-  .nav-links a {
-    font-size: 14px;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .hero-content {
-    padding: 120px 24px 40px;
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0;
+    margin: 0;
+
+    text-align: left;
+  }
+
+  .hero-content span {
+    display: block;
+
+    font-size: 13px;
+    letter-spacing: 4px;
+
+    margin-bottom: 16px;
   }
 
   .hero-content h1 {
-    font-size: 36px;
+    font-size: 56px;
+    line-height: 0.95;
+
+    margin-bottom: 18px;
   }
 
   .hero-content p {
-    font-size: 15px;
+    max-width: 100%;
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    margin-bottom: 26px;
   }
 
   .hero-btn {
-    padding: 13px 28px;
-    font-size: 15px;
+    padding: 14px 30px;
+
+    font-size: 16px;
+
+    color: white;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-btn a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    position: fixed;
+
+    top: 54px;
+    right: -100%;
+
+    width: 220px;
+    height: calc(100vh - 54px);
+
+    background: rgba(58, 0, 0, 0.96);
+
+    backdrop-filter: blur(12px);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 28px;
+
+    padding: 40px 30px;
+
+    transition: 0.4s ease;
+
+    z-index: 1500;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+}
+.mobile-menu-btn {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+
+    font-size: 34px;
+    color: white;
+
+    cursor: pointer;
+    z-index: 2000;
   }
 }

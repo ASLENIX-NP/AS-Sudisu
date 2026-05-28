@@ -15,7 +15,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
         </button>
 
         <div className="popup-top">
-          <h2>🌶️ Welcome to Sudiisu Pride</h2>
+          <h2> Welcome to Sudiisu Pride</h2>
 
           <p>
             Premium Nepali spices crafted with authenticity, freshness, and
@@ -47,7 +47,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
           </div>
 
           <a
-            href="https://wa.me/97759043677?text=Hello%20Sudiisu%20Pride"
+            href="https://wa.me/9779816259642?text=Hello%20Sudiisu%20Pride"
             target="_blank"
             rel="noopener noreferrer"
             className="popup-card whatsapp-card"

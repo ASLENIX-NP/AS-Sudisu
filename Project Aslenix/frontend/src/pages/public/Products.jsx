@@ -45,13 +45,9 @@ const ProductsPage = () => {
         />
       </div>
 
-      {/* FLOAT BUTTONS */}
-      <button
-        className="nav-float nav-left"
-        onClick={() =>
-          navigate("/")
-        }
-      >
+      {/* SLOGAN */}
+      {/* FLOATING NAV BUTTONS */}
+      <button className="nav-float nav-left" onClick={() => navigate("/")}>
         ← Back
       </button>
 
@@ -89,19 +85,16 @@ const ProductsPage = () => {
                 alt={product.name}
                 className="product-image"
               />
-<h3>{product.name}</h3>
 
-<p className="product-price">
-  Rs. {product.price}
-</p>
+              <h3>{product.name}</h3>
 
-<p className="product-origin">
-  Origin: {product.origin}
-</p>
+              <p className="product-price">
+                Rs. {product.price}
+              </p>
 
-<span className="product-weight">
-  {product.weight}
-</span>
+              <span className="product-weight">
+                {product.weight}
+              </span>
             </Link>
           ))}
         </div>

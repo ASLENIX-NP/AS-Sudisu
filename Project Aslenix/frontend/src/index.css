@@ -33,3 +33,39 @@ a {
   text-decoration: none;
   color: inherit;
 }
+@media (max-width: 768px) {
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  h1 {
+    font-size: 42px !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: 32px !important;
+  }
+
+  p {
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

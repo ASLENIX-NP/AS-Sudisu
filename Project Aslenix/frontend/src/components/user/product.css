@@ -5,7 +5,7 @@
 .products-page {
   background: #ffffff;
   min-height: 100vh;
-  padding-top: 90px;
+  padding-top: 80px;
 }
 
 /* MAIN SECTION */
@@ -26,7 +26,7 @@
 
   margin-bottom: 40px;
 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* TITLES */
@@ -45,7 +45,7 @@
 
   border-radius: 18px;
 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 
   transition: 0.3s ease;
 }
@@ -85,17 +85,14 @@
 
 /* NAVIGATION BUTTONS */
 
-.next-btn,
-.back-btn {
-  background: #e0d4d4;
+.next-btn {
+  right: 35px;
 
-  color: white;
+  padding: 16px 30px;
 
-  border: none;
+  font-size: 18px;
 
-  padding: 12px 24px;
+  background: linear-gradient(135deg, #ff3d00, #ff6f00);
 
-  border-radius: 40px;
-
-  cursor: pointer;
+  border-radius: 999px;
 }

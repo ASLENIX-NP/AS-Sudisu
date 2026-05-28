@@ -10,7 +10,7 @@
       rgba(207, 114, 20, 0.896),
       rgba(189, 114, 39, 0.78)
     ),
-    url("/spices-bg.jpg");
+    url("../assets/images/herobg.jpg");
 
   background-position: center;
   background-size: cover;

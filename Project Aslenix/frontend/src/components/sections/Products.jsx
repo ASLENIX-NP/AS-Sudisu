@@ -16,10 +16,10 @@ import meat from "../../assets/spice/meat.jpg";
 import mix from "../../assets/spice/mix.jpg";
 
 const Products = () => {
-  const [selectedProduct, setSelectedProduct] =
-    useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   /* IMAGE MAP */
   const imageMap = {
@@ -43,49 +43,33 @@ const Products = () => {
       /* ATTACH LOCAL IMAGE */
       const updatedProducts = data.map((item) => ({
         ...item,
-        image:
-          imageMap[item.name.toLowerCase()] || turmeric,
+        image: imageMap[item.name.toLowerCase()] || turmeric,
       }));
 
       setProducts(updatedProducts);
 
-      console.log(
-        "Supabase Products:",
-        updatedProducts
-      );
+      console.log("Supabase Products:", updatedProducts);
     } catch (error) {
-      console.error(
-        "Error fetching products:",
-        error
-      );
+      console.error("Error fetching products:", error);
     }
   };
 
   return (
     <>
       <section className="products-section">
-        <h2 className="products-title">
-          Signature Spices
-        </h2>
+        <h2 className="products-title">Signature Spices</h2>
+
 
         <div className="products-grid">
           {products.map((item, index) => (
-            <div
-              className="product-card"
-              key={item.id || index}
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-              />
+            <div className="product-card" key={item.id || index}>
+              <img src={item.image} alt={item.name} />
 
               <h3>{item.name}</h3>
 
               <button
                 className="details-btn"
-                onClick={() =>
-                  setSelectedProduct(item)
-                }
+                onClick={() => setSelectedProduct(item)}
               >
                 View Details
               </button>
@@ -98,9 +82,7 @@ const Products = () => {
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
-          onClose={() =>
-            setSelectedProduct(null)
-          }
+          onClose={() => setSelectedProduct(null)}
         />
       )}
     </>

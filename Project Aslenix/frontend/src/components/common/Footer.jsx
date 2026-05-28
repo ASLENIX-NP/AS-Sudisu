@@ -1,9 +1,6 @@
 import "./Footer.css";
-
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import {
   FaInstagram,
   FaFacebook,
@@ -40,21 +37,55 @@ export default function Footer() {
       "Premium Nepali Masala crafted with purity and authentic taste.",
   });
 
+  /* =========================
+     SETTINGS STATE
+  ========================= */
+
+  const [settings, setSettings] = useState({
+    companyName: "",
+    email: "",
+    phone: "",
+    address: "",
+    facebook: "",
+    instagram: "",
+    tiktok: "",
+  });
+
+  /* =========================
+     FETCH SETTINGS
+  ========================= */
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/settings"
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSettings(data.settings);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <footer className="footer">
         {/* TOP CTA */}
 
         <div className="footer-top">
-          <h2>
-            {settings.heroSubtitle}
-          </h2>
+          <h2>{settings.heroSubtitle}</h2>
 
           <button
             className="cta-btn"
-            onClick={() =>
-              setOpenPopup(true)
-            }
+            onClick={() => setOpenPopup(true)}
           >
             Let’s Start Conversation
           </button>
@@ -84,15 +115,11 @@ export default function Footer() {
           <div>
             <h4>Contact</h4>
 
-            <a
-              href={`tel:${settings.phone}`}
-            >
+            <a href={`tel:${settings.phone}`}>
               📞 {settings.phone}
             </a>
 
-            <a
-              href={`mailto:${settings.email}`}
-            >
+            <a href={`mailto:${settings.email}`}>
               ✉️ {settings.email}
             </a>
 
@@ -129,7 +156,10 @@ export default function Footer() {
             </a>
 
             <a
-              href={`https://wa.me/${settings.phone}`}
+              href={`https://wa.me/${settings.phone.replace(
+                /\s+/g,
+                ""
+              )}`}
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -142,9 +172,8 @@ export default function Footer() {
         {/* COPYRIGHT */}
 
         <div className="footer-bottom">
-          © 2026{" "}
-          {settings.companyName}. All
-          Rights Reserved.
+          © 2026 {settings.companyName}. All Rights
+          Reserved.
         </div>
       </footer>
 
@@ -152,9 +181,7 @@ export default function Footer() {
 
       <InquiryPopup
         isOpen={openPopup}
-        onClose={() =>
-          setOpenPopup(false)
-        }
+        onClose={() => setOpenPopup(false)}
       />
     </>
   );
