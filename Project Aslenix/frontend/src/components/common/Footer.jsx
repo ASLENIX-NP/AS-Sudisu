@@ -41,15 +41,6 @@ export default function Footer() {
      SETTINGS STATE
   ========================= */
 
-  const [settings, setSettings] = useState({
-    companyName: "",
-    email: "",
-    phone: "",
-    address: "",
-    facebook: "",
-    instagram: "",
-    tiktok: "",
-  });
 
   /* =========================
      FETCH SETTINGS
