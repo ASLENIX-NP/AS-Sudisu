@@ -89,16 +89,19 @@ const ProductsPage = () => {
                 alt={product.name}
                 className="product-image"
               />
+<h3>{product.name}</h3>
 
-              <h3>{product.name}</h3>
+<p className="product-price">
+  Rs. {product.price}
+</p>
 
-              <p className="product-price">
-                Rs. {product.price}
-              </p>
+<p className="product-origin">
+  Origin: {product.origin}
+</p>
 
-              <span className="product-weight">
-                {product.weight}
-              </span>
+<span className="product-weight">
+  {product.weight}
+</span>
             </Link>
           ))}
         </div>
