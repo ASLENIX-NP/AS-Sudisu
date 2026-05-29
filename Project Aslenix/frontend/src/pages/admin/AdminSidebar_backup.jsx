@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    localStorage.removeItem("adminLoggedIn");
-    navigate("/admin");
+  const logoutHandler = async () => {
+    await supabase.auth.signOut();
+
+    window.location.href = "/admin";
   };
 
   const linkStyle = {
@@ -72,8 +74,9 @@ const AdminSidebar = () => {
       </div>
 
       {/* LOGOUT */}
-      <button
-        onClick={logoutHandler}
+     <button
+     onClick={handleLogout}
+      className="logout-btn"
         style={{
           background: "#facc15",
           color: "black",

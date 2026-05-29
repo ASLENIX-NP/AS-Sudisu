@@ -1,75 +1,88 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 
 const AdminSidebar = () => {
-  const navigate = useNavigate();
+  const logoutHandler = async () => {
+    await supabase.auth.signOut();
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminLoggedIn");
-    navigate("/admin");
+    window.location.href = "/admin";
   };
 
-  const linkStyle = ({ isActive }) => ({
-    display: "block",
-    padding: "15px 20px",
-    marginBottom: "10px",
-    borderRadius: "10px",
+  const linkStyle = {
+    color: "white",
     textDecoration: "none",
-    background: isActive ? "#f5cc15" : "transparent",
-    color: isActive ? "#000" : "#fff",
+    fontSize: "18px",
     fontWeight: "600",
+    padding: "14px 18px",
+    borderRadius: "10px",
     transition: "0.3s",
-  });
+    background: "#0f172a",
+  };
 
   return (
     <div
       style={{
         width: "250px",
-        minHeight: "100vh",
-        background: "#071133",
+        background: "#020f44",
         padding: "30px 20px",
-        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <h2
-        style={{
-          color: "#fff",
-          marginBottom: "40px",
-        }}
-      >
-        Admin Panel
-      </h2>
+      {/* TOP SECTION */}
+      <div>
+        <h2
+          style={{
+            color: "white",
+            marginBottom: "40px",
+            fontSize: "32px",
+          }}
+        >
+          SUDIISU ADMIN
+        </h2>
 
-      <NavLink to="/admin/dashboard" style={linkStyle}>
-        Dashboard
-      </NavLink>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "18px",
+          }}
+        >
+          <Link to="/admin/dashboard" style={linkStyle}>
+            Dashboard
+          </Link>
 
-      <NavLink to="/admin/products" style={linkStyle}>
-        Products
-      </NavLink>
+          <Link to="/admin/products" style={linkStyle}>
+            Products
+          </Link>
 
-      <NavLink to="/admin/orders" style={linkStyle}>
-        Orders
-      </NavLink>
+          <Link to="/admin/inquiries" style={linkStyle}>
+            Inquiries
+          </Link>
 
-      <NavLink to="/admin/customers" style={linkStyle}>
-        Customers
-      </NavLink>
+          <Link to="/admin/analytics" style={linkStyle}>
+            Analytics
+          </Link>
 
-      <NavLink to="/admin/settings" style={linkStyle}>
-        Settings
-      </NavLink>
+          <Link to="/admin/settings" style={linkStyle}>
+            Settings
+          </Link>
+        </div>
+      </div>
 
+      {/* LOGOUT */}
       <button
-        onClick={handleLogout}
+        onClick={logoutHandler}
+        className="logout-btn"
         style={{
-          marginTop: "40px",
-          width: "100%",
-          padding: "15px",
+          background: "#facc15",
+          color: "black",
           border: "none",
+          padding: "14px",
           borderRadius: "10px",
-          background: "#f5cc15",
-          color: "#000",
           fontWeight: "bold",
+          fontSize: "16px",
           cursor: "pointer",
         }}
       >

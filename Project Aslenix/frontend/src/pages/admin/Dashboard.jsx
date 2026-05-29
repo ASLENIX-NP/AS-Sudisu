@@ -1,12 +1,33 @@
+import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { supabase } from "../../lib/supabase";
+
 import {
   FaUsers,
-  FaMoneyBillWave,
-  FaShoppingCart,
   FaPepperHot,
 } from "react-icons/fa";
 
 const Dashboard = () => {
+  const [productCount, setProductCount] = useState(0);
+  const [inquiryCount, setInquiryCount] = useState(0);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  const fetchStats = async () => {
+    const { count: products } = await supabase
+      .from("products")
+      .select("*", { count: "exact", head: true });
+
+    const { count: inquiries } = await supabase
+      .from("inquiries")
+      .select("*", { count: "exact", head: true });
+
+    setProductCount(products || 0);
+    setInquiryCount(inquiries || 0);
+  };
+
   const cardStyle = {
     flex: "1",
     minWidth: "220px",
@@ -60,36 +81,37 @@ const Dashboard = () => {
             flexWrap: "wrap",
           }}
         >
-          {/* Customers */}
+          {/* Inquiries */}
           <div style={cardStyle}>
             <FaUsers size={35} color="#38bdf8" />
-            <h2 style={{ marginTop: "15px" }}>1,250</h2>
-            <p style={{ color: "#cbd5e1" }}>Total Customers</p>
+
+            <h2 style={{ marginTop: "15px" }}>
+              {inquiryCount}
+            </h2>
+
+            <p style={{ color: "#cbd5e1" }}>
+              Customer Inquiries
+            </p>
           </div>
 
-          {/* Revenue */}
+          {/* Products */}
           <div style={cardStyle}>
-            <FaMoneyBillWave size={35} color="#22c55e" />
-            <h2 style={{ marginTop: "15px" }}>Rs. 12,400</h2>
-            <p style={{ color: "#cbd5e1" }}>Total Revenue</p>
-          </div>
+            <FaPepperHot
+              size={35}
+              color="#e879f9"
+            />
 
-          {/* Orders */}
-          <div style={cardStyle}>
-            <FaShoppingCart size={35} color="#f97316" />
-            <h2 style={{ marginTop: "15px" }}>320</h2>
-            <p style={{ color: "#cbd5e1" }}>Orders</p>
-          </div>
+            <h2 style={{ marginTop: "15px" }}>
+              {productCount}
+            </h2>
 
-          {/* Spice Products */}
-          <div style={cardStyle}>
-            <FaPepperHot size={35} color="#e879f9" />
-            <h2 style={{ marginTop: "15px" }}>7</h2>
-            <p style={{ color: "#cbd5e1" }}>Spice Products</p>
+            <p style={{ color: "#cbd5e1" }}>
+              Total Products
+            </p>
           </div>
         </div>
 
-        {/* Recent Activity Section */}
+        {/* System Status */}
         <div
           style={{
             marginTop: "40px",
@@ -100,7 +122,7 @@ const Dashboard = () => {
           }}
         >
           <h2 style={{ marginBottom: "20px" }}>
-            Recent Activity
+            System Status
           </h2>
 
           <div
@@ -117,7 +139,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              🛒 New Spice Order Received
+              📦 Products are managed through Supabase
             </div>
 
             <div
@@ -127,7 +149,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              🌶️ Chilli Powder Stock Updated
+              📨 Customer inquiries are arriving live
             </div>
 
             <div
@@ -137,7 +159,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              📦 Turmeric Powder Added
+              ⚙️ Settings can be updated from Admin Panel
             </div>
 
             <div
@@ -147,7 +169,7 @@ const Dashboard = () => {
                 borderRadius: "10px",
               }}
             >
-              👤 New Customer Registered
+              🚀 SUDIISU Admin System Active
             </div>
           </div>
         </div>

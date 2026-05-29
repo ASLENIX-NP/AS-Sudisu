@@ -9,14 +9,27 @@ import {
 const ProductsManager = () => {
   // STATES
   const [products, setProducts] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [weight, setWeight] = useState("");
   const [origin, setOrigin] = useState("");
-  const [stock, setStock] = useState("");
-  const [image, setImage] = useState("");
-
+ const [stock, setStock] = useState("");
+const [description, setDescription] = useState("");
+const [image, setImage] = useState("");
+<textarea
+  placeholder="Product Description"
+  style={{
+    ...inputStyle,
+    minHeight: "120px",
+    gridColumn: "1 / -1",
+    resize: "vertical",
+  }}
+  value={description}
+  onChange={(e) =>
+    setDescription(e.target.value)
+  }
+/>
   const [uploading, setUploading] = useState(false);
 
   // EDIT STATE
@@ -82,6 +95,7 @@ const ProductsManager = () => {
           weight,
           origin,
           stock,
+          description,
           image,
         },
       ]);
@@ -157,9 +171,15 @@ const ProductsManager = () => {
     setWeight("");
     setOrigin("");
     setStock("");
+    setDescription("");
     setImage("");
   };
-
+const filteredProducts = products.filter(
+  (product) =>
+    product.name
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase())
+);
   return (
     <div
       style={{
@@ -309,7 +329,30 @@ const ProductsManager = () => {
             : "Add Product"}
         </button>
       </div>
-
+<div
+  style={{
+    marginBottom: "20px",
+  }}
+>
+  <input
+    type="text"
+    placeholder="🔍 Search products..."
+    value={searchTerm}
+    onChange={(e) =>
+      setSearchTerm(e.target.value)
+    }
+    style={{
+      width: "100%",
+      padding: "12px",
+      borderRadius: "10px",
+      border: "none",
+      outline: "none",
+      background: "#1e2b5c",
+      color: "white",
+      fontSize: "16px",
+    }}
+  />
+</div>
       {/* PRODUCT TABLE */}
       <div
         style={{
@@ -342,7 +385,7 @@ const ProductsManager = () => {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id}>
                 <td style={tdStyle}>
                   <img
