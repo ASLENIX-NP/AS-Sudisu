@@ -1,70 +1,32 @@
 import "./Footer.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
-import {
-  FaInstagram,
-  FaFacebook,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 
 import InquiryPopup from "./InquiryPopup";
 
 export default function Footer() {
-  const [openPopup, setOpenPopup] =
-    useState(false);
-
+  const [openPopup, setOpenPopup] = useState(false);
   /* STATIC SETTINGS */
 
   const [settings] = useState({
-    companyName: "SUDIISU",
+    companyName: "SUDISU",
 
-    email: "sudiisu@gmail.com",
+    email: "info@fortunegroup.com.np",
 
-    phone: "9800000000",
+    phone: "057590436",
 
-    address: "Kathmandu, Nepal",
+    address: "Manahari-07, Nepal",
 
-    facebook:
-      "https://facebook.com",
+    facebook: "https://www.facebook.com/sudisuspice",
 
-    instagram:
-      "https://instagram.com",
+    instagram: "https://www.instagram.com/sudisu_spices",
 
-    tiktok:
-      "https://tiktok.com",
+    whatsapp: "https://wa.me/977981-6259642",
 
-    heroSubtitle:
-      "Premium Nepali Masala crafted with purity and authentic taste.",
+    heroSubtitle: "BRING FLAVOUR TO YOUR KITCHEN WITH SUDISU SPICES",
   });
-
-  /* =========================
-     SETTINGS STATE
-  ========================= */
-
-
-  /* =========================
-     FETCH SETTINGS
-  ========================= */
-
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
-  const fetchSettings = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/settings"
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSettings(data.settings);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -74,11 +36,8 @@ export default function Footer() {
         <div className="footer-top">
           <h2>{settings.heroSubtitle}</h2>
 
-          <button
-            className="cta-btn"
-            onClick={() => setOpenPopup(true)}
-          >
-            Let’s Start Conversation
+          <button className="cta-btn" onClick={() => setOpenPopup(true)}>
+            Connect with Us
           </button>
         </div>
 
@@ -92,13 +51,9 @@ export default function Footer() {
 
             <Link to="/">Home</Link>
 
-            <Link to="/products">
-              Products
-            </Link>
+            <Link to="/products">Products</Link>
 
-            <Link to="/contact">
-              Contact
-            </Link>
+            <Link to="/contact">Contact</Link>
           </div>
 
           {/* CONTACT */}
@@ -106,20 +61,22 @@ export default function Footer() {
           <div>
             <h4>Contact</h4>
 
-            <a href={`tel:${settings.phone}`}>
-              📞 {settings.phone}
+            {/* PHONE */}
+            <a href="tel:057590436">Phone: 057-590436</a>
+
+            {/* EMAIL */}
+            <a href="mailto:info@fortunegroup.com.np">
+              Email: info@fortunegroup.com.np
             </a>
 
-            <a href={`mailto:${settings.email}`}>
-              ✉️ {settings.email}
-            </a>
-
-            <a
-              href="https://maps.app.goo.gl/azF4zHRdJEBgkDYs8"
+            {/* LOCATION */}
+           
+           <a
+              href="https://www.google.com/maps/search/Fortune+group+of+industries+Pvt+LTD/@27.5395879,84.8074828,81m"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
-              📍 {settings.address}
+              📍 Manahari-07,Makwanpur
             </a>
           </div>
 
@@ -129,7 +86,7 @@ export default function Footer() {
             <h4>Follow Us</h4>
 
             <a
-              href={settings.instagram}
+              href="https://www.instagram.com/sudisu_spices/"
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -138,7 +95,7 @@ export default function Footer() {
             </a>
 
             <a
-              href={settings.facebook}
+              href="https://www.facebook.com/sudisuspice"
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -147,10 +104,7 @@ export default function Footer() {
             </a>
 
             <a
-              href={`https://wa.me/${settings.phone.replace(
-                /\s+/g,
-                ""
-              )}`}
+              href="https://wa.me/9779816259642"
               target="_blank"
               rel="noreferrer"
               className="social-link"
@@ -163,17 +117,13 @@ export default function Footer() {
         {/* COPYRIGHT */}
 
         <div className="footer-bottom">
-          © 2026 {settings.companyName}. All Rights
-          Reserved.
+          &copy; 2026 SUDISU. All Rights Reserved.
         </div>
       </footer>
 
       {/* POPUP */}
 
-      <InquiryPopup
-        isOpen={openPopup}
-        onClose={() => setOpenPopup(false)}
-      />
+      <InquiryPopup isOpen={openPopup} onClose={() => setOpenPopup(false)} />
     </>
   );
 }

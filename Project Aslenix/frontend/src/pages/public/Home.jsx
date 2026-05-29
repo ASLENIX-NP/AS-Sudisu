@@ -15,50 +15,18 @@ const Home = () => {
      SETTINGS STATE
   ========================= */
 
-  const [settings, setSettings] = useState({
-    companyName: "",
-    heroTitle: "",
-    heroSubtitle: "",
-  });
 
-  /* =========================
-     FETCH SETTINGS
-  ========================= */
 
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
-  const fetchSettings = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/settings"
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSettings(data.settings);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [settings] = useState([]);
+   
+ 
 
   return (
     <>
       {/* NAVBAR */}
       <Navbar />
 
-      {/* NEXT BUTTON */}
-
-      <button
-        className="nav-float nav-right"
-        onClick={() => navigate("/products")}
-      >
-        Next →
-      </button>
-
+    
       {/* HERO */}
 
       <Hero

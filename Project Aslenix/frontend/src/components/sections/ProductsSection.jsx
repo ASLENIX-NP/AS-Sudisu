@@ -34,7 +34,7 @@ export default function ProductsSection() {
           <img src={spices} alt="Meat Masala" />
 
           <div className="product-content">
-            <h1>Meat Masala</h1>
+            <h3>Meat Masala</h3>
 
             <p>
               Premium blend for delicious meat curries and traditional Nepali
@@ -51,7 +51,7 @@ export default function ProductsSection() {
           <img src={meat} alt="Premium Spice Range" />
 
           <div className="product-content">
-            <h2>Premium Spice Range</h2>
+            <h3>Premium Spice Range</h3>
 
             <p>
               Explore our complete range of handcrafted Nepali masalas and
@@ -75,8 +75,8 @@ export default function ProductsSection() {
             <button>Order Now</button>
           </div>
         </div>
+        
       </div>
-      {/* BOTTOM BANNER */}
     </section>
   );
 }

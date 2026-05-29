@@ -13,18 +13,7 @@ const Blog = () => {
     <>
       <Navbar />
 
-      {/* FLOATING BUTTONS */}
-
-      <button className="nav-float nav-left" onClick={() => navigate("/about")}>
-        ← Back
-      </button>
-
-      <button
-        className="nav-float nav-right"
-        onClick={() => navigate("/contact")}
-      >
-        Next →
-      </button>
+     
 
       {/* BLOG SECTION */}
 

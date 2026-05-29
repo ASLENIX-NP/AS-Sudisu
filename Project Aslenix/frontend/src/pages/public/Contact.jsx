@@ -107,9 +107,6 @@ const Contact = () => {
     <>
       <Navbar />
 
-      <button className="nav-float nav-left" onClick={() => navigate("/blog")}>
-        Back
-      </button>
 
       <section className="contact-hero">
         <div className="hero-image-wrapper">

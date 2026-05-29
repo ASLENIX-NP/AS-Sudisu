@@ -14,20 +14,6 @@ const About = () => {
 
       {/* FLOATING BUTTONS */}
 
-      <button
-        className="nav-float nav-left"
-        onClick={() => navigate("/products")}
-      >
-        ← Back
-      </button>
-
-      <button
-        className="nav-float nav-right"
-        onClick={() => navigate("/blog")}
-      >
-        Next →
-      </button>
-
       <section
         className="about-section"
         style={{
@@ -37,34 +23,28 @@ const About = () => {
               rgba(0,0,0,0.72)
             ),
             url(${cookingWomen})
-          `
+          `,
         }}
       >
         <div className="about-container">
-
           <div className="about-text">
-
             <h1>About Us</h1>
 
             <p>
-              Sudiisu Pride is a premium Nepali spice brand
-              dedicated to preserving authenticity, purity
-              and traditional craftsmanship.
+              Sudiisu Pride is a premium Nepali spice brand dedicated to
+              preserving authenticity, purity and traditional craftsmanship.
             </p>
 
             <p>
-              Rooted in Nepal’s rich culinary heritage,
-              our spices are carefully sourced from trusted
-              local farmers and processed with strict
+              Rooted in Nepal’s rich culinary heritage, our spices are carefully
+              sourced from trusted local farmers and processed with strict
               quality standards.
             </p>
 
             <p>
-              Every product is crafted to deliver
-              natural aroma, rich flavor and
+              Every product is crafted to deliver natural aroma, rich flavor and
               uncompromised freshness.
             </p>
-
           </div>
         </div>
       </section>
