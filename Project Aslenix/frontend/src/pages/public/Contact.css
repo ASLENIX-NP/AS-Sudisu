@@ -24,7 +24,7 @@ body {
   padding-top: px;
   background:
     radial-gradient(circle at top, rgba(212, 154, 19, 0.12), transparent 35%),
-    linear-gradient(180deg, #2d0500 0%, #4d0900 45%, #260300 100%);
+    linear-gradient(180deg, #ede8e7 0%, #4d0900 45%, #260300 100%);
 
   color: white;
   overflow: hidden;

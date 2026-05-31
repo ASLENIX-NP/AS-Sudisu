@@ -2,7 +2,7 @@ import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 import Hero from "../../components/sections/Hero";
 import { useNavigate } from "react-router-dom";
-import ProductsSection from "../../components/sections/ProductsSection";
+import HomeProducts from "../../components/sections/HomeProducts";
 import WhyChoose from "../../components/sections/WhyChoose";
 import { useEffect, useState } from "react";
 
@@ -38,7 +38,7 @@ const Home = () => {
       <WhyChoose />
 
       {/* PRODUCTS */}
-      <ProductsSection />
+      <HomeProducts />
 
       {/* FOOTER */}
       <Footer />
