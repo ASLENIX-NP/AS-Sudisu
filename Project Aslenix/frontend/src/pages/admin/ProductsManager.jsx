@@ -14,22 +14,9 @@ const ProductsManager = () => {
   const [price, setPrice] = useState("");
   const [weight, setWeight] = useState("");
   const [origin, setOrigin] = useState("");
- const [stock, setStock] = useState("");
-const [description, setDescription] = useState("");
-const [image, setImage] = useState("");
-<textarea
-  placeholder="Product Description"
-  style={{
-    ...inputStyle,
-    minHeight: "120px",
-    gridColumn: "1 / -1",
-    resize: "vertical",
-  }}
-  value={description}
-  onChange={(e) =>
-    setDescription(e.target.value)
-  }
-/>
+  const [stock, setStock] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [uploading, setUploading] = useState(false);
 
   // EDIT STATE
@@ -128,17 +115,19 @@ const [image, setImage] = useState("");
   };
 
   // EDIT PRODUCT
-  const handleEdit = (product) => {
-    setEditingId(product.id);
+const handleEdit = (product) => {
+  console.log("EDIT CLICKED", product);
 
-    setName(product.name);
-    setPrice(product.price);
-    setWeight(product.weight);
-    setOrigin(product.origin);
-    setStock(product.stock);
-    setImage(product.image);
-  };
+  setEditingId(product.id);
 
+  setName(product.name);
+  setPrice(product.price);
+  setWeight(product.weight);
+  setOrigin(product.origin);
+  setStock(product.stock);
+  setDescription(product.description || "");
+  setImage(product.image);
+};
   // UPDATE PRODUCT
   const handleUpdate = async () => {
     const success = await updateProduct(
@@ -149,6 +138,7 @@ const [image, setImage] = useState("");
         weight,
         origin,
         stock,
+        description,
         image,
       }
     );
@@ -264,7 +254,20 @@ const filteredProducts = products.filter(
             onChange={(e) =>
               setStock(e.target.value)
             }
-          />
+          /> 
+          <textarea
+  placeholder="Product Description"
+  style={{
+    ...inputStyle,
+    minHeight: "120px",
+    gridColumn: "1 / -1",
+    resize: "vertical",
+  }}
+  value={description}
+  onChange={(e) =>
+    setDescription(e.target.value)
+  }
+/>
         </div>
 
         {/* IMAGE UPLOAD */}
