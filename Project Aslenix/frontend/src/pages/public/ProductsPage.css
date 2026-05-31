@@ -139,7 +139,7 @@
 
   padding: 26px 22px;
 
-  background: linear-gradient(180deg, #eb7f78 0%, #efc57b 100%);
+  background: linear-gradient(180deg, #e36f52 60%, #da9022 100%);
 
   text-align: center;
 
@@ -165,12 +165,12 @@
 ========================================= */
 
 .product-image {
-  width: 110% !important; /* 🔥 slightly wider for better fill */
+  width: 100% !important; /* 🔥 slightly wider for better fill */
 
-  height: 260px !important; /* 🔥 taller to fill card better */
+  height: 300px !important; /* 🔥 taller to fill card better */
 
   object-fit: cover;
-  margin: -10px -10px;
+  margin: -5px -2px;
   object-position: center 50%;
 
   border-radius: 1px;
@@ -183,7 +183,7 @@
 ========================================= */
 
 .product-card h3 {
-  margin-top: 20px;
+  margin-top: 30px;
 
   font-size: 20px;
 
@@ -202,7 +202,7 @@
 
   border: 2px solid #2b2b2b;
 
-  padding: 10px 2px; /* 🔥 smaller padding for better fit */
+  padding: 10px 18px; /* 🔥 smaller padding for better fit */
 
   border-radius: 12px;
 
@@ -214,13 +214,13 @@
 
   transition: 0.3s ease;
 
-  margin-top: auto;
+  margin-top: 30px;
 }
 
 .product-card button:hover {
-  background: #e2a712;
+  background: #dc0b0b;
 
-  color: rgb(11, 1, 1);
+  color: rgb(239, 234, 234);
 }
 
 /* =========================================
