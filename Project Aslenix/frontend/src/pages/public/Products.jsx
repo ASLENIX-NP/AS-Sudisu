@@ -6,7 +6,7 @@ import Footer from "../../components/common/Footer";
 
 import ProductModal from "../../components/sections/ProductModal";
 
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./ProductsPage.css";
 
@@ -75,9 +75,13 @@ const ProductsPage = () => {
 
                     <h3>{product.name}</h3>
 
-                    <button onClick={() => setSelectedProduct(product)}>
-                      View Details
-                    </button>
+                    <button
+                    onClick={() =>
+                     navigate(`/products/${product.id}`)
+                     }
+                    >
+                  View Details
+                  </button>
                   </div>
                 ))}
               </div>
