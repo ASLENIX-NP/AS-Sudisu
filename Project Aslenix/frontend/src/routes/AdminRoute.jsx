@@ -13,21 +13,21 @@ const AdminRoute = ({ children }) => {
   }, []);
 
   const checkSession = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-  if (
-    session?.user?.email ===
-    "alishasaud6@gmail.com"
-  ) {
-    setIsAdmin(true);
-  } else {
-    setIsAdmin(false);
-  }
+    if (
+      session?.user?.email ===
+      "alishasaud6@gmail.com"
+    ) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
 
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   if (loading) {
     return <h2>Loading...</h2>;

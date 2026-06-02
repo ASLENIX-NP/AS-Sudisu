@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
-
+import AdminLayout from "../../layouts/AdminLayout";
 import {
   deleteProduct,
   updateProduct,
@@ -170,34 +170,44 @@ const filteredProducts = products.filter(
       ?.toLowerCase()
       .includes(searchTerm.toLowerCase())
 );
-  return (
+ return (
+  <AdminLayout>
     <div
       style={{
         minHeight: "100vh",
-        background: "#071133",
-        color: "white",
+       background: "#f8fafc",
+           color: "#0f172a",
         padding: "40px",
       }}
     >
       <h1
-        style={{
-          fontSize: "50px",
-          marginBottom: "30px",
-        }}
-      >
+  style={{
+    fontSize: "42px",
+    fontWeight: "700",
+    color: "#0f172a",
+    marginBottom: "30px",
+  }}
+>
         Manage Products 🌶️
       </h1>
 
       {/* ADD PRODUCT */}
       <div
         style={{
-          background: "#111c44",
-          padding: "25px",
-          borderRadius: "15px",
+          background: "#ffffff",
+         padding: "25px",
+         borderRadius: "20px",
+         border: "1px solid #e2e8f0",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
           marginBottom: "30px",
         }}
       >
-        <h2 style={{ marginBottom: "20px" }}>
+       <h2
+  style={{
+    marginBottom: "20px",
+    color: "#0f172a",
+  }}
+>
           {editingId
             ? "Edit Product"
             : "Add New Product"}
@@ -283,7 +293,7 @@ const filteredProducts = products.filter(
               uploadImage(e.target.files[0])
             }
             style={{
-              color: "white",
+              color: "#0f172a",
             }}
           />
 
@@ -350,8 +360,9 @@ const filteredProducts = products.filter(
       borderRadius: "10px",
       border: "none",
       outline: "none",
-      background: "#1e2b5c",
-      color: "white",
+      background: "#ffffff",
+color: "#0f172a",
+border: "1px solid #e2e8f0",
       fontSize: "16px",
     }}
   />
@@ -360,9 +371,11 @@ const filteredProducts = products.filter(
       <div
         style={{
           overflowX: "auto",
-          background: "#111c44",
-          borderRadius: "15px",
-          padding: "20px",
+         background: "#ffffff",
+borderRadius: "20px",
+padding: "20px",
+border: "1px solid #e2e8f0",
+boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
         }}
       >
         <table
@@ -374,7 +387,7 @@ const filteredProducts = products.filter(
           <thead>
             <tr
               style={{
-                background: "#1e2b5c",
+               background: "#f8fafc",
               }}
             >
               <th style={thStyle}>Image</th>
@@ -465,27 +478,29 @@ const filteredProducts = products.filter(
         </table>
       </div>
     </div>
+    </AdminLayout>
   );
 };
-
 const thStyle = {
   padding: "15px",
   textAlign: "left",
-  color: "#facc15",
+  color: "#334155",
+  fontWeight: "600",
 };
 
 const tdStyle = {
   padding: "15px",
-  borderBottom: "1px solid #334155",
+  borderBottom: "1px solid #e2e8f0",
+  color: "#0f172a",
 };
 
 const inputStyle = {
   padding: "12px",
-  borderRadius: "10px",
-  border: "none",
+  borderRadius: "12px",
+  border: "1px solid #e2e8f0",
   outline: "none",
-  background: "#1e2b5c",
-  color: "white",
+  background: "#f8fafc",
+  color: "#0f172a",
 };
 
 export default ProductsManager;

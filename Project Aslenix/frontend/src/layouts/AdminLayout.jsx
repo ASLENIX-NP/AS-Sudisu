@@ -1,23 +1,19 @@
+import "./AdminLayout.css";
+
 import AdminSidebar from "../components/admin/AdminSidebar";
+import AdminTopbar from "../components/admin/AdminTopbar";
 
 const AdminLayout = ({ children }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        background: "#03103f",
-      }}
-    >
+    <div className="admin-layout">
       <AdminSidebar />
 
-      <div
-        style={{
-          flex: 1,
-          padding: "30px",
-        }}
-      >
-        {children}
+      <div className="admin-content-wrapper">
+        <AdminTopbar />
+
+        <div className="admin-content">
+          {children}
+        </div>
       </div>
     </div>
   );
