@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./Blog.css";
 
 import blogImage from "../../assets/images/sudisuPH3.jpg";
+import { BiCertification } from "react-icons/bi";
 
 const Blog = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Blog = () => {
           </div>
         </div>
       </section>
-
+    <certificate />
       <Footer />
     </>
   );

@@ -61,12 +61,10 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await fetch(
-      "http://localhost:5000/api/inquiries",
-      {
+    try {
+      const response = await fetch("http://localhost:5000/api/inquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,36 +75,34 @@ const Contact = () => {
           phone: `${formData.phoneCode} ${formData.phone}`,
           message: formData.message,
         }),
-      },
-    );
-
-    const data = await response.json();
-
-    if (data.success) {
-      alert("Inquiry sent successfully");
-
-      setFormData({
-        fullName: "",
-        country: "",
-        province: "",
-        district: "",
-        phoneCode: "+977",
-        phone: "",
-        email: "",
-        message: "",
       });
-    } else {
-      alert("Failed to send inquiry");
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Inquiry sent successfully");
+
+        setFormData({
+          fullName: "",
+          country: "",
+          province: "",
+          district: "",
+          phoneCode: "+977",
+          phone: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        alert("Failed to send inquiry");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Server error");
     }
-  } catch (error) {
-    console.log(error);
-    alert("Server error");
-  }
-};
+  };
   return (
     <>
       <Navbar />
-
 
       <section className="contact-hero">
         <div className="hero-image-wrapper">

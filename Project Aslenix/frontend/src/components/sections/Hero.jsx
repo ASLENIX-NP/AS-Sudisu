@@ -1,116 +1,82 @@
-import { useEffect, useState } from "react";
 import "./Hero.css";
+import heroBg from "../../assets/images/heropage1.png";
 
-import herobg from "../../assets/images/herobg.jpg";
-import hero2 from "../../assets/images/hero2.jpg";
-import hero3 from "../../assets/images/hero3.png";
-import hero4 from "../../assets/images/hero4.jpg";
-import hero5 from "../../assets/images/hero5.png";
+import { FaLeaf } from "react-icons/fa";
+import { GiCookingPot } from "react-icons/gi";
+import { AiFillSafetyCertificate } from "react-icons/ai";
+import { FaTruckFast } from "react-icons/fa6";
 
-const slides = [
-  {
-    image: herobg,
-    subtitle: "WELCOME TO SUDIISU PRIDE",
-    title: "The New Taste of Nepal",
-    description:
-      "Premium Nepali spices crafted with tradition, purity, and care.",
-    button: "Discover Now",
-  },
-
-  {
-    image: hero2,
-    subtitle: "AUTHENTIC NEPALI FLAVORS",
-    title: "Crafted With Care",
-    description: "Experience the true essence of Nepal in every dish.",
-    button: "Explore more",
-  },
-
-  {
-    image: hero3,
-    subtitle: "QUALITY YOU CAN TRUST",
-    title: "Made With Tradition",
-    description: "Healthy, fresh and premium quality spices for every home.",
-    button: "Learn More",
-  },
-
-  {
-    image: hero4,
-    subtitle: "PREMIUM MASALA COLLECTION",
-    title: "Rich Aroma & Flavor",
-    description: "Handpicked Nepali spices blended for authentic taste.",
-    button: "learn more",
-  },
-
-  {
-    image: hero5,
-    subtitle: "TRADITIONAL NEPALI SPICES",
-    title: "Crafted With Excellence",
-    description: "Delivering freshness and purity from Nepal to your kitchen.",
-    button: "Learn More",
-  },
-];
-
-const Hero = ({ heroTitle, heroSubtitle }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  /* AUTO SLIDER */
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) =>
-        prev === slides.length - 1 ? 0 : prev + 1
-      );
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, []);
-
+const Hero = () => {
   return (
     <section className="hero">
-      {/* BACKGROUND SLIDES */}
+      {/* BACKGROUND */}
+      <div className="hero-bg" style={{ backgroundImage: `url(${heroBg})` }} />
 
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`hero-slide ${
-            currentSlide === index ? "active-slide" : ""
-          }`}
-          style={{
-            backgroundImage: `url(${slide.image})`,
-            backgroundSize: slide.imageSize,
-            backgroundPosition: slide.imagePosition,
-          }}
-        />
-      ))}
+      {/* DARK OVERLAY (LIGHTER LIKE YOUR 2ND IMAGE) */}
+      <div className="hero-overlay" />
 
-      {/* DARK OVERLAY */}
+      {/* MAIN CONTENT */}
+      <div className="hero-container">
+        {/* LEFT SIDE */}
+        <div className="hero-left">
+          <p className="hero-subtitle">PREMIUM NEPALI SPICES</p>
 
-      <div className="hero-overlay"></div>
+          <h1 className="hero-title">
+            THE NEW TASTE OF <span>NEPAL</span>
+          </h1>
+          <div className="hero-line"></div>
+          <p className="hero-desc">
+            Handcrafted with tradition, purity, and rich flavors of Nepal.
+          </p>
 
-      {/* CONTENT */}
+          <button className="hero-btn">Explore Our Products →</button>
+        </div>
 
-      <div className="hero-content" key={currentSlide}>
-        {/* DYNAMIC SUBTITLE */}
-        <p className="hero-subtitle">
-          {heroSubtitle ||
-            slides[currentSlide].subtitle}
-        </p>
+        {/* RIGHT SIDE (NO hero1/hero2 ERROR ANYMORE) */}
+        <div className="hero-right">
+          <div className="product-stack" />
+        </div>
+      </div>
 
-        {/* DYNAMIC TITLE */}
-        <h1 className="hero-title">
-          {heroTitle ||
-            slides[currentSlide].title}
-        </h1>
+      {/* BOTTOM FEATURES BAR (EXACT STYLE LIKE IMAGE 2) */}
+      <div className="hero-features-bar">
+        <div className="feature-item">
+          <FaLeaf className="feature-icon" />
+          <div>
+            <p className="feature-title">100% NATURAL</p>
+            <p className="feature-sub">No Preservatives</p>
+          </div>
+        </div>
 
-        {/* SLIDE DESCRIPTION */}
-        <p className="hero-desc">
-          {slides[currentSlide].description}
-        </p>
+        <div className="divider" />
 
-        {/* BUTTON */}
-        <button className="hero-btn">
-          {slides[currentSlide].button}
-        </button>
+        <div className="feature-item">
+          <GiCookingPot className="feature-icon" />
+          <div>
+            <p className="feature-title">TRADITIONAL RECIPE</p>
+            <p className="feature-sub">Authentic Nepali Taste</p>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="feature-item">
+          <AiFillSafetyCertificate className="feature-icon" />
+          <div>
+            <p className="feature-title">PREMIUM QUALITY</p>
+            <p className="feature-sub">Pure & Handpicked</p>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="feature-item">
+          <FaTruckFast className="feature-icon" />
+          <div>
+            <p className="feature-title">FAST DELIVERY</p>
+            <p className="feature-sub">Across Nepal</p>
+          </div>
+        </div>
       </div>
     </section>
   );
