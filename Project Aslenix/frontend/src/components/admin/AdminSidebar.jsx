@@ -1,91 +1,147 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+
+import "./AdminSidebar.css";
+
+import {
+  FaHome,
+  FaBoxOpen,
+  FaTags,
+  FaEnvelope,
+  FaChartBar,
+  FaAddressBook,
+  FaInfoCircle,
+  FaBullhorn,
+  FaBlog,
+  FaCog,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 const AdminSidebar = () => {
   const logoutHandler = async () => {
     await supabase.auth.signOut();
-
     window.location.href = "/admin";
   };
 
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "18px",
-    fontWeight: "600",
-    padding: "14px 18px",
-    borderRadius: "10px",
-    transition: "0.3s",
-    background: "#0f172a",
-  };
-
   return (
-    <div
-      style={{
-        width: "250px",
-        background: "#020f44",
-        padding: "30px 20px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      {/* TOP SECTION */}
+    <div className="admin-sidebar">
       <div>
-        <h2
-          style={{
-            color: "white",
-            marginBottom: "40px",
-            fontSize: "32px",
-          }}
-        >
-          SUDIISU ADMIN
-        </h2>
+        <div className="admin-logo">
+  <h2>
+    SUDIISU
+    <br />
+    ADMIN
+  </h2>
+</div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "18px",
-          }}
-        >
-          <Link to="/admin/dashboard" style={linkStyle}>
+        <div className="admin-links">
+          <NavLink
+            to="/admin/dashboard"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaHome />
             Dashboard
-          </Link>
+          </NavLink>
 
-          <Link to="/admin/products" style={linkStyle}>
+          <NavLink
+            to="/admin/products"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaBoxOpen />
             Products
-          </Link>
+          </NavLink>
 
-          <Link to="/admin/inquiries" style={linkStyle}>
+          <NavLink
+            to="/admin/categories"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaTags />
+            Categories
+          </NavLink>
+
+          <NavLink
+            to="/admin/inquiries"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaEnvelope />
             Inquiries
-          </Link>
+          </NavLink>
 
-          <Link to="/admin/analytics" style={linkStyle}>
+          <NavLink
+            to="/admin/analytics"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaChartBar />
             Analytics
-          </Link>
+          </NavLink>
 
-          <Link to="/admin/settings" style={linkStyle}>
+          <NavLink
+            to="/admin/contact"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaAddressBook />
+            Contact
+          </NavLink>
+
+          <NavLink
+            to="/admin/about"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaInfoCircle />
+            About
+          </NavLink>
+
+          <NavLink
+            to="/admin/announcements"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaBullhorn />
+            Announcements
+          </NavLink>
+
+          <NavLink
+            to="/admin/blog"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaBlog />
+            Blog
+          </NavLink>
+
+          <NavLink
+            to="/admin/settings"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaCog />
             Settings
-          </Link>
+          </NavLink>
         </div>
       </div>
 
-      {/* LOGOUT */}
       <button
         onClick={logoutHandler}
         className="logout-btn"
-        style={{
-          background: "#facc15",
-          color: "black",
-          border: "none",
-          padding: "14px",
-          borderRadius: "10px",
-          fontWeight: "bold",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
       >
+        <FaSignOutAlt />
         Logout
       </button>
     </div>

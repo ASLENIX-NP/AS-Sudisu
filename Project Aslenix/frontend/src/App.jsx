@@ -20,7 +20,8 @@ import Blog from "./pages/public/Blog";
 /* Admin Pages */
 import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
-
+import ContactAdmin from "./pages/admin/ContactAdmin";
+import CategoriesAdmin from "./pages/admin/CategoriesAdmin";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -96,6 +97,23 @@ function App() {
             </AdminRoute>
           }
         />
+
+        <Route
+  path="/admin/categories"
+  element={
+    <AdminRoute>
+      <CategoriesAdmin />
+    </AdminRoute>
+  }
+/>
+        <Route
+  path="/admin/contact"
+  element={
+    <AdminRoute>
+      <ContactAdmin />
+    </AdminRoute>
+  }
+/>
       </Routes>
     </Router>
   );

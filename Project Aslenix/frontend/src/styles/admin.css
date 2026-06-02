@@ -1,0 +1,66 @@
+/* ADMIN THEME */
+
+.admin-page {
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.admin-title {
+  color: #111827;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.admin-subtitle {
+  color: #090909;
+  margin-top: 5px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.admin-table th {
+  background: #f9fafb;
+  color: #374151;
+  padding: 16px;
+  text-align: left;
+}
+
+.admin-table td {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+.admin-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  outline: none;
+}
+
+.admin-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.admin-btn:hover {
+  background: #1d4ed8;
+}
