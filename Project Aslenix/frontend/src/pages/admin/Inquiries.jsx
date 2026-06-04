@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import "../../styles/inquiries.css";
 
 const Inquiries = () => {
   const [inquiries, setInquiries] = useState([]);
+const [searchTerm, setSearchTerm] = useState("");
 
+const filteredInquiries = inquiries.filter(
+  (item) =>
+    item.name
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+    item.email
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase())
+);
   useEffect(() => {
     fetchInquiries();
   }, []);
@@ -45,29 +56,21 @@ const Inquiries = () => {
 
   return (
     <AdminLayout>
-      <div
-        style={{
-          padding: "30px",
-          color: "white",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "40px",
-            marginBottom: "30px",
-          }}
-        >
-          Customer Inquiries 📩
-        </h1>
+  <div className="inquiries-container">
+       <h1>Customer Inquiries 📩</h1>
 
-        <div
-          style={{
-            overflowX: "auto",
-            background: "#1e293b",
-            borderRadius: "16px",
-            padding: "20px",
-          }}
-        >
+<div className="inquiry-search">
+  <input
+    type="text"
+    placeholder="🔍 Search inquiries..."
+    value={searchTerm}
+    onChange={(e) =>
+      setSearchTerm(e.target.value)
+    }
+  />
+</div>
+
+     <div className="inquiries-card">
           <table
             style={{
               width: "100%",
@@ -90,7 +93,7 @@ const Inquiries = () => {
             </thead>
 
             <tbody>
-              {inquiries.map((item) => (
+             {filteredInquiries.map((item) => (
                 <tr
                   key={item._id}
                   style={{
@@ -114,22 +117,14 @@ const Inquiries = () => {
                   </td>
 
                   <td style={tdStyle}>
-                    <button
-                      onClick={() =>
-                        deleteInquiry(item._id)
-                      }
-                      style={{
-                        background: "#ef4444",
-                        border: "none",
-                        padding: "10px 16px",
-                        borderRadius: "8px",
-                        color: "white",
-                        cursor: "pointer",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Delete
-                    </button>
+                  <button
+  className="delete-btn"
+  onClick={() =>
+    deleteInquiry(item._id)
+  }
+>
+  🗑 Delete
+</button>
                   </td>
                 </tr>
               ))}

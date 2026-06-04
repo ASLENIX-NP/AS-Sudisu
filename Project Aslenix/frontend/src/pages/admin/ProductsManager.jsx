@@ -129,31 +129,42 @@ const handleEdit = (product) => {
   setImage(product.image);
 };
   // UPDATE PRODUCT
-  const handleUpdate = async () => {
-    const success = await updateProduct(
-      editingId,
-      {
-        name,
-        price,
-        weight,
-        origin,
-        stock,
-        description,
-        image,
-      }
-    );
+const handleUpdate = async () => {
+  console.log("Updating ID:", editingId);
 
-    if (success) {
-      alert("Product Updated Successfully ✅");
+  console.log({
+    name,
+    price,
+    weight,
+    origin,
+    stock,
+    description,
+    image,
+  });
 
-      setEditingId(null);
-
-      resetForm();
-
-      fetchProducts();
+  const success = await updateProduct(
+    editingId,
+    {
+      name,
+      price,
+      weight,
+      origin,
+      stock,
+      description,
+      image,
     }
-  };
+  );
 
+  if (success) {
+    alert("Product Updated Successfully ✅");
+
+    setEditingId(null);
+
+    resetForm();
+
+    fetchProducts();
+  }
+};
   // RESET FORM
   const resetForm = () => {
     setName("");
@@ -342,11 +353,11 @@ const filteredProducts = products.filter(
             : "Add Product"}
         </button>
       </div>
-<div
+      <div
   style={{
     marginBottom: "20px",
   }}
->
+     >
   <input
     type="text"
     placeholder="🔍 Search products..."
@@ -361,21 +372,21 @@ const filteredProducts = products.filter(
       border: "none",
       outline: "none",
       background: "#ffffff",
-color: "#0f172a",
-border: "1px solid #e2e8f0",
+     color: "#0f172a",
+     border: "1px solid #e2e8f0",
       fontSize: "16px",
     }}
-  />
-</div>
+     />
+      </div>
       {/* PRODUCT TABLE */}
       <div
         style={{
           overflowX: "auto",
          background: "#ffffff",
-borderRadius: "20px",
-padding: "20px",
-border: "1px solid #e2e8f0",
-boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+         borderRadius: "20px",
+         padding: "20px",
+         border: "1px solid #e2e8f0",
+         boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
         }}
       >
         <table
@@ -396,6 +407,7 @@ boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
               <th style={thStyle}>Weight</th>
               <th style={thStyle}>Origin</th>
               <th style={thStyle}>Stock</th>
+          
               <th style={thStyle}>Actions</th>
             </tr>
           </thead>
@@ -432,46 +444,47 @@ boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
                   {product.origin}
                 </td>
 
-                <td style={tdStyle}>
-                  {product.stock}
-                </td>
+         <td style={tdStyle}>
+  <span
+    style={{
+      fontWeight: "600",
+      color:
+        product.stock <= 0
+          ? "#ef4444"
+          : product.stock <= 10
+          ? "#f59e0b"
+          : "#16a34a",
+    }}
+  >
+    {product.stock}
+  </span>
+</td>
+<td style={tdStyle}>
+  <span
+    onClick={() => handleEdit(product)}
+    style={{
+      color: "#2563eb",
+      cursor: "pointer",
+      fontWeight: "600",
+      marginRight: "18px",
+      fontSize: "15px",
+    }}
+  >
+    ✏️ Edit
+  </span>
 
-                <td style={tdStyle}>
-                  <button
-                    onClick={() =>
-                      handleEdit(product)
-                    }
-                    style={{
-                      background: "#2563eb",
-                      color: "white",
-                      border: "none",
-                      padding: "10px 15px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      fontWeight: "bold",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      handleDelete(product.id)
-                    }
-                    style={{
-                      background: "#dc2626",
-                      color: "white",
-                      border: "none",
-                      padding: "10px 15px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+  <span
+    onClick={() => handleDelete(product.id)}
+    style={{
+      color: "#ef4444",
+      cursor: "pointer",
+      fontWeight: "600",
+      fontSize: "15px",
+    }}
+  >
+    🗑 Delete
+  </span>
+</td>
               </tr>
             ))}
           </tbody>

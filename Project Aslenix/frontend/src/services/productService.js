@@ -35,15 +35,17 @@ export const updateProduct = async (
   id,
   updatedData
 ) => {
-  const { error } = await supabase
+  console.log("Updating:", id);
+  console.log(updatedData);
+
+  const { data, error } = await supabase
     .from("products")
     .update(updatedData)
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
-  if (error) {
-    console.log(error);
-    return false;
-  }
+  console.log("RESULT:", data);
+  console.log("ERROR:", error);
 
-  return true;
+  return !error;
 };
