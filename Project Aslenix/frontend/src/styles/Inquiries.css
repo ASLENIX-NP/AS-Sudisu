@@ -1,0 +1,67 @@
+.inquiries-container {
+  padding: 40px;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.inquiries-container h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.inquiry-search {
+  margin-bottom: 25px;
+}
+
+.inquiry-search input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.inquiries-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-x: auto;
+}
+
+.inquiries-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inquiries-card th {
+  padding: 16px;
+  text-align: left;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 600;
+}
+
+.inquiries-card td {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.delete-btn:hover {
+  color: #dc2626;
+}
