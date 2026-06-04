@@ -10,13 +10,13 @@ import inquiryRoutes from "./routes/inquiryRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
 
 import { errorHandler } from "./middlewares/errorMiddleware.js";
-
+import certificateRoutes from "./routes/certificateRoutes.js";
 const app = express();
 
 /* =========================
    SECURITY MIDDLEWARE
 ========================= */
-
+app.use("/api/certificates", certificateRoutes);
 app.use(helmet());
 
 /* =========================
@@ -31,9 +31,10 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  })
+  }),
 );
 
 /* =========================

@@ -22,6 +22,7 @@ import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
 import ContactAdmin from "./pages/admin/ContactAdmin";
 import CategoriesAdmin from "./pages/admin/CategoriesAdmin";
+import Certificates from "./pages/admin/Certificates";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -36,11 +37,9 @@ function App() {
 
         <Route path="/products" element={<Products />} />
 
-        <Route
-          path="/products/:id"
-          element={<ProductDetails />}
-        />
-
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/admin/blog" element={<Blog />} />
+        <Route path="/admin/certificates" element={<Certificates />} />
         <Route path="/contact" element={<Contact />} />
 
         <Route path="/about" element={<About />} />
@@ -99,21 +98,21 @@ function App() {
         />
 
         <Route
-  path="/admin/categories"
-  element={
-    <AdminRoute>
-      <CategoriesAdmin />
-    </AdminRoute>
-  }
-/>
+          path="/admin/categories"
+          element={
+            <AdminRoute>
+              <CategoriesAdmin />
+            </AdminRoute>
+          }
+        />
         <Route
-  path="/admin/contact"
-  element={
-    <AdminRoute>
-      <ContactAdmin />
-    </AdminRoute>
-  }
-/>
+          path="/admin/contact"
+          element={
+            <AdminRoute>
+              <ContactAdmin />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </Router>
   );

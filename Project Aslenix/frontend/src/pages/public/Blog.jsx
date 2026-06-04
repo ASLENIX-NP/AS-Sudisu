@@ -6,15 +6,32 @@ import "./Blog.css";
 
 import blogImage from "../../assets/images/sudisuPH3.jpg";
 import { BiCertification } from "react-icons/bi";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import AdminLayout from "../../layouts/AdminLayout";
 const Blog = () => {
   const navigate = useNavigate();
+  const [certificates, setCertificates] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchCertificates();
+  }, []);
+
+  const fetchCertificates = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/certificates");
+
+      console.log("CERTIFICATES DATA:", res.data); // DEBUG
+
+      setCertificates(res.data);
+    } catch (err) {
+      console.log("ERROR loading certificates:", err);
+    }
+  };
   return (
     <>
       <Navbar />
-
-     
 
       {/* BLOG SECTION */}
 
@@ -70,8 +87,24 @@ const Blog = () => {
             </p>
           </div>
         </div>
+
+        <div className="cert-section">
+          <h2>Our Certificates</h2>
+
+          <div className="cert-grid">
+            {certificates.map((item) => (
+              <div key={item.id} className="cert-card">
+                <img
+                  src={item.image_url || ""}
+                  alt={item.title || "certificate"}
+                />
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
-    <certificate />
       <Footer />
     </>
   );

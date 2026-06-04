@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-
+import Certificates from "../pages/admin/Certificates";
 const AdminRoute = ({ children }) => {
   console.log("ADMIN ROUTE RUNNING");
 
@@ -17,10 +17,7 @@ const AdminRoute = ({ children }) => {
       data: { session },
     } = await supabase.auth.getSession();
 
-    if (
-      session?.user?.email ===
-      "alishasaud6@gmail.com"
-    ) {
+    if (session?.user?.email === "alishasaud6@gmail.com") {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
