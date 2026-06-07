@@ -16,6 +16,7 @@ import {
   FaCog,
   FaSignOutAlt,
   FaGraduationCap,
+  FaStar,
 } from "react-icons/fa";
 
 const AdminSidebar = () => {
@@ -36,6 +37,7 @@ const AdminSidebar = () => {
         </div>
 
         <div className="admin-links">
+
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
@@ -127,6 +129,16 @@ const AdminSidebar = () => {
           </NavLink>
 
           <NavLink
+            to="/admin/reviews"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaStar />
+            Reviews
+          </NavLink>
+
+          <NavLink
             to="/admin/certificates"
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
@@ -145,10 +157,14 @@ const AdminSidebar = () => {
             <FaCog />
             Settings
           </NavLink>
+
         </div>
       </div>
 
-      <button onClick={logoutHandler} className="logout-btn">
+      <button
+        onClick={logoutHandler}
+        className="logout-btn"
+      >
         <FaSignOutAlt />
         Logout
       </button>

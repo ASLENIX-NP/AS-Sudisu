@@ -4,17 +4,18 @@ import "../../styles/inquiries.css";
 
 const Inquiries = () => {
   const [inquiries, setInquiries] = useState([]);
-const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-const filteredInquiries = inquiries.filter(
-  (item) =>
-    item.name
-      ?.toLowerCase()
-      .includes(searchTerm.toLowerCase()) ||
-    item.email
-      ?.toLowerCase()
-      .includes(searchTerm.toLowerCase())
-);
+  const filteredInquiries = inquiries.filter(
+    (item) =>
+      item.name
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      item.email
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+  );
+
   useEffect(() => {
     fetchInquiries();
   }, []);
@@ -56,94 +57,148 @@ const filteredInquiries = inquiries.filter(
 
   return (
     <AdminLayout>
-  <div className="inquiries-container">
-       <h1>Customer Inquiries 📩</h1>
+      <div className="inquiries-container">
 
-<div className="inquiry-search">
-  <input
-    type="text"
-    placeholder="🔍 Search inquiries..."
-    value={searchTerm}
-    onChange={(e) =>
-      setSearchTerm(e.target.value)
-    }
-  />
-</div>
+        {/* HEADER */}
 
-     <div className="inquiries-card">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-            }}
-          >
-            <thead>
-              <tr
-                style={{
-                  background: "#334155",
-                }}
-              >
-                <th style={thStyle}>Name</th>
-                <th style={thStyle}>Email</th>
-                <th style={thStyle}>Phone</th>
-                <th style={thStyle}>Message</th>
-                <th style={thStyle}>Date</th>
-                <th style={thStyle}>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-             {filteredInquiries.map((item) => (
-                <tr
-                  key={item._id}
-                  style={{
-                    borderBottom: "1px solid #334155",
-                  }}
-                >
-                  <td style={tdStyle}>{item.name}</td>
-
-                  <td style={tdStyle}>{item.email}</td>
-
-                  <td style={tdStyle}>{item.phone}</td>
-
-                  <td style={tdStyle}>
-                    {item.message}
-                  </td>
-
-                  <td style={tdStyle}>
-                    {new Date(
-                      item.createdAt
-                    ).toLocaleDateString()}
-                  </td>
-
-                  <td style={tdStyle}>
-                  <button
-  className="delete-btn"
-  onClick={() =>
-    deleteInquiry(item._id)
-  }
->
-  🗑 Delete
-</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="inquiries-header">
+          <div className="inquiries-title">
+            <h1>Customer Inquiries</h1>
+            <p>
+              View and manage customer messages received from the website.
+            </p>
+          </div>
         </div>
+
+        {/* STATS */}
+
+        <div className="inquiries-stats">
+
+          <div className="inquiry-stat">
+            <span>Total Inquiries</span>
+            <h2>{inquiries.length}</h2>
+          </div>
+
+          <div className="inquiry-stat">
+            <span>Search Results</span>
+            <h2>{filteredInquiries.length}</h2>
+          </div>
+
+          <div className="inquiry-stat">
+            <span>Status</span>
+            <h2 style={{ color: "#22c55e" }}>
+              Active
+            </h2>
+          </div>
+
+        </div>
+
+ 
+        {/* SEARCH */}
+
+        <div className="inquiry-search">
+          <input
+            type="text"
+            placeholder="Search by name or email..."
+            value={searchTerm}
+            onChange={(e) =>
+              setSearchTerm(e.target.value)
+            }
+          />
+        </div>
+
+        {/* TABLE */}
+
+        <div className="inquiries-card">
+
+          {filteredInquiries.length === 0 ? (
+
+            <div className="empty-state">
+              <h3>No inquiries found</h3>
+              <p>
+                Customer messages will appear here.
+              </p>
+            </div>
+
+          ) : (
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Phone</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {filteredInquiries.map((item) => (
+                  <tr key={item._id}>
+
+                    <td>
+                      <div className="customer-name">
+                        {item.name}
+                      </div>
+
+                      <div className="customer-email">
+                        {item.email}
+                      </div>
+                    </td>
+
+                    <td>
+                      {item.phone}
+                    </td>
+
+                    <td>
+                      <div className="message-preview">
+                        {item.message?.length > 70
+                          ? item.message.slice(0, 70) + "..."
+                          : item.message}
+                      </div>
+                    </td>
+
+                    <td>
+                      <div className="inquiry-date">
+                        {new Date(
+                          item.createdAt
+                        ).toLocaleDateString()}
+                      </div>
+                    </td>
+
+                    <td>
+                      <span className="status-badge">
+                        ● New
+                      </span>
+                    </td>
+
+                    <td>
+                      <button
+                        className="delete-btn"
+                        onClick={() =>
+                          deleteInquiry(item._id)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </td>
+
+                  </tr>
+                ))}
+
+              </tbody>
+            </table>
+
+          )}
+
+        </div>
+
       </div>
     </AdminLayout>
   );
-};
-
-const thStyle = {
-  padding: "16px",
-  textAlign: "left",
-  color: "#facc15",
-};
-
-const tdStyle = {
-  padding: "16px",
 };
 
 export default Inquiries;

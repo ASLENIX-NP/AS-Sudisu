@@ -1,251 +1,140 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
+import "../../styles/analytics.css";
+
 import {
   FaBoxOpen,
   FaEnvelope,
-  FaChartLine,
   FaUsers,
+  FaChartLine,
 } from "react-icons/fa";
 
 const Analytics = () => {
- const [productCount, setProductCount] = useState(0);
-const [inquiryCount, setInquiryCount] = useState(0);
-  const cardStyle = {
-    background: "#1e293b",
-    padding: "25px",
-    borderRadius: "18px",
-    color: "white",
-    flex: "1",
-    minWidth: "240px",
-    boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
-  };
-useEffect(() => {
-  fetchAnalytics();
-}, []);
+  const [productCount, setProductCount] = useState(0);
+  const [inquiryCount, setInquiryCount] = useState(0);
 
-const fetchAnalytics = async () => {
-  try {
-    // PRODUCTS FROM SUPABASE
-    const { data: products } = await supabase
-      .from("products")
-      .select("*");
+  useEffect(() => {
+    fetchAnalytics();
+  }, []);
 
-    setProductCount(products.length);
+  const fetchAnalytics = async () => {
+    try {
+      const { data: products } = await supabase
+        .from("products")
+        .select("*");
 
-    // INQUIRIES FROM MONGODB
-    const response = await fetch(
-      "http://localhost:5000/api/inquiries"
-    );
+      setProductCount(products?.length || 0);
 
-    const data = await response.json();
+      const response = await fetch(
+        "http://localhost:5000/api/inquiries"
+      );
 
-    if (data.success) {
-      setInquiryCount(data.inquiries.length);
+      const data = await response.json();
+
+      if (data.success) {
+        setInquiryCount(data.inquiries.length);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
+
   return (
     <AdminLayout>
-      <div
-        style={{
-          padding: "30px",
-          color: "white",
-        }}
-      >
-        {/* HEADER */}
-        <div
-          style={{
-            marginBottom: "35px",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "42px",
-              marginBottom: "10px",
-            }}
-          >
-            Analytics Dashboard 📊
-          </h1>
+      <div className="analytics-page">
 
-          <p
-            style={{
-              color: "#94a3b8",
-              fontSize: "17px",
-            }}
-          >
-            Business insights and website performance overview.
+        <div className="analytics-header">
+          <h1>Analytics</h1>
+          <p>
+            Business performance and customer engagement overview.
           </p>
         </div>
 
-        {/* ANALYTICS CARDS */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-          }}
-        >
-          {/* PRODUCTS */}
-          <div style={cardStyle}>
-            <FaBoxOpen size={35} color="#38bdf8" />
+        <div className="analytics-stats">
 
-            <h2
-              style={{
-                marginTop: "18px",
-                fontSize: "34px",
-              }}
-            >
-              {productCount}
-            </h2>
-
-            <p
-              style={{
-                color: "#cbd5e1",
-                marginTop: "8px",
-              }}
-            >
-              Total Products
-            </p>
+          <div className="analytics-card">
+            <FaBoxOpen className="analytics-icon blue" />
+            <span>Products</span>
+            <h2>{productCount}</h2>
+            <small>Active inventory items</small>
           </div>
 
-          {/* INQUIRIES */}
-          <div style={cardStyle}>
-            <FaEnvelope size={35} color="#22c55e" />
-
-            <h2
-              style={{
-                marginTop: "18px",
-                fontSize: "34px",
-              }}
-            >
-            {inquiryCount}
-            </h2>
-
-            <p
-              style={{
-                color: "#cbd5e1",
-                marginTop: "8px",
-              }}
-            >
-              Customer Inquiries
-            </p>
+          <div className="analytics-card">
+            <FaEnvelope className="analytics-icon green" />
+            <span>Inquiries</span>
+            <h2>{inquiryCount}</h2>
+            <small>Customer messages</small>
           </div>
 
-          {/* VISITORS */}
-          <div style={cardStyle}>
-            <FaUsers size={35} color="#f97316" />
-
-            <h2
-              style={{
-                marginTop: "18px",
-                fontSize: "34px",
-              }}
-            >
-              1.2K
-            </h2>
-
-            <p
-              style={{
-                color: "#cbd5e1",
-                marginTop: "8px",
-              }}
-            >
-              Website Visitors
-            </p>
+          <div className="analytics-card">
+            <FaUsers className="analytics-icon orange" />
+            <span>Visitors</span>
+            <h2>1.2K</h2>
+            <small>Monthly traffic</small>
           </div>
 
-          {/* GROWTH */}
-          <div style={cardStyle}>
-            <FaChartLine size={35} color="#e879f9" />
-
-            <h2
-              style={{
-                marginTop: "18px",
-                fontSize: "34px",
-              }}
-            >
-              +18%
-            </h2>
-
-            <p
-              style={{
-                color: "#cbd5e1",
-                marginTop: "8px",
-              }}
-            >
-              Monthly Growth
-            </p>
+          <div className="analytics-card">
+            <FaChartLine className="analytics-icon purple" />
+            <span>Growth</span>
+            <h2>+18%</h2>
+            <small>Compared to last month</small>
           </div>
+
         </div>
 
-        {/* RECENT INSIGHTS */}
-        <div
-          style={{
-            marginTop: "40px",
-            background: "#1e293b",
-            borderRadius: "18px",
-            padding: "25px",
-          }}
-        >
-          <h2
-            style={{
-              marginBottom: "20px",
-            }}
-          >
-            Recent Insights
-          </h2>
+        <div className="analytics-grid">
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-            }}
-          >
-            <div
-              style={{
-                background: "#334155",
-                padding: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              🌶️ Chilli Powder is the most viewed product this week.
+          <div className="analytics-panel">
+            <h3>Performance Insights</h3>
+
+            <div className="insight-item">
+              Chilli Powder remains the most viewed product.
             </div>
 
-            <div
-              style={{
-                background: "#334155",
-                padding: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              📩 Inquiry traffic increased by 22% this month.
+            <div className="insight-item">
+              Inquiry volume increased this month.
             </div>
 
-            <div
-              style={{
-                background: "#334155",
-                padding: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              📦 New product additions improved customer engagement.
+            <div className="insight-item">
+              Product catalog engagement remains strong.
             </div>
 
-            <div
-              style={{
-                background: "#334155",
-                padding: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              🚀 Website growth is steadily increasing in Nepal region.
+            <div className="insight-item">
+              Traffic growth continues across Nepal.
             </div>
           </div>
+
+          <div className="analytics-panel">
+            <h3>System Overview</h3>
+
+            <div className="system-row">
+              <span>Products</span>
+              <strong>{productCount}</strong>
+            </div>
+
+            <div className="system-row">
+              <span>Inquiries</span>
+              <strong>{inquiryCount}</strong>
+            </div>
+
+            <div className="system-row">
+              <span>Database</span>
+              <div className="status-pill connected">
+                Connected
+              </div>
+            </div>
+
+            <div className="system-row">
+              <span>Status</span>
+              <div className="status-pill online">
+                Online
+              </div>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </AdminLayout>
   );
