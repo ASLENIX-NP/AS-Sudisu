@@ -1,0 +1,52 @@
+.about-admin-page {
+  padding: 10px 0;
+}
+
+.about-header {
+  margin-bottom: 30px;
+}
+
+.about-header h1 {
+  font-size: 54px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.about-header p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.about-card {
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0,0,0,.04);
+}
+
+.about-card.full-width {
+  grid-column: span 2;
+}
+
+.about-card h2 {
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card.full-width {
+    grid-column: span 1;
+  }
+}

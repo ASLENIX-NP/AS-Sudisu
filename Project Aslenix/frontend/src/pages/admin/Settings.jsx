@@ -1,5 +1,6 @@
 import AdminLayout from "../../layouts/AdminLayout";
 import { useEffect, useState } from "react";
+import "../../styles/Settings.css";
 
 const Settings = () => {
   const [settings, setSettings] = useState({
@@ -13,10 +14,6 @@ const Settings = () => {
     instagram: "",
     tiktok: "",
   });
-
-  /* =========================
-     FETCH SETTINGS
-  ========================= */
 
   useEffect(() => {
     fetchSettings();
@@ -38,20 +35,12 @@ const Settings = () => {
     }
   };
 
-  /* =========================
-     HANDLE INPUT CHANGE
-  ========================= */
-
   const handleChange = (e) => {
     setSettings({
       ...settings,
       [e.target.name]: e.target.value,
     });
   };
-
-  /* =========================
-     SAVE SETTINGS
-  ========================= */
 
   const handleSave = async () => {
     try {
@@ -77,84 +66,51 @@ const Settings = () => {
     }
   };
 
-  /* =========================
-     INPUT STYLE
-  ========================= */
-
-  const inputStyle = {
-    width: "100%",
-    padding: "14px",
-    borderRadius: "10px",
-    border: "none",
-    background: "#334155",
-    color: "white",
-    fontSize: "15px",
-  };
-
   return (
     <AdminLayout>
-      <div
-        style={{
-          padding: "30px",
-          color: "white",
-        }}
-      >
-        {/* HEADER */}
+      <div className="settings-page">
 
-        <div
-          style={{
-            marginBottom: "35px",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "40px",
-              marginBottom: "10px",
-            }}
-          >
-            Website Settings ⚙️
+        <div className="settings-header">
+          <h1 className="settings-title">
+            Website Settings
           </h1>
 
-          <p
-            style={{
-              color: "#94a3b8",
-            }}
-          >
+          <p className="settings-subtitle">
             Manage your website and business information.
           </p>
         </div>
 
-        {/* SETTINGS BOX */}
+        <div className="settings-stats">
 
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "30px",
-            borderRadius: "18px",
-          }}
-        >
-          {/* BUSINESS INFO */}
+          <div className="settings-stat-card">
+            <span>Business Info</span>
+            <h2>4</h2>
+          </div>
 
-          <h2 style={{ marginBottom: "20px" }}>
-            Business Information
-          </h2>
+          <div className="settings-stat-card">
+            <span>Homepage Fields</span>
+            <h2>2</h2>
+          </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "20px",
-              marginBottom: "35px",
-            }}
-          >
+          <div className="settings-stat-card">
+            <span>Social Links</span>
+            <h2>3</h2>
+          </div>
+
+        </div>
+
+        <div className="settings-card">
+
+          <h2>Business Information</h2>
+
+          <div className="settings-grid">
             <input
               type="text"
               name="companyName"
               value={settings.companyName}
               onChange={handleChange}
               placeholder="Company Name"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <input
@@ -163,7 +119,7 @@ const Settings = () => {
               value={settings.email}
               onChange={handleChange}
               placeholder="Business Email"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <input
@@ -172,7 +128,7 @@ const Settings = () => {
               value={settings.phone}
               onChange={handleChange}
               placeholder="Phone Number"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <input
@@ -181,31 +137,20 @@ const Settings = () => {
               value={settings.address}
               onChange={handleChange}
               placeholder="Business Address"
-              style={inputStyle}
+              className="settings-input"
             />
           </div>
 
-          {/* HERO CONTENT */}
+          <h2>Homepage Content</h2>
 
-          <h2 style={{ marginBottom: "20px" }}>
-            Homepage Content
-          </h2>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-              marginBottom: "35px",
-            }}
-          >
+          <div className="settings-column">
             <input
               type="text"
               name="heroTitle"
               value={settings.heroTitle}
               onChange={handleChange}
               placeholder="Hero Title"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <textarea
@@ -214,34 +159,20 @@ const Settings = () => {
               onChange={handleChange}
               placeholder="Hero Subtitle"
               rows="4"
-              style={{
-                ...inputStyle,
-                resize: "none",
-              }}
+              className="settings-textarea"
             />
           </div>
 
-          {/* SOCIAL LINKS */}
+          <h2>Social Media Links</h2>
 
-          <h2 style={{ marginBottom: "20px" }}>
-            Social Media Links
-          </h2>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "20px",
-            }}
-          >
+          <div className="settings-grid">
             <input
               type="text"
               name="facebook"
               value={settings.facebook}
               onChange={handleChange}
               placeholder="Facebook Link"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <input
@@ -250,7 +181,7 @@ const Settings = () => {
               value={settings.instagram}
               onChange={handleChange}
               placeholder="Instagram Link"
-              style={inputStyle}
+              className="settings-input"
             />
 
             <input
@@ -259,28 +190,17 @@ const Settings = () => {
               value={settings.tiktok}
               onChange={handleChange}
               placeholder="TikTok Link"
-              style={inputStyle}
+              className="settings-input"
             />
           </div>
 
-          {/* SAVE BUTTON */}
-
           <button
             onClick={handleSave}
-            style={{
-              marginTop: "35px",
-              background: "#facc15",
-              color: "black",
-              border: "none",
-              padding: "14px 28px",
-              borderRadius: "10px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              fontSize: "16px",
-            }}
+            className="settings-save-btn"
           >
             Save Settings
           </button>
+
         </div>
       </div>
     </AdminLayout>

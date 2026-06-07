@@ -18,26 +18,34 @@
   padding: 24px 16px;
 
   overflow-y: auto;
-
   flex-shrink: 0;
 
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
 }
+
+/* LOGO */
 
 .admin-logo {
   margin-bottom: 35px;
-  padding: 0 10px;
+  padding: 0 10px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .admin-logo h2 {
   margin: 0;
-  font-size: 32px;
+
+  font-size: 30px;
   font-weight: 800;
+
   line-height: 1.1;
+  letter-spacing: 1px;
+
   color: white;
 }
 
-.admin-nav {
+/* LINKS */
+
+.admin-links {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -50,7 +58,7 @@
 
   padding: 14px 16px;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   color: #dbeafe;
   text-decoration: none;
@@ -61,17 +69,31 @@
   transition: all 0.25s ease;
 }
 
+.admin-link svg {
+  font-size: 17px;
+  min-width: 17px;
+}
+
 .admin-link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
   color: white;
+  transform: translateX(3px);
 }
 
 .admin-link.active {
-  background: #2563eb;
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
   color: white;
 
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  box-shadow:
+    0 10px 20px rgba(37,99,235,.25);
 }
+
+/* LOGOUT */
 
 .logout-btn {
   width: 100%;
@@ -80,7 +102,7 @@
   color: #111827;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
 
   padding: 14px;
 
@@ -94,18 +116,51 @@
   justify-content: center;
   gap: 10px;
 
-  transition: 0.3s;
+  transition: all 0.25s ease;
 }
 
 .logout-btn:hover {
   background: #eab308;
+  transform: translateY(-2px);
 }
+
+.logout-btn svg {
+  font-size: 16px;
+}
+
+/* SCROLLBAR */
 
 .admin-sidebar::-webkit-scrollbar {
   width: 6px;
 }
 
+.admin-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .admin-sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.18);
   border-radius: 10px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+  .admin-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+
+  .admin-logo h2 {
+    font-size: 26px;
+  }
+
+  .admin-link {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
 }

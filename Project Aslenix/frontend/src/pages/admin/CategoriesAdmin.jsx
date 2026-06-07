@@ -8,6 +8,14 @@ const CategoriesAdmin = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Active");
   const [editingId, setEditingId] = useState(null);
+  const [search, setSearch] = useState("");
+    const filteredCategories = categories.filter((category) =>
+    category.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase())
+  );
+  
+  
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -72,7 +80,6 @@ const CategoriesAdmin = () => {
     alert(error.message);
     return;
   }
-
   fetchCategories();
 };
 const editCategory = (category) => {
@@ -107,50 +114,107 @@ const updateCategory = async () => {
     <AdminLayout>
       <div
         style={{
-          padding: "30px",
+          padding: "10px 0",
           width: "100%",
         }}
       >
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: "700",
-            color: "#0f172a",
-            marginBottom: "25px",
-          }}
-        >
-          Categories 📂
-        </h1>
-          <div
-  style={{
-    background: "#ffffff",
-    borderRadius: "16px",
-    padding: "20px",
-    marginBottom: "20px",
-    border: "1px solid #e2e8f0",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-    width: "250px",
-  }}
->
-  <h3
-    style={{
-      color: "#64748b",
-      margin: 0,
-      fontSize: "14px",
-    }}
-  >
-    Total Categories
-  </h3>
-
+        <div style={{ marginBottom: "24px" }}>
   <h1
     style={{
-      margin: "10px 0 0",
+      fontSize: "54px",
+      fontWeight: "800",
       color: "#0f172a",
-      fontSize: "36px",
+      marginBottom: "10px",
+      lineHeight: "1",
     }}
   >
-    {categories.length}
+    Categories
   </h1>
+
+  <p
+    style={{
+      color: "#64748b",
+      fontSize: "16px",
+    }}
+  >
+    Manage product categories and organization.
+  </p>
+</div>
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "20px",
+    marginBottom: "25px",
+  }}
+>
+  <div style={statsCard}>
+    <p
+      style={{
+        color: "#64748b",
+        marginBottom: "8px",
+      }}
+    >
+      Total Categories
+    </p>
+
+    <h2
+      style={{
+        fontSize: "40px",
+        color: "#0f172a",
+      }}
+    >
+      {categories.length}
+    </h2>
+  </div>
+
+  <div style={statsCard}>
+    <p
+      style={{
+        color: "#64748b",
+        marginBottom: "8px",
+      }}
+    >
+      Active Categories
+    </p>
+
+    <h2
+      style={{
+        fontSize: "40px",
+        color: "#16a34a",
+      }}
+    >
+      {
+        categories.filter(
+          (c) => c.status === "Active"
+        ).length
+      }
+    </h2>
+  </div>
+
+  <div style={statsCard}>
+    <p
+      style={{
+        color: "#64748b",
+        marginBottom: "8px",
+      }}
+    >
+      Inactive Categories
+    </p>
+
+    <h2
+      style={{
+        fontSize: "40px",
+        color: "#dc2626",
+      }}
+    >
+      {
+        categories.filter(
+          (c) => c.status === "Inactive"
+        ).length
+      }
+    </h2>
+  </div>
 </div>
         {/* Add Category Card */}
         <div
@@ -229,7 +293,31 @@ const updateCategory = async () => {
             </button>
           </div>
         </div>
-
+<div
+  style={{
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "20px",
+    marginBottom: "20px",
+    border: "1px solid #e2e8f0",
+  }}
+>
+  <input
+    type="text"
+    placeholder="🔍 Search categories..."
+    value={search}
+    onChange={(e) =>
+      setSearch(e.target.value)
+    }
+    style={{
+      width: "100%",
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid #e2e8f0",
+      fontSize: "15px",
+    }}
+  />
+</div>
         {/* Categories Table */}
         <div
           style={{
@@ -260,7 +348,7 @@ const updateCategory = async () => {
             </thead>
               
             <tbody>
-              {categories.map((category) => (
+              {filteredCategories.map((category) => (
                 <tr key={category.id}>
                   <td style={tdStyle}>
                     {category.name}
@@ -354,13 +442,18 @@ const tdStyle = {
   color: "#0f172a",
 };
 
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "10px",
+const statsCard = {
+  background: "#fff",
+  borderRadius: "20px",
+  padding: "24px",
   border: "1px solid #e2e8f0",
-  outline: "none",
-  background: "#f8fafc",
-  color: "#0f172a",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
 };
-
+const inputStyle = {
+  padding: "14px",
+  borderRadius: "12px",
+  border: "1px solid #e2e8f0",
+  background: "#f8fafc",
+  fontSize: "15px",
+};
 export default CategoriesAdmin;
