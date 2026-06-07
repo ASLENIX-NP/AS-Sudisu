@@ -484,13 +484,14 @@ body {
 
   padding: 0 25px;
 
-  background: #7e595949;
+  background: #80545449;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
 
-  color: rgb(148, 134, 134);
+  color: #ffffff;
   font-size: 18px;
-  font-weight: 600;
+
+
 
   outline: none;
 }
@@ -513,15 +514,23 @@ body {
   height: 60px !important;
 
   background: #741616;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 185, 7, 0.36);
   border-radius: 18px;
 
-  color: rgba(139, 123, 123, 0.482);
+  color: rgba(248, 245, 245, 0.967);
   font-size: 20px;
   font-weight: 700;
 
   text-align: center;
   padding: 0;
+}
+
+.phone-wrapper input[type="tel"]:focus {
+  border-color: #ffc31a;
+
+  background: rgba(249, 226, 226, 0.19);
+
+  box-shadow: 0 0 0 4px rgba(255, 195, 26, 0.12);
 }
 
 /* PHONE NUMBER */
@@ -542,3 +551,6 @@ body {
   font-size: 35px !important;
   text-align: center !important;
 }
+
+
+

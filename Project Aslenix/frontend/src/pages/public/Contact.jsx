@@ -41,6 +41,16 @@ const Contact = () => {
     message: "",
   });
 
+  const countryPhoneRules = {
+    Nepal: 10,
+    India: 10,
+    Bangladesh: 11,
+    Pakistan: 10,
+    "Sri Lanka": 9,
+    Bhutan: 8,
+    Maldives: 7,
+  };
+
   const handleCountryChange = (e) => {
     const selectedCountry = southAsianCountries.find(
       (country) => country.name === e.target.value,
@@ -62,6 +72,18 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const requiredLength = countryPhoneRules[formData.country];
+
+    if (requiredLength && formData.phone.length !== requiredLength) {
+      alert(`Phone number must contain exactly ${requiredLength} digits`);
+      return;
+    }
+
+    if (formData.country === "Nepal" && !/^9[78]\d{8}$/.test(formData.phone)) {
+      alert("Please enter a valid Nepal mobile number");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/inquiries", {
@@ -96,10 +118,11 @@ const Contact = () => {
         alert("Failed to send inquiry");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       alert("Server error");
     }
   };
+
   return (
     <>
       <Navbar />
@@ -125,7 +148,6 @@ const Contact = () => {
 
             <form className="contact-form" onSubmit={handleSubmit}>
               {/* NAME */}
-
               <div className="form-group">
                 <label>Full Name</label>
 
@@ -137,9 +159,7 @@ const Contact = () => {
                   onChange={handleChange}
                 />
               </div>
-
               {/* COUNTRY */}
-
               <div className="form-group">
                 <label>Country</label>
 
@@ -157,9 +177,7 @@ const Contact = () => {
                   ))}
                 </select>
               </div>
-
               {/* PROVINCE */}
-
               <div className="form-group">
                 <label>Province / State</label>
 
@@ -171,9 +189,7 @@ const Contact = () => {
                   onChange={handleChange}
                 />
               </div>
-
               {/* DISTRICT */}
-
               <div className="form-group">
                 <label>District / City</label>
 
@@ -185,9 +201,7 @@ const Contact = () => {
                   onChange={handleChange}
                 />
               </div>
-
               {/* PHONE */}
-
               <div className="form-group">
                 <label>Phone Number</label>
 
@@ -202,15 +216,54 @@ const Contact = () => {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="98XXXXXXXX"
                     value={formData.phone}
-                    onChange={handleChange}
+                    placeholder={
+                      formData.country === "Nepal"
+                        ? "9800000000"
+                        : "Phone Number"
+                    }
+                    onChange={(e) => {
+                      let value = e.target.value.replace(/\D/g, "");
+
+                      // Prevent user from typing country code again
+                      if (
+                        formData.country === "Nepal" &&
+                        value.startsWith("977")
+                      ) {
+                        value = value.slice(3);
+                      }
+
+                      if (
+                        formData.country === "India" &&
+                        value.startsWith("91")
+                      ) {
+                        value = value.slice(2);
+                      }
+
+                      if (
+                        formData.country === "Bangladesh" &&
+                        value.startsWith("880")
+                      ) {
+                        value = value.slice(3);
+                      }
+
+                      const maxLength =
+                        countryPhoneRules[formData.country] || 15;
+
+                      value = value.slice(0, maxLength);
+
+                      setFormData({
+                        ...formData,
+                        phone: value,
+                      });
+                    }}
+                    maxLength={countryPhoneRules[formData.country] || 15}
+                    required
                   />
                 </div>
               </div>
 
               {/* EMAIL */}
-
               <div className="form-group">
                 <label>Email Address</label>
 
@@ -222,9 +275,7 @@ const Contact = () => {
                   onChange={handleChange}
                 />
               </div>
-
               {/* MESSAGE */}
-
               <div className="form-group full-width">
                 <label>Your Message</label>
 
@@ -236,9 +287,7 @@ const Contact = () => {
                   onChange={handleChange}
                 ></textarea>
               </div>
-
               {/* BUTTON */}
-
               <button type="submit" className="contact-submit-btn">
                 Send Message
               </button>

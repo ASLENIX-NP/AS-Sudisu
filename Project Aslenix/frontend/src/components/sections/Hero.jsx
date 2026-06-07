@@ -29,7 +29,9 @@ const Hero = () => {
             Handcrafted with tradition, purity, and rich flavors of Nepal.
           </p>
 
-          <button className="hero-btn">Explore Our Products →</button>
+          <button className="hero-btn" onClick={() => navigate("/products")}>
+            Explore Our Products →
+          </button>
         </div>
 
         {/* RIGHT SIDE (NO hero1/hero2 ERROR ANYMORE) */}
