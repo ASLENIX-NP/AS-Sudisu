@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
 
 import { getProducts } from "../../services/productService";
 
 import Navbar from "../../components/common/Navbar";
-
 import Footer from "../../components/common/Footer";
+
+/* REVIEW COMPONENT */
+import Review from "./Review";
 
 import "./ProductDetails.css";
 
@@ -17,7 +18,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [id]);
 
   const fetchProduct = async () => {
     const products = await getProducts();
@@ -74,6 +75,9 @@ const ProductDetails = () => {
           </p>
         </div>
       </div>
+
+      {/* REVIEWS SECTION */}
+      <Review productId={product.id} />
 
       <Footer />
     </>

@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
 import "../../styles/dashboard.css";
+import { useNavigate } from "react-router-dom";
 
 import {
   FaUsers,
   FaPepperHot,
   FaFolder,
   FaCertificate,
-  FaBoxOpen,
-  FaCog,
+  FaStar,
+  FaBlog,
 } from "react-icons/fa";
 
 const Dashboard = () => {
@@ -17,7 +18,10 @@ const Dashboard = () => {
   const [inquiryCount, setInquiryCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
   const [certificateCount, setCertificateCount] = useState(0);
-
+const [reviewCount, setReviewCount] = useState(0);
+const [blogCount, setBlogCount] = useState(0);
+const navigate = useNavigate();
+const [pendingReviews, setPendingReviews] = useState(0);
   useEffect(() => {
     fetchStats();
   }, []);
@@ -38,11 +42,24 @@ const Dashboard = () => {
     const { count: certificates } = await supabase
       .from("certificates")
       .select("*", { count: "exact", head: true });
+    const { count: reviews } = await supabase
+  .from("reviews")
+  .select("*", { count: "exact", head: true });
+const { count: pending } = await supabase
+  .from("reviews")
+  .select("*", { count: "exact", head: true })
+  .eq("status", "Pending");
+const { count: blogs } = await supabase
+  .from("blog")
+  .select("*", { count: "exact", head: true });  
 
     setProductCount(products || 0);
     setInquiryCount(inquiries || 0);
     setCategoryCount(categories || 0);
     setCertificateCount(certificates || 0);
+    setReviewCount(reviews || 0);
+    setBlogCount(blogs || 0);
+    setPendingReviews(pending || 0);
   };
 
   return (
@@ -103,6 +120,32 @@ const Dashboard = () => {
       <p>Uploaded documents</p>
     </div>
   </div>
+<div className="stat-card">
+  <FaStar className="stat-icon reviews" />
+
+  <div>
+    <span className="card-label">Reviews</span>
+    <h2>{reviewCount}</h2>
+    <p>Customer reviews</p>
+  </div>
+</div>
+<div className="stat-card">
+  <div>
+    <span className="card-label">Pending Reviews</span>
+    <h2>{pendingReviews}</h2>
+    <p>Waiting for approval</p>
+  </div>
+</div>
+
+<div className="stat-card">
+  <FaBlog className="stat-icon blogs" />
+
+  <div>
+    <span className="card-label">Blog Posts</span>
+    <h2>{blogCount}</h2>
+    <p>Published articles</p>
+  </div>
+</div>
 
 </div>
         {/* MAIN GRID */}
@@ -152,30 +195,32 @@ const Dashboard = () => {
           <div className="dashboard-card">
             <h2>Quick Actions</h2>
 
-            <div className="quick-actions">
+ <div className="quick-actions">
 
-  <button>
+  <button onClick={() => navigate("/admin/products")}>
     + Add Product
   </button>
 
-  <button>
+  <button onClick={() => navigate("/admin/categories")}>
     + Add Category
   </button>
 
-  <button>
-    ↑ Upload Certificate
+  <button onClick={() => navigate("/admin/blog")}>
+    + Create Blog
   </button>
 
-  <button>
-    📩 View Inquiries
+  <button onClick={() => navigate("/admin/reviews")}>
+    ⭐ Manage Reviews
+  </button>
+
+  <button onClick={() => navigate("/admin/announcements")}>
+    📢 Announcements
   </button>
 
 </div>
           </div>
 
         </div>
-
-        {/* SYSTEM STATUS */}
 
 {/* SYSTEM STATUS */}
 
