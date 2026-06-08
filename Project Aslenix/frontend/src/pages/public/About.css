@@ -57,9 +57,9 @@
   font-size: 72px;
   font-weight: 800;
 
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 
-  color: white;
+  color: rgb(209, 139, 33);
 }
 
 /* =========================
@@ -74,6 +74,7 @@
 
   margin-bottom: 24px;
 }
+
 
 /* =========================
    RESPONSIVE
@@ -90,6 +91,7 @@
 
   .about-text p {
     font-size: 16px;
+    color: #d01515;
   }
 } /* FLOATING NAV BUTTONS */
 
@@ -191,4 +193,19 @@
   .nav-right {
     display: none !important;
   }
+}
+.our-reach {
+  width: 100%;
+  padding: 40px 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.reach-image {
+  width: 100%;
+  max-width: 1400px;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }

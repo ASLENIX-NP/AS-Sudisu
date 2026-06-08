@@ -3,6 +3,7 @@ import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import cookingWomen from "../../assets/images/cooking women.jpg";
+import reachImage from "../../assets/images/AboutUS.png";
 
 import mixMasala from "../../assets/spice/mix.jpg";
 import meatMasala from "../../assets/spice/meat.jpg";
@@ -16,12 +17,19 @@ const About = () => {
       <Navbar />
 
       {/* FLOATING BUTTONS */}
-
       <section
         className="about-section"
         style={{
-          background:
-              `url(${cookingWomen}) center/cover no-repeat`,
+          backgroundImage: `
+      linear-gradient(
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.55)
+      ),
+      url(${cookingWomen})
+    `,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div className="about-container">
@@ -46,7 +54,13 @@ const About = () => {
           </div>
         </div>
       </section>
-
+      <section className="our-reach">
+        <img
+          src={reachImage}
+          alt="Our Reach Across Nepal"
+          className="reach-image"
+        />
+      </section>
       <Footer />
     </>
   );

@@ -18,16 +18,16 @@ const ProductsPage = () => {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeProduct, setActiveProduct] = useState(null);
+  const [sliderProducts, setSliderProducts] = useState([]);
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(true);
   const productsPerPage = 24;
 
   const totalPages = Math.ceil((products?.length || 0) / productsPerPage);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-
+  const [currentSlide, setCurrentSlide] = useState(0);
   const currentProducts = (products || []).slice(
     indexOfFirstProduct,
     indexOfLastProduct,
@@ -38,35 +38,15 @@ const ProductsPage = () => {
   }, []);
 
   const fetchProducts = async () => {
-    const data = await getProducts();
-    setProducts(data);
+    try {
+      const data = await getProducts();
+      setProducts(data || []);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
-  const newProducts = [
-    {
-      id: 1,
-      name: "Mix Masala",
-      image: mixMasala,
-    },
-    {
-      id: 2,
-      name: "Meat Masala",
-      image: meatMasala,
-    },
-    {
-      id: 3,
-      name: "Garam Masala",
-      image: garamMasala,
-    },
-  ];
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveProduct((prev) =>
-        prev === newProducts.length - 1 ? 0 : prev + 1,
-      );
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [newProducts.length]);
 
   return (
     <>
@@ -79,31 +59,7 @@ const ProductsPage = () => {
           className="sudisu-main-products"
         />
       </div>
-      <section className="new-products-section">
-        <div className="new-products-header">
-          <div className="new-badge">NEW PRODUCTS</div>
 
-          <p>
-            Discover our latest Sudisu spice products crafted with authentic
-            Nepali flavours.
-          </p>
-        </div>
-
-        <div className="new-products-slider">
-          {newProducts.map((item) => (
-            <div
-              key={item.id}
-              className={`new-product-card ${
-                activeProduct === item.id ? "active" : ""
-              }`}
-              onClick={() => setActiveProduct(item.id)}
-            >
-              <img src={item.image} alt={item.name} />
-              <h3>{item.name}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="products-page">
         <div className="products-header">
