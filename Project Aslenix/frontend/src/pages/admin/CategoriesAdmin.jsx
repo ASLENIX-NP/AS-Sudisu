@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AdminLayout from "../../layouts/AdminLayout";
+import "../../styles/CategoriesAdmin.css";
 
 const CategoriesAdmin = () => {
   const [categories, setCategories] = useState([]);
@@ -112,43 +113,18 @@ const updateCategory = async () => {
 };
   return (
     <AdminLayout>
-      <div
-        style={{
-          padding: "10px 0",
-          width: "100%",
-        }}
-      >
-        <div style={{ marginBottom: "24px" }}>
-  <h1
-    style={{
-      fontSize: "54px",
-      fontWeight: "800",
-      color: "#0f172a",
-      marginBottom: "10px",
-      lineHeight: "1",
-    }}
-  >
+      <div className="categories-page">
+        <div className="categories-header">
+ <h1 className="categories-title">
     Categories
   </h1>
 
-  <p
-    style={{
-      color: "#64748b",
-      fontSize: "16px",
-    }}
-  >
+  <p className="categories-subtitle">
     Manage product categories and organization.
   </p>
 </div>
-<div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "20px",
-    marginBottom: "25px",
-  }}
->
-  <div style={statsCard}>
+<div className="categories-stats">
+ <div className="category-stat-card">
     <p
       style={{
         color: "#64748b",
@@ -168,7 +144,7 @@ const updateCategory = async () => {
     </h2>
   </div>
 
-  <div style={statsCard}>
+  <div className="category-stat-card">
     <p
       style={{
         color: "#64748b",
@@ -192,7 +168,7 @@ const updateCategory = async () => {
     </h2>
   </div>
 
-  <div style={statsCard}>
+  <div className="category-stat-card">
     <p
       style={{
         color: "#64748b",
@@ -293,30 +269,8 @@ const updateCategory = async () => {
             </button>
           </div>
         </div>
-<div
-  style={{
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "20px",
-    marginBottom: "20px",
-    border: "1px solid #e2e8f0",
-  }}
->
-  <input
-    type="text"
-    placeholder="🔍 Search categories..."
-    value={search}
-    onChange={(e) =>
-      setSearch(e.target.value)
-    }
-    style={{
-      width: "100%",
-      padding: "14px",
-      borderRadius: "12px",
-      border: "1px solid #e2e8f0",
-      fontSize: "15px",
-    }}
-  />
+<div className="categories-search">
+ className="categories-search-input"
 </div>
         {/* Categories Table */}
         <div

@@ -26,6 +26,7 @@ import Certificates from "./pages/admin/Certificates";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import AboutAdmin from "./pages/admin/AboutAdmin";
 import Announcements from "./pages/admin/Announcements";
+import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -138,6 +139,14 @@ function App() {
   element={
     <AdminRoute>
       <Announcements />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/reviews"
+  element={
+    <AdminRoute>
+      <ReviewsAdmin />
     </AdminRoute>
   }
 />

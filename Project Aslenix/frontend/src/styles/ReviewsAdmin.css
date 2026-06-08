@@ -1,0 +1,124 @@
+.reviews-page {
+  padding: 10px 0;
+}
+
+.reviews-header {
+  margin-bottom: 24px;
+}
+
+.reviews-title {
+  font-size: 54px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.reviews-subtitle {
+  color: #64748b;
+  font-size: 16px;
+}
+
+.reviews-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.review-stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.review-stat-card span {
+  color: #64748b;
+}
+
+.review-stat-card h2 {
+  margin-top: 10px;
+  font-size: 36px;
+  color: #0f172a;
+}
+
+.reviews-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.review-search {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.reviews-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reviews-table th,
+.reviews-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-badge.approved {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-badge.rejected {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.approve-btn,
+.reject-btn,
+.delete-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.approve-btn {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.reject-btn {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
