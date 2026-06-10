@@ -11,6 +11,7 @@ const CategoriesAdmin = () => {
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
     const filteredCategories = categories.filter((category) =>
+      
     category.name
       ?.toLowerCase()
       .includes(search.toLowerCase())
@@ -143,7 +144,19 @@ const updateCategory = async () => {
       {categories.length}
     </h2>
   </div>
+<div className="category-upload-box">
+  <label className="upload-label">
+    Category Image
+  </label>
 
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setImage(e.target.files[0])
+    }
+  />
+</div>
   <div className="category-stat-card">
     <p
       style={{
@@ -193,55 +206,44 @@ const updateCategory = async () => {
   </div>
 </div>
         {/* Add Category Card */}
-        <div
-          style={{
-            background: "#ffffff",
-            borderRadius: "20px",
-            padding: "25px",
-            border: "1px solid #e2e8f0",
-            marginBottom: "25px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-          }}
-        >
-          <h2
-            style={{
-              marginBottom: "20px",
-              color: "#0f172a",
-            }}
-          >
-            Add Category
-          </h2>
+        <div className="categories-form-card">
+         <h2
+  style={{
+    marginBottom: "8px",
+    color: "#0f172a",
+  }}
+>
+  {editingId
+    ? "Edit Category"
+    : "Create New Category"}
+</h2>
 
-          <div
-            style={{
-              display: "grid",
-              gap: "15px",
-            }}
-          >
+<p className="form-subtitle">
+  Organize your products into groups and
+  make browsing easier for customers.
+</p>
+         <div className="categories-form-grid">
             <input
               placeholder="Category Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={inputStyle}
+              className="categories-input"
             />
 
             <textarea
-              placeholder="Description"
-              value={description}
-              onChange={(e) =>
-                setDescription(e.target.value)
-              }
-              style={{
-                ...inputStyle,
-                minHeight: "100px",
-              }}
-            />
+  className="categories-input categories-textarea"
+  placeholder="Description"
+  value={description}
+  onChange={(e) =>
+    setDescription(e.target.value)
+  }
+/>
 
             <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              style={inputStyle}
-            >
+  className="categories-input"
+  value={status}
+  onChange={(e) => setStatus(e.target.value)}
+>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
@@ -252,16 +254,7 @@ const updateCategory = async () => {
               ? updateCategory
               : addCategory
                }
-              style={{
-                background: "#2563eb",
-                color: "white",
-                border: "none",
-                padding: "12px 20px",
-                borderRadius: "10px",
-                cursor: "pointer",
-                fontWeight: "600",
-                width: "fit-content",
-              }}
+              className="categories-save-btn"
             >
                {editingId
     ? "Update Category"
@@ -270,24 +263,17 @@ const updateCategory = async () => {
           </div>
         </div>
 <div className="categories-search">
- className="categories-search-input"
+  <input
+    type="text"
+    className="categories-search-input"
+    placeholder="🔍 Search categories..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
 </div>
         {/* Categories Table */}
-        <div
-          style={{
-            background: "#ffffff",
-            borderRadius: "20px",
-            padding: "25px",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-            }}
-          >
+        <div className="categories-table-card">
+          <table className="categories-table">
             <thead>
               <tr
                 style={{
@@ -334,43 +320,24 @@ const updateCategory = async () => {
 </td>
 
 <td style={tdStyle}>
-  <div
-    style={{
-      display: "flex",
-      gap: "10px",
-    }}
-  >
+  <div className="action-buttons">
     <button
-      onClick={() =>
-        editCategory(category)
-      }
-      style={{
-        background: "#eff6ff",
-        color: "#2563eb",
-        border: "1px solid #bfdbfe",
-        padding: "8px 12px",
-        borderRadius: "8px",
-        cursor: "pointer",
-      }}
-    >
-      ✏️ Edit
-    </button>
+  className="edit-btn"
+  onClick={() =>
+    editCategory(category)
+  }
+>
+  ✏️ Edit
+</button>
 
-    <button
-      onClick={() =>
-        deleteCategory(category.id)
-      }
-      style={{
-        background: "#fef2f2",
-        color: "#dc2626",
-        border: "1px solid #fecaca",
-        padding: "8px 12px",
-        borderRadius: "8px",
-        cursor: "pointer",
-      }}
-    >
-      🗑 Delete
-    </button>
+   <button
+  className="delete-btn"
+  onClick={() =>
+    deleteCategory(category.id)
+  }
+>
+  🗑 Delete
+</button>
   </div>
 </td>
                 </tr>
@@ -403,11 +370,5 @@ const statsCard = {
   border: "1px solid #e2e8f0",
   boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
 };
-const inputStyle = {
-  padding: "14px",
-  borderRadius: "12px",
-  border: "1px solid #e2e8f0",
-  background: "#f8fafc",
-  fontSize: "15px",
-};
+
 export default CategoriesAdmin;
