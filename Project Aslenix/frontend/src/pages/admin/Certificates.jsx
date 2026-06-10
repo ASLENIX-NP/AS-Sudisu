@@ -26,37 +26,38 @@ const Certificates = () => {
     }
   };
 
-  const submit = async () => {
-    try {
-      const formData = new FormData();
+const submit = async () => {
+  try {
+    const formData = new FormData();
 
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("image", image);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", image);
 
-      await axios.post(
-        "http://localhost:5000/api/certificates",
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
-      );
+    const res = await axios.post(
+      "http://localhost:5000/api/certificates",
+      formData
+    );
 
-      alert("Certificate Added");
+    console.log("SUCCESS:", res.data);
 
-      setTitle("");
-      setDescription("");
-      setImage(null);
+    alert("Certificate Added Successfully");
 
-      fetchCertificates();
-    } catch (err) {
-      console.log(err);
-      alert("Error saving certificate");
-    }
-  };
+    setTitle("");
+    setDescription("");
+    setImage(null);
+
+    fetchCertificates();
+  } catch (err) {
+    console.log("ERROR:", err);
+
+    alert(
+      err?.response?.data?.error ||
+      err.message ||
+      "Upload Failed"
+    );
+  }
+};
 
   const deleteCertificate = async (id) => {
     const confirmed = window.confirm(
@@ -141,7 +142,14 @@ const Certificates = () => {
                 setImage(e.target.files[0])
               }
             />
-
+{image && (
+  <div className="cert-preview">
+    <img
+      src={URL.createObjectURL(image)}
+      alt="preview"
+    />
+  </div>
+)}
           </div>
 
           <textarea
@@ -188,6 +196,14 @@ const Certificates = () => {
                 />
 
                 <div className="cert-card-body">
+                  <button
+  className="cert-view-btn"
+  onClick={() =>
+    window.open(c.image_url, "_blank")
+  }
+>
+  View Certificate
+</button>
 
                   <h3>{c.title}</h3>
 

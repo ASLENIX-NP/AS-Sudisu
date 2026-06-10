@@ -16,7 +16,7 @@ const app = express();
 /* =========================
    SECURITY MIDDLEWARE
 ========================= */
-app.use("/api/certificates", certificateRoutes);
+
 app.use(helmet());
 
 /* =========================
@@ -44,7 +44,7 @@ app.use(
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-
+app.use("/api/certificates", certificateRoutes);
 /* =========================
    API TEST
 ========================= */

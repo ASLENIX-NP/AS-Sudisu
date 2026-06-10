@@ -152,11 +152,9 @@
 
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(300px, 1fr)
-  );
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 350px));
+  justify-content: center;
+  gap: 25px;
 }
 
 .cert-card {
@@ -231,4 +229,65 @@
   .cert-form {
     padding: 20px;
   }
+}
+/* Upload Box */
+
+.cert-form input[type="file"] {
+  padding: 12px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  cursor: pointer;
+}
+
+.cert-form input[type="file"]:hover {
+  border-color: #2563eb;
+}
+
+/* Certificate Preview */
+
+.cert-preview {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.cert-preview img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Certificate Image */
+.cert-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #f8fafc;
+  padding: 10px;
+}
+
+/* Certificate Title */
+
+.cert-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* View Button */
+
+.cert-view-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.cert-view-btn:hover {
+  background: #1d4ed8;
 }
