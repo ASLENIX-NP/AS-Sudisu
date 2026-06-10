@@ -16,6 +16,8 @@ import ProductDetails from "./pages/public/ProductDetails";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
+import { Toaster } from "react-hot-toast";
+
 
 /* Admin Pages */
 import ProductsManager from "./pages/admin/ProductsManager";
@@ -34,6 +36,7 @@ function App() {
 
   return (
     <Router>
+      <Toaster position="top-right" />
       <Routes>
         {/* PUBLIC PAGES */}
 
@@ -42,7 +45,7 @@ function App() {
         <Route path="/products" element={<Products />} />
 
         <Route path="/products/:id" element={<ProductDetails />} />
-        
+
         <Route path="/admin/certificates" element={<Certificates />} />
 
         <Route path="/contact" element={<Contact />} />
@@ -119,37 +122,37 @@ function App() {
           }
         />
         <Route
-  path="/admin/about"
-  element={
-    <AdminRoute>
-      <AboutAdmin />
-    </AdminRoute>
-  }
-/>
+          path="/admin/about"
+          element={
+            <AdminRoute>
+              <AboutAdmin />
+            </AdminRoute>
+          }
+        />
         <Route
-  path="/admin/blog"
-  element={
-    <AdminRoute>
-      <BlogAdmin />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/announcements"
-  element={
-    <AdminRoute>
-      <Announcements />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/reviews"
-  element={
-    <AdminRoute>
-      <ReviewsAdmin />
-    </AdminRoute>
-  }
-/>
+          path="/admin/blog"
+          element={
+            <AdminRoute>
+              <BlogAdmin />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/announcements"
+          element={
+            <AdminRoute>
+              <Announcements />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/reviews"
+          element={
+            <AdminRoute>
+              <ReviewsAdmin />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </Router>
   );
