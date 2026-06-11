@@ -18,7 +18,6 @@ import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
 import { Toaster } from "react-hot-toast";
 
-
 /* Admin Pages */
 import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
@@ -35,6 +34,36 @@ import ResetPassword from "./pages/admin/ResetPassword";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
+  }, []);
+
+  useEffect(() => {
+    const trackVisitor = async () => {
+      console.log("Visitor tracking started");
+      const existingVisitor = localStorage.getItem("sudisu_visitor");
+
+      if (existingVisitor) return;
+
+      const visitorId = crypto.randomUUID();
+
+      console.log("Generated Visitor ID:", visitorId);
+
+      localStorage.setItem("sudisu_visitor", visitorId);
+      const result = await supabase.from("Website_Visitors").insert([
+        {
+          visitor_id: visitorId,
+        },
+      ]);
+
+      console.log("Insert Result:", result);
+
+      if (result.error) {
+        console.error("Insert Error:", result.error);
+      } else {
+        console.log("Visitor inserted successfully");
+      }
+    };
+
+    trackVisitor();
   }, []);
 
   return (

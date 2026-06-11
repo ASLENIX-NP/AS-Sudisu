@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import "./Review.css";
 
-const Review = ({ productId }) => {
+const Review = ({ productId, productName }) => {
   const [reviews, setReviews] = useState([]);
 
   const [name, setName] = useState("");
@@ -44,6 +44,7 @@ const Review = ({ productId }) => {
           rating,
           review,
           product_id: productId,
+          product_name: productName,
           status: "Pending",
         },
       ]);

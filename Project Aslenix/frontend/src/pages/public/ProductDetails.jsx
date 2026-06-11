@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Review from "./Review";
 
 import "./ProductDetails.css";
+import { supabase } from "../../lib/supabase";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -42,23 +43,40 @@ const ProductDetails = () => {
       [name]: name === "rating" ? Number(value) : value,
     });
   };
+
   const handleSubmit = async () => {
     try {
-      await fetch("YOUR_API_OR_SUPABASE_ENDPOINT", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.id,
-          ...reviewData,
-        }),
-      });
+      const { error } = await supabase.from("reviews").insert([
+        {
+          name: reviewData.name,
+          rating: reviewData.rating,
+          review: reviewData.comment,
+
+          product_id: product.id,
+          product_name: product.name,
+
+          status: "Pending",
+        },
+      ]);
+
+      if (error) {
+        console.log(error);
+        toast.error("Failed to submit review");
+        return;
+      }
 
       toast.success("🎉 Review submitted successfully!");
 
-      setShowReview(false); // ✅ CLOSE POPUP
-      setReviewData({ name: "", rating: 5, comment: "" }); // reset
+      setShowReview(false);
+
+      setReviewData({
+        name: "",
+        rating: 5,
+        comment: "",
+      });
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
     }
   };
 
