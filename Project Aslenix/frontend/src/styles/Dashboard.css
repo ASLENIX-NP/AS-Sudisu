@@ -358,6 +358,29 @@
   color: #22c55e;
 }
 
+.system-status-card {
+  padding: 25px;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.status-online {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.status-update {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #888;
+}
+
 /* ========================================
    RESPONSIVE
 ======================================== */
@@ -517,4 +540,13 @@
   background: #ef4444;
 
   border-radius: 50%;
+}
+
+/* ========================================
+   SYSTEM STATUS
+======================================== */
+
+.status-offline {
+  color: #ef4444;
+  font-weight: 600;
 }

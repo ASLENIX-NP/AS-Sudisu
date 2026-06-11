@@ -26,11 +26,22 @@ const Dashboard = () => {
   const [productCount, setProductCount] = useState(0);
   const [inquiryCount, setInquiryCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
+  const [topProducts, setTopProducts] = useState([]);
   const [certificateCount, setCertificateCount] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
+  const [visitorCount, setVisitorCount] = useState(0);
   const [blogCount, setBlogCount] = useState(0);
   const navigate = useNavigate();
   const [pendingReviews, setPendingReviews] = useState(0);
+
+  const [databaseStatus, setDatabaseStatus] = useState("Checking...");
+
+  const [serverStatus, setServerStatus] = useState("Checking...");
+
+  const [reviewStatus, setReviewStatus] = useState("Checking...");
+
+  const [lastUpdated, setLastUpdated] = useState("");
+
   const chartData = [
     { day: "Mon", inquiries: 4 },
     { day: "Tue", inquiries: 8 },
@@ -85,6 +96,15 @@ const Dashboard = () => {
       .from("blog")
       .select("*", { count: "exact", head: true });
 
+    const { count: visitors, error: visitorError } = await supabase
+      .from("Website_Visitors")
+      .select("*", { count: "exact", head: true });
+
+    console.log("Visitor Count:", visitors);
+    console.log("Visitor Error:", visitorError);
+
+    setVisitorCount(visitors || 0);
+
     setProductCount(products || 0);
     setInquiryCount(inquiryCountValue || 0);
     setCategoryCount(categories || 0);
@@ -92,6 +112,54 @@ const Dashboard = () => {
     setReviewCount(reviews || 0);
     setBlogCount(blogs || 0);
     setPendingReviews(pending || 0);
+
+    const { data: approvedReviews } = await supabase
+      .from("reviews")
+      .select("product_id, product_name")
+      .eq("status", "Approved");
+
+    const productRanking = {};
+
+    approvedReviews?.forEach((review) => {
+      const id = review.product_id;
+
+      if (!productRanking[id]) {
+        productRanking[id] = {
+          id,
+          name: review.product_name,
+          reviewCount: 0,
+        };
+      }
+
+      productRanking[id].reviewCount += 1;
+    });
+
+    const sortedProducts = Object.values(productRanking)
+      .sort((a, b) => b.reviewCount - a.reviewCount)
+      .slice(0, 5);
+
+    setTopProducts(sortedProducts);
+    // DATABASE CHECK
+    const { error: dbError } = await supabase
+      .from("products")
+      .select("id")
+      .limit(1);
+
+    setDatabaseStatus(dbError ? "Disconnected" : "Connected");
+
+    // REVIEW SYSTEM CHECK
+    const { error: reviewError } = await supabase
+      .from("reviews")
+      .select("id")
+      .limit(1);
+
+    setReviewStatus(reviewError ? "Error" : "Working");
+
+    // SERVER CHECK
+    setServerStatus("Online");
+
+    // LAST UPDATED
+    setLastUpdated(new Date().toLocaleString());
   };
 
   return (
@@ -168,6 +236,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
         <div className="analytics-grid">
           {/* Chart */}
 
@@ -198,30 +267,16 @@ const Dashboard = () => {
               <h2>Top Products</h2>
             </div>
 
-            <div className="top-product">
-              <span>1</span>
-              <p>Timur Powder</p>
-            </div>
+            {topProducts.map((product, index) => (
+              <div key={product.id} className="top-product">
+                <span>{index + 1}</span>
 
-            <div className="top-product">
-              <span>2</span>
-              <p>Black Pepper</p>
-            </div>
-
-            <div className="top-product">
-              <span>3</span>
-              <p>Chilli Powder</p>
-            </div>
-
-            <div className="top-product">
-              <span>4</span>
-              <p>Cumin Seeds</p>
-            </div>
-
-            <div className="top-product">
-              <span>5</span>
-              <p>Coriander Powder</p>
-            </div>
+                <div>
+                  <p>{product.name}</p>
+                  <small>{product.reviewCount} Reviews</small>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Notifications */}
@@ -339,32 +394,58 @@ const Dashboard = () => {
 
         {/* SYSTEM STATUS */}
 
-        <div className="dashboard-card">
+        <div className="dashboard-card system-status-card">
           <h2>System Status</h2>
 
-          <div className="overview-grid">
-            <div className="overview-box">
-              <span>Total Products</span>
-              <h3>{productCount}</h3>
-            </div>
-
-            <div className="overview-box">
-              <span>Total Inquiries</span>
-              <h3>{inquiryCount}</h3>
-            </div>
-
-            <div className="overview-box">
-              <span>Database</span>
-
-              <div className="status-pill connected">● Connected</div>
-            </div>
-
-            <div className="overview-box">
-              <span>System</span>
-
-              <div className="status-pill online">● Online</div>
-            </div>
+          <div className="status-item">
+            <span>Website Status</span>
+            <span className="status-online">● Online</span>
           </div>
+
+          <div className="status-item">
+            <span>Database</span>
+
+            <span
+              className={
+                databaseStatus === "Connected"
+                  ? "status-online"
+                  : "status-offline"
+              }
+            >
+              ● {databaseStatus}
+            </span>
+          </div>
+
+          <div className="status-item">
+            <span>Server</span>
+
+            <span
+              className={
+                serverStatus === "Online" ? "status-online" : "status-offline"
+              }
+            >
+              ● {serverStatus}
+            </span>
+          </div>
+
+          <div className="status-item">
+            <span>Review System</span>
+
+            <span
+              className={
+                reviewStatus === "Working" ? "status-online" : "status-offline"
+              }
+            >
+              ● {reviewStatus}
+            </span>
+          </div>
+
+          <div className="status-item">
+            <span>Website Visitors</span>
+            <span className="status-online">👥 {visitorCount} Visits</span>
+          </div>
+
+          <p className="status-update">Last Updated: {lastUpdated}</p>
         </div>
 
         <div className="mini-stats">
@@ -381,6 +462,11 @@ const Dashboard = () => {
           <div className="mini-card">
             <h4>Blogs</h4>
             <span>{blogCount}</span>
+          </div>
+
+          <div className="mini-card">
+            <h4>Visitors</h4>
+            <span>{visitorCount}</span>
           </div>
         </div>
       </div>
