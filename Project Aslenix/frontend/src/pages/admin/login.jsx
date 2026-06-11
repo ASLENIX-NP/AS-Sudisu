@@ -4,61 +4,77 @@ import { supabase } from "../../lib/supabase";
 import "./login.css";
 
 const Login = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+e.preventDefault();
 
-    const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+const { data, error } =
+  await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-    if (data.user) {
-      navigate("/admin/dashboard");
-    }
-  };
+if (error) {
+  alert(error.message);
+  return;
+}
 
-  return (
-    <div className="login-page">
-      <div className="login-card">
-        <h1>ASLENIX ADMIN</h1>
+if (data.user) {
+  navigate("/admin/dashboard");
+}
 
-        <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Admin Email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-          />
+};
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
+return ( <div className="login-page"> <div className="login-card"> 
+<h1>SUDISU ADMIN</h1>
 
-          <button type="submit">
-            Login
-          </button>
-        </form>
+
+    <form onSubmit={handleLogin}>
+      <input
+        type="email"
+        placeholder="Admin Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <div className="login-links">
+        <button
+          type="button"
+          className="forgot-link"
+          onClick={() => navigate("/forgot-password")}
+        >
+          Forgot Password?
+        </button>
       </div>
-    </div>
-  );
+
+      <button type="submit">
+        Login
+      </button>
+
+      <p
+  className="back-site-link"
+  onClick={() => navigate("/")}
+>
+  ← Back to Website
+</p>
+    </form>
+  </div>
+</div>
+
+
+);
 };
 
 export default Login;

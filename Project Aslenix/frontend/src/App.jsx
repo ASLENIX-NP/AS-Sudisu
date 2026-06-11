@@ -29,6 +29,9 @@ import BlogAdmin from "./pages/admin/BlogAdmin";
 import AboutAdmin from "./pages/admin/AboutAdmin";
 import Announcements from "./pages/admin/Announcements";
 import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
+import ForgotPassword from "./pages/admin/ForgotPassword";
+import ResetPassword from "./pages/admin/ResetPassword";
+
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -153,6 +156,14 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
+<Route
+  path="/reset-password"
+  element={<ResetPassword />}
+/>
       </Routes>
     </Router>
   );
