@@ -45,37 +45,40 @@
 
 /* SMALL TEXT */
 .hero .hero-subtitle {
-  font-size: 20px;
-  letter-spacing: 3px;
-  color: #f1b613;
-  margin-bottom: 1px;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: #B30000;
+  font-weight: 700;
 }
-
 /* BIG TITLE */
 .hero .hero-title {
-  font-size: 60px;
-  font-weight: 700;
+  font-size: 72px;
+  font-weight: 800;
   line-height: 1.05;
+  color: #ffffff;
 }
-
 .hero .hero-title span {
   font-size: 69px;
   font-weight: 700;
   line-height: 1.05;
-  color: #ff2b2b;
+  color: #B30000;
 }
 
 .hero-line {
-  width: 230px;
-  height: 3px;
-  background: linear-gradient(90deg, #ff0000c4, #ada0a0);
-  margin: 15px 15px 30px 0;
-  border-radius: 10px;
+  width: 180px;
+  height: 4px;
+
+  background: #B30000;
+
+  border-radius: 20px;
+
+  margin: 20px 0;
 }
+
 /* DESCRIPTION */
 .hero .hero-desc {
   font-size: 20px;
-
+   color: #ffffff;
   opacity: 0.9;
   margin-top: 5px;
   margin-bottom: 25px;
@@ -84,21 +87,29 @@
 
 /* BUTTON */
 .hero .hero-btn {
-  padding: 11px 50px;
-  border: 1px solid #ef0404;
-  background: transparent;
-  color: rgb(234, 8, 8);
+  padding: 16px 38px;
+
+  background: #B30000;
+
+  border: none;
+
+  border-radius: 8px;
+
+  color: white;
+
   font-size: 16px;
-  font-weight: 70;
-  border-radius: 15px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition: all 0.3s ease;
 }
 
 .hero .hero-btn:hover {
-  background: #ff2b2b00;
-}
+  background: #8f0000;
 
+  transform: translateY(-3px);
+}
 /* RIGHT SIDE IMAGE */
 .hero .hero-right {
   position: relative;
@@ -162,7 +173,7 @@
   align-items: center;
   gap: 10px;
 
-  color: white;
+   color: #B30000;
 }
 
 /* icon */
@@ -173,14 +184,16 @@
 
 /* text styles */
 .hero .feature-title {
-  font-size: 10px;
+   font-size: 13px;
+  color: white;
   font-weight: 700;
   letter-spacing: 1px;
   margin-top: 2px;
 }
 
 .hero .feature-sub {
-  font-size: 11px;
+  font-size: 13px;
+  color: #d0d0d0;
   opacity: 0.8;
   margin-top: 4px;
 }
@@ -191,6 +204,8 @@
   height: 25px;
   background: rgba(255, 255, 255, 0.2);
 }
+
+
 
 /* responsive */
 @media (max-width: 768px) {

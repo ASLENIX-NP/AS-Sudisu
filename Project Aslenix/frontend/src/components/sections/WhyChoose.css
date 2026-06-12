@@ -1,94 +1,160 @@
+/* =========================
+   WHY CHOOSE SUDIISU
+========================= */
+
 .why {
-  padding: 100px 8%;
+  padding: 120px 8%;
 
-  background: #e1a244;
-
-  color: rgb(248, 234, 234);
+  background: #ffffff;
 
   text-align: center;
+
+  position: relative;
 }
+
+.why::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 120px;
+  height: 4px;
+
+  background: #B30000;
+}
+
+/* HEADING */
 
 .why h2 {
-  font-size: 50px;
+  font-size: 52px;
 
-  margin-bottom: 60px;
+  color: #111111;
+
+  margin-bottom: 15px;
+
+  font-weight: 700;
 }
 
+.why h2::after {
+  content: "";
+
+  display: block;
+
+  width: 80px;
+  height: 4px;
+
+  background: #B30000;
+
+  margin: 18px auto 0;
+
+  border-radius: 20px;
+}
+
+/* GRID */
+
 .why-grid {
+  margin-top: 60px;
+
   display: grid;
 
   grid-template-columns: repeat(4, 1fr);
 
-  gap: 25px;
+  gap: 30px;
 }
 
+/* CARD */
+
 .why-card {
-  background: #0c0801e5;
+  background: #111111;
 
-  padding: 40px 30px;
+  color: white;
 
-  border-radius: 20px;
+  padding: 45px 30px;
 
-  transition: 0.3s;
+  border-radius: 24px;
+
+  border-top: 5px solid #B30000;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.12);
+
+  transition: all .35s ease;
+
+  cursor: pointer;
 }
 
 .why-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-12px);
+
+  box-shadow:
+    0 25px 50px rgba(179,0,0,.25);
 }
+
+/* ICON TITLE */
 
 .why-card h3 {
-  color: #ebb214;
+  color: #ffffff;
 
-  margin-bottom: 20px;
+  font-size: 24px;
+
+  margin-bottom: 18px;
+
+  line-height: 1.4;
 }
-@media (max-width: 768px) {
-  .why-cards {
-    display: flex;
-    overflow-x: auto;
 
-    gap: 20px;
+/* DESCRIPTION */
 
-    scroll-snap-type: x mandatory;
+.why-card p {
+  color: #d0d0d0;
 
-    padding-bottom: 20px;
-  }
+  font-size: 15px;
 
-  .why-card {
-    min-width: 240px;
-    flex-shrink: 0;
-
-    scroll-snap-align: center;
-  }
-
-  .why-cards::-webkit-scrollbar {
-    display: none;
-  }
+  line-height: 1.8;
 }
-@media (max-width: 768px) {
-  .why-grid {
-    display: flex;
 
-    overflow-x: auto;
-    overflow-y: hidden;
+/* MOBILE */
 
-    gap: 20px;
+@media(max-width:1024px){
 
-    padding: 20px;
-
-    scroll-snap-type: x mandatory;
-
-    -webkit-overflow-scrolling: touch;
+  .why-grid{
+    grid-template-columns: repeat(2,1fr);
   }
 
-  .why-grid::-webkit-scrollbar {
-    display: none;
+}
+
+@media(max-width:768px){
+
+  .why{
+    padding:80px 20px;
   }
 
-  .why-card {
-    min-width: 280px;
+  .why h2{
+    font-size:36px;
+  }
 
-    flex-shrink: 0 0;
+  .why-grid{
+    display:flex;
 
-    scroll-snap-align: center;
+    overflow-x:auto;
+
+    gap:20px;
+
+    scroll-snap-type:x mandatory;
+
+    padding-bottom:10px;
+  }
+
+  .why-grid::-webkit-scrollbar{
+    display:none;
+  }
+
+  .why-card{
+    min-width:280px;
+
+    scroll-snap-align:center;
   }
 }

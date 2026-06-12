@@ -5,8 +5,9 @@ import { FaLeaf } from "react-icons/fa";
 import { GiCookingPot } from "react-icons/gi";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { FaTruckFast } from "react-icons/fa6";
-
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="hero">
       {/* BACKGROUND */}

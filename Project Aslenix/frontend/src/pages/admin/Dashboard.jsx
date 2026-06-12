@@ -34,6 +34,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [pendingReviews, setPendingReviews] = useState(0);
 
+  const [activities, setActivities] = useState([]);
+
   const [databaseStatus, setDatabaseStatus] = useState("Checking...");
 
   const [serverStatus, setServerStatus] = useState("Checking...");
@@ -139,6 +141,35 @@ const Dashboard = () => {
       .slice(0, 5);
 
     setTopProducts(sortedProducts);
+    // populate default activities and notifications so UI doesn't break
+    const activitiesArr = [
+      {
+        id: 1,
+        title: "Products Updated",
+        desc: "Inventory synchronized with database",
+        tag: "Today",
+      },
+      {
+        id: 2,
+        title: "Customer Inquiries",
+        desc: "Messages arriving in real-time",
+        tag: "Live",
+      },
+      {
+        id: 3,
+        title: "Certificates Active",
+        desc: "Public certificates available",
+        tag: "Online",
+      },
+      {
+        id: 4,
+        title: "Admin Settings",
+        desc: "System configuration accessible",
+        tag: "Ready",
+      },
+    ];
+    setActivities(activitiesArr);
+
     // DATABASE CHECK
     const { error: dbError } = await supabase
       .from("products")
@@ -179,7 +210,7 @@ const Dashboard = () => {
 
         {/* KPI CARDS */}
 
-        <div className="stats-grid">
+        <div className="dashboard-stats-grid">
           <div className="modern-kpi inquiries-card">
             <div className="kpi-left">
               <div className="kpi-icon-circle">
@@ -229,7 +260,7 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <span>Total Reviews</span>
+                <span>Approved Reviews</span>
                 <h2>{reviewCount}</h2>
                 <p className="positive">Customer feedback</p>
               </div>
@@ -237,13 +268,14 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Analytics: Chart + Right column (Top Products and Recent Activity) */}
         <div className="analytics-grid">
           {/* Chart */}
 
           <div className="dashboard-card chart-card">
             <h2>Inquiry Trend</h2>
 
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
@@ -260,66 +292,42 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* Products */}
+          {/* Right column: Top products and Recent Activity */}
+          <div className="right-column">
+            <div className="dashboard-card products-card">
+              <div className="card-header">
+                <h2>Top Products</h2>
+              </div>
 
-          <div className="dashboard-card products-card">
-            <div className="card-header">
-              <h2>Top Products</h2>
+              {topProducts.map((product, index) => (
+                <div key={product.id} className="top-product">
+                  <span>{index + 1}</span>
+
+                  <div>
+                    <p>{product.name}</p>
+                    <small>{product.reviewCount} Reviews</small>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {topProducts.map((product, index) => (
-              <div key={product.id} className="top-product">
-                <span>{index + 1}</span>
+            <div className="notif-activity-row">
+              <div className="dashboard-card recent-activity-card">
+                <h2>Recent Activity</h2>
 
-                <div>
-                  <p>{product.name}</p>
-                  <small>{product.reviewCount} Reviews</small>
+                <div className="activity-list compact">
+                  {activities.map((act) => (
+                    <div key={act.id} className="activity-item">
+                      <div>
+                        <strong>{act.title}</strong>
+                        <small>{act.desc}</small>
+                      </div>
+
+                      <span>{act.tag}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Notifications */}
-
-          <div className="dashboard-card notifications-card">
-            <div className="card-header">
-              <h2>Notifications</h2>
-            </div>
-
-            <div className="notification-item">
-              <div>
-                <strong>New inquiry received</strong>
-                <small>5 minutes ago</small>
-              </div>
-
-              <span className="notification-dot"></span>
-            </div>
-
-            <div className="notification-item">
-              <div>
-                <strong>Timur Powder stock is low</strong>
-                <small>10 minutes ago</small>
-              </div>
-
-              <span className="notification-dot"></span>
-            </div>
-
-            <div className="notification-item">
-              <div>
-                <strong>New review submitted</strong>
-                <small>1 hour ago</small>
-              </div>
-
-              <span className="notification-dot"></span>
-            </div>
-
-            <div className="notification-item">
-              <div>
-                <strong>Certificate uploaded</strong>
-                <small>2 hours ago</small>
-              </div>
-
-              <span className="notification-dot"></span>
             </div>
           </div>
         </div>
@@ -327,44 +335,6 @@ const Dashboard = () => {
         {/* MAIN GRID */}
 
         <div className="dashboard-grid">
-          <div className="dashboard-card">
-            <h2>Recent Activity</h2>
-
-            <div className="activity-list">
-              <div className="activity-item">
-                <div>
-                  <strong>Products Updated</strong>
-                  <small>Inventory synchronized with database</small>
-                </div>
-                <span>Today</span>
-              </div>
-
-              <div className="activity-item">
-                <div>
-                  <strong>Customer Inquiries</strong>
-                  <small>Messages arriving in real-time</small>
-                </div>
-                <span>Live</span>
-              </div>
-
-              <div className="activity-item">
-                <div>
-                  <strong>Certificates Active</strong>
-                  <small>Public certificates available</small>
-                </div>
-                <span>Online</span>
-              </div>
-
-              <div className="activity-item">
-                <div>
-                  <strong>Admin Settings</strong>
-                  <small>System configuration accessible</small>
-                </div>
-                <span>Ready</span>
-              </div>
-            </div>
-          </div>
-
           <div className="dashboard-card">
             <h2>Quick Actions</h2>
 

@@ -12,8 +12,7 @@ const Navbar = () => {
   return (
     <>
       {/* TOP BAR */}
-      <div className="top-red-bar"></div>
-
+     
       <nav className="navbar">
         {/* LOGO */}
         <div className="nav-logo">

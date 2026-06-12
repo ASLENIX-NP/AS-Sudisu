@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
@@ -17,9 +18,38 @@ import {
   FaSignOutAlt,
   FaGraduationCap,
   FaStar,
+  FaBell,
 } from "react-icons/fa";
 
 const AdminSidebar = () => {
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    fetchNotificationCount();
+  }, []);
+
+  const fetchNotificationCount = async () => {
+    const { count: pendingReviews } = await supabase
+      .from("reviews")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "Pending");
+
+    let inquiryCount = 0;
+
+    try {
+      const response = await fetch("http://localhost:5000/api/inquiries");
+      const data = await response.json();
+
+      if (data.success) {
+        inquiryCount = data.inquiries.length;
+      }
+    } catch (error) {
+      inquiryCount = 0;
+    }
+
+    setNotificationCount((pendingReviews || 0) + inquiryCount);
+  };
+
   const logoutHandler = async () => {
     await supabase.auth.signOut();
     window.location.href = "/admin";
@@ -56,6 +86,21 @@ const AdminSidebar = () => {
           >
             <FaBoxOpen />
             Products
+          </NavLink>
+
+          <NavLink
+            to="/admin/notifications"
+            className={({ isActive }) =>
+              isActive ? "admin-link active" : "admin-link"
+            }
+          >
+            <FaBell />
+            <span className="admin-link-label">Notifications</span>
+            {notificationCount > 0 && (
+              <span className="sidebar-notification-badge">
+                {notificationCount}
+              </span>
+            )}
           </NavLink>
 
           <NavLink

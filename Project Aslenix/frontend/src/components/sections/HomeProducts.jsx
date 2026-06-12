@@ -25,11 +25,11 @@ export default function HomeProducts() {
           OUR PRODUCTS
         </span>
 
-        <h2>Featured Masalas</h2>
+        <h2>Our Signature Collection</h2>
 
         <p>
-          Premium handcrafted Nepali spices made with authentic ingredients and
-          traditional flavors.
+          Discover authentic Nepali masalas crafted with traditional recipes,
+          premium ingredients, and rich Himalayan flavors.
         </p>
       </div>
 

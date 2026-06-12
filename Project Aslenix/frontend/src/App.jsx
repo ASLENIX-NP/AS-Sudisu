@@ -28,6 +28,7 @@ import BlogAdmin from "./pages/admin/BlogAdmin";
 import AboutAdmin from "./pages/admin/AboutAdmin";
 import Announcements from "./pages/admin/Announcements";
 import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
+import NotificationsAdmin from "./pages/admin/NotificationsAdmin";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
 
@@ -106,6 +107,15 @@ function App() {
           element={
             <AdminRoute>
               <ProductsManager />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/notifications"
+          element={
+            <AdminRoute>
+              <NotificationsAdmin />
             </AdminRoute>
           }
         />

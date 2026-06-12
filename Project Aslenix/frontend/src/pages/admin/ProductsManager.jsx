@@ -369,7 +369,7 @@ const filteredProducts = products.filter(
       width: "100%",
       padding: "12px",
       borderRadius: "10px",
-      border: "none",
+      //border: "none",
       outline: "none",
       background: "#ffffff",
      color: "#0f172a",
