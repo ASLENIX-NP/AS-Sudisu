@@ -12,25 +12,38 @@ const ForgotPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
 
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
     setLoading(true);
 
-    const { error } = await supabase.auth.resetPasswordForEmail(
-      email,
-      {
-        redirectTo:
-          "http://localhost:5173/reset-password",
-      }
-    );
+    const { error } =
+      await supabase.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+            "http://localhost:5173/reset-password",
+        }
+      );
 
     setLoading(false);
 
     if (error) {
-      alert(error.message);
+      console.log(error);
+
+      alert(
+        "If the email exists, a reset link has been sent."
+      );
       return;
     }
 
     alert(
-      "Password reset email sent. Please check your inbox."
+      "If the email exists, a reset link has been sent."
     );
   };
 
@@ -55,13 +68,12 @@ const ForgotPassword = () => {
               : "Send Reset Link"}
           </button>
 
-          <button
-            type="button"
-            className="back-site-btn"
+          <p
+            className="back-site-link"
             onClick={() => navigate("/admin")}
           >
             ← Back to Login
-          </button>
+          </p>
         </form>
       </div>
     </div>

@@ -4,75 +4,80 @@ import { supabase } from "../../lib/supabase";
 import "./login.css";
 
 const ResetPassword = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [password, setPassword] = useState("");
-const [confirmPassword, setConfirmPassword] =
-useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
 
-const handleResetPassword = async (e) => {
-e.preventDefault();
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
 
+    if (password.length < 8) {
+      alert(
+        "Password must be at least 8 characters"
+      );
+      return;
+    }
 
-if (password !== confirmPassword) {
-  alert("Passwords do not match");
-  return;
-}
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-const { error } =
-  await supabase.auth.updateUser({
-    password,
-  });
+    const { error } =
+      await supabase.auth.updateUser({
+        password,
+      });
 
-if (error) {
-  alert(error.message);
-  return;
-}
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
-alert("Password updated successfully");
+    alert("Password updated successfully");
 
-navigate("/admin");
+    navigate("/admin");
+  };
 
+  return (
+    <div className="login-page">
+      <div className="login-card">
+        <h1>Reset Password</h1>
 
-};
+        <form onSubmit={handleResetPassword}>
+          <input
+            type="password"
+            placeholder="New Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
 
-return ( <div className="login-page"> <div className="login-card"> <h1>Reset Password</h1>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) =>
+              setConfirmPassword(e.target.value)
+            }
+          />
 
-    <form onSubmit={handleResetPassword}>
-      <input
-        type="password"
-        placeholder="New Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+          <button type="submit">
+            Update Password
+          </button>
 
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) =>
-          setConfirmPassword(e.target.value)
-        }
-      />
-
-      <button type="submit">
-        Update Password
-      </button>
-
-      <button
-        type="button"
-        className="back-site-btn"
-        onClick={() => navigate("/admin")}
-      >
-        ← Back to Login
-      </button>
-    </form>
-  </div>
-</div>
-
-);
+          <p
+            className="back-site-link"
+            onClick={() => navigate("/admin")}
+          >
+            ← Back to Login
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default ResetPassword;
