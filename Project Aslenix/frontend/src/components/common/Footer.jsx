@@ -2,8 +2,15 @@ import "./Footer.css";
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
-
+import {
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaPhone,
+  FaWhatsapp,
+  FaFacebook,
+  FaInstagram,
+  FaGlobe,
+} from "react-icons/fa";
 import InquiryPopup from "./InquiryPopup";
 
 export default function Footer() {
@@ -36,11 +43,21 @@ export default function Footer() {
         <div className="footer-top">
           <h2>{settings.heroSubtitle}</h2>
 
-          <button className="cta-btn" onClick={() => setOpenPopup(true)}>
-            Connect with Us
-          </button>
-        </div>
+          <p className="footer-subtitle">
+            Premium Nepali spices crafted with authentic ingredients,
+            traditional recipes and trusted quality standards.
+          </p>
 
+          <div className="footer-actions">
+            <button className="cta-btn" onClick={() => setOpenPopup(true)}>
+              Connect With Us
+            </button>
+
+            <Link to="/products" className="footer-product-btn">
+              Explore Products
+            </Link>
+          </div>
+        </div>
         {/* FOOTER GRID */}
 
         <div className="footer-grid">
@@ -62,21 +79,26 @@ export default function Footer() {
             <h4>Contact</h4>
 
             {/* PHONE */}
-            <a href="tel:057590436">Phone: 057-590436</a>
+            <a href="tel:057590436">
+              <FaPhone />
+              Phone: 057-590436
+            </a>
 
             {/* EMAIL */}
             <a href="mailto:info@fortunegroup.com.np">
-              Email: info@fortunegroup.com.np
+              <FaEnvelope />
+              info@fortunegroup.com.np
             </a>
 
             {/* LOCATION */}
-           
-           <a
+
+            <a
               href="https://www.google.com/maps/search/Fortune+group+of+industries+Pvt+LTD/@27.5395879,84.8074828,81m"
               target="_blank"
               rel="noopener noreferrer"
             >
-              📍 Manahari-07,Makwanpur
+              <FaMapMarkerAlt />
+              Manahari-07, Makwanpur, Nepal
             </a>
           </div>
 

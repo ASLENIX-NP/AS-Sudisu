@@ -6,10 +6,12 @@ import { GiCookingPot } from "react-icons/gi";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { FaTruckFast } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import HeroNavbar from "../common/HeroNavbar";
+
 const Hero = () => {
   const navigate = useNavigate();
   return (
-    <section className="hero">
+    <HeroNavbar className="hero">
       {/* BACKGROUND */}
       <div className="hero-bg" style={{ backgroundImage: `url(${heroBg})` }} />
 
@@ -81,7 +83,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
+    </HeroNavbar>
   );
 };
 

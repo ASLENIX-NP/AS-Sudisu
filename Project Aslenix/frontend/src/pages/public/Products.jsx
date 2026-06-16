@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/productService";
 
-import Navbar from "../../components/common/Navbar";
+import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 
 import ProductModal from "../../components/sections/ProductModal";
@@ -50,16 +50,13 @@ const ProductsPage = () => {
 
   return (
     <>
-      <Navbar />
-
-      <div className="sudisu-product-showcase">
+      <HeroNavbar as="div" className="sudisu-product-showcase">
         <img
           src={heroProducts}
           alt="Sudisu Products"
           className="sudisu-main-products"
         />
-      </div>
-
+      </HeroNavbar>
 
       <section className="products-page">
         <div className="products-header">

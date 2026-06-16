@@ -5,42 +5,50 @@
 /* =========================
    NAVBAR
 ========================= */
-
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
 
-  width: 100%;
+  top: 20px;          /* gap from top */
+  left: 25px;         /* gap from left */
+  right: 25px;        /* gap from right */
+
+  width: auto;
   height: 75px;
 
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(15px);
 
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid #d40000;
 
-  border-bottom: 3px solid #b30000;
+  border-radius: 18px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 60px;
+  padding: 0 35px;
 
   z-index: 1000;
 
-  transition: all 0.3s ease;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.45),
+    0 0 30px rgba(212, 0, 0, 0.15);
 }
+
 /* LOGO */
 
 .nav-logo {
   display: flex;
   align-items: center;
+  height: 100%;
 }
-
 .nav-logo img {
-  height: 70px;
+  height: 110px;
   width: auto;
   object-fit: contain;
+
+  margin-top: 8px;
 }
 
 /* NAV LINKS */
