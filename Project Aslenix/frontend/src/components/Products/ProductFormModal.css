@@ -1,0 +1,40 @@
+.products-form-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.products-form-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(200px, 1fr)
+  );
+  gap: 15px;
+}
+
+.product-upload-block {
+  margin-top: 20px;
+}
+
+.product-submit-btn {
+  margin-top: 20px;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.product-submit-add {
+  background: #facc15;
+  color: #000;
+}
+
+.product-submit-update {
+  background: #22c55e;
+  color: white;
+}
