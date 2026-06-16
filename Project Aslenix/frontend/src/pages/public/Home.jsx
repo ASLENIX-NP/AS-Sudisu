@@ -11,9 +11,7 @@ import Counter from "../../components/common/Counter";
 const Home = () => {
   const navigate = useNavigate();
 
-  /* =========================
-     SETTINGS STATE
-  ========================= */
+
 
   const [settings] = useState([]);
 
