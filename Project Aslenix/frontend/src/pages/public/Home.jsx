@@ -1,12 +1,12 @@
-import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 import Hero from "../../components/sections/Hero";
 import { useNavigate } from "react-router-dom";
 import HomeProducts from "../../components/sections/HomeProducts";
 import WhyChoose from "../../components/sections/WhyChoose";
-import { useEffect, useState } from "react";
 import statsBg from "../../assets/images/finalContact.png";
 import "./home.css";
+import { useEffect, useRef, useState } from "react";
+import Counter from "../../components/common/Counter";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,10 +17,32 @@ const Home = () => {
 
   const [settings] = useState([]);
 
+  const statsRef = useRef(null);
+
+  const [statsVisible, setStatsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.8, // 80% of section must be visible
+      },
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   return (
     <>
       {/* NAVBAR */}
-      <Navbar />
 
       {/* HERO */}
 
@@ -32,6 +54,7 @@ const Home = () => {
       {/* WHY CHOOSE */}
       <WhyChoose />
       <section
+        ref={statsRef}
         className="stats-section"
         style={{
           backgroundImage: `url(${statsBg})`,
@@ -39,22 +62,23 @@ const Home = () => {
       >
         <div className="stats-overlay">
           <div className="stat">
-            <h2>100%</h2>
+            {statsVisible && <Counter target={100} suffix="%" />}
             <p>Natural Ingredients</p>
           </div>
 
           <div className="stat">
-            <h2>20+</h2>
+            {statsVisible && <Counter target={20} suffix="+" />}
+
             <p>Products</p>
           </div>
 
           <div className="stat">
-            <h2>5000+</h2>
+            {statsVisible && <Counter target={5000} suffix="+" />}
             <p>Happy Customers</p>
           </div>
 
           <div className="stat">
-            <h2>25+</h2>
+            {statsVisible && <Counter target={25} suffix="+" />}
             <p>Districts Served</p>
           </div>
         </div>

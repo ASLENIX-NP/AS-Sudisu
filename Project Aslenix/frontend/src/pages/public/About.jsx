@@ -1,5 +1,5 @@
 import "./About.css";
-import Navbar from "../../components/common/Navbar";
+import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import cookingWomen from "../../assets/images/cooking women.jpg";
@@ -8,16 +8,13 @@ import reachImage from "../../assets/images/AboutUS.png";
 import mixMasala from "../../assets/spice/mix.jpg";
 import meatMasala from "../../assets/spice/meat.jpg";
 import garamMasala from "../../assets/spice/garam.jpg";
-
 const About = () => {
   const navigate = useNavigate();
 
   return (
     <>
-      <Navbar />
-
       {/* FLOATING BUTTONS */}
-      <section
+      <HeroNavbar
         className="about-section"
         style={{
           backgroundImage: `
@@ -53,7 +50,7 @@ const About = () => {
             </p>
           </div>
         </div>
-      </section>
+      </HeroNavbar>
       <section className="our-reach">
         <img
           src={reachImage}

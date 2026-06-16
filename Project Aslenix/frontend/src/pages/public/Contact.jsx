@@ -1,24 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import {
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaRegClock,
-  FaWhatsapp,
-} from "react-icons/fa";
-
-import Navbar from "../../components/common/Navbar";
+import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 
 import "./Contact.css";
-
-import heroImg from "../../assets/images/finalContact.png";
+import { FaEnvelope, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 
 const Contact = () => {
-  const navigate = useNavigate();
-
   const southAsianCountries = [
     { name: "Nepal", code: "+977" },
     { name: "India", code: "+91" },
@@ -125,29 +113,80 @@ const Contact = () => {
 
   return (
     <>
-      <Navbar />
-
       <section className="contact-hero">
-        <div className="hero-image-wrapper">
-          <img src={heroImg} alt="Sudisu Spices" className="hero-image" />
-        </div>
+        <HeroNavbar as="div" className="contact-navbar-wrapper" />
+        <div className="contact-layout">
+          {/* LEFT SIDE */}
 
-        <div className="contact-content">
-          <span className="contact-tag">AUTHENTIC NEPALI SPICES</span>
+          <div className="contact-info">
+            <h1 className="company-name">SUDISU PRIDE</h1>
 
-          <h1>Connect With Sudisu Spices</h1>
+            <h2 className="company-slogan">“ स्वाद र स्वास्थ्य संगै संगै ”</h2>
 
-          <p className="contact-description">
-            Bringing authentic Nepali taste to every kitchen with premium
-            handcrafted spices made from pure ingredients and traditional
-            recipes.
-          </p>
+            <p className="company-description">
+              Fortune Group of Industries Pvt. Ltd. is committed to delivering
+              authentic Nepali spices crafted with premium ingredients,
+              traditional recipes and uncompromising quality standards.
+            </p>
 
-          <div className="info-card">
+            <div className="contact-box">
+              <div className="icon-circle">
+                <FaEnvelope />
+              </div>
+
+              <div>
+                <h3>Email</h3>
+                <p>info@fortunegroup.com.np</p>
+              </div>
+            </div>
+
+            <div className="contact-box">
+              <div className="icon-circle">
+                <FaWhatsapp />
+              </div>
+
+              <div>
+                <h3>WhatsApp</h3>
+                <p>+977 9816259642</p>
+              </div>
+            </div>
+
+            <div className="contact-box">
+              <div className="icon-circle">
+                <FaMapMarkerAlt />
+              </div>
+
+              <div>
+                <h3>Location</h3>
+
+                <p>
+                  Fortune Group of Industries Pvt. Ltd.
+                  <br />
+                  Manahari-07, Makwanpur, Nepal
+                </p>
+              </div>
+            </div>
+
+            <div className="map-wrapper">
+              <iframe
+                title="Fortune Group Location"
+                src="https://maps.google.com/maps?q=27.539477,84.8075733&z=17&output=embed"
+                width="100%"
+                height="350"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          {/* RIGHT SIDE */}
+
+          <div className="feedback-card">
             <h2>Your Feedback Matters</h2>
 
             <form className="contact-form" onSubmit={handleSubmit}>
-              {/* NAME */}
+              {/* KEEP YOUR CURRENT FORM FIELDS HERE */}
               <div className="form-group">
                 <label>Full Name</label>
 

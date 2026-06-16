@@ -190,13 +190,13 @@
 
 .stats-section {
   position: relative;
-  padding: 120px 80px;
+  padding: 110px 80px;
 
 
   overflow: hidden;
-}.stats-section::before {
+}
+.stats-section::before {
   content: "";
-
   position: absolute;
   inset: 0;
 
@@ -207,10 +207,9 @@
     ),
     url("../../assets/images/stats-bg.jpg");
 
-  background-size: cover;
+  background-size: contain; /* show full image */
+  background-repeat: no-repeat;
   background-position: center;
-
-  animation: zoomBackground 20s ease-in-out infinite alternate;
 
   z-index: 0;
 }
@@ -237,7 +236,7 @@
 .stat h2{
   font-size:85px;
 
-  color:#f5b100;
+  color:#f5b0009f;
 
   font-weight:800;
 
