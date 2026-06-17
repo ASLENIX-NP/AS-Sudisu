@@ -15,10 +15,33 @@ export const useProducts = () => {
       setProducts(data);
     }
   };
+const addProduct = async (
+  productData,
+  resetForm,
+  setIsFormOpen,
+  setProducts
+) => {
+  const { error } = await supabase
+    .from("products")
+    .insert([productData]);
 
- return {
+  if (error) {
+    console.log(error);
+    alert(error.message);
+    return;
+  }
+
+  alert("Product Added Successfully");
+
+  resetForm();
+  setIsFormOpen(false);
+
+  await fetchProducts(setProducts);
+};
+return {
   fetchProducts,
   uploadImage,
+  addProduct,
 };
 
 };

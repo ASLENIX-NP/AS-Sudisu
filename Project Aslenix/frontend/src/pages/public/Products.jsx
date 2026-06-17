@@ -8,7 +8,6 @@ import ProductModal from "../../components/sections/ProductModal";
 import mixMasala from "../../assets/spice/mix.jpg";
 import meatMasala from "../../assets/spice/meat.jpg";
 import garamMasala from "../../assets/spice/garam.jpg";
-import { useNavigate } from "react-router-dom";
 
 import "./ProductsPage.css";
 
@@ -19,7 +18,6 @@ const ProductsPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sliderProducts, setSliderProducts] = useState([]);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const productsPerPage = 24;
 
@@ -81,9 +79,9 @@ const ProductsPage = () => {
 
                     <h3>{product.name}</h3>
 
-                    <button onClick={() => navigate(`/products/${product.id}`)}>
-                      View Details
-                    </button>
+                    <button onClick={() => setSelectedProduct(product)}>
+                       View Details
+                       </button>
                   </div>
                 ))}
               </div>

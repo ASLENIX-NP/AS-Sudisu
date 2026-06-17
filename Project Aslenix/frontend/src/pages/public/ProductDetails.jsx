@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { getProducts } from "../../services/productService";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
 import toast from "react-hot-toast";
 /* REVIEW COMPONENT */
 import Review from "./Review";
@@ -86,57 +84,80 @@ const ProductDetails = () => {
 
   return (
     <>
-      <Navbar />
 
-      <div className="product-container">
-        {/* LEFT IMAGE */}
-        <div className="product-image-section">
-          <img src={product.image} alt={product.name} />
-        </div>
+<div className="product-details-overlay">
+  <div className="product-details-modal">
 
-        {/* RIGHT INFO */}
-        <div className="product-info-section">
-          <h1>{product.name}</h1>
-          <h2>Rs. {product.price}</h2>
+    <button
+      className="product-details-close"
+      onClick={() => navigate("/products")}
+    >
+      ✕
+    </button>
 
-          <p>
-            <b>Origin:</b> {product.origin}
-          </p>
-          <p>
-            <b>Weight:</b> {product.weight}
-          </p>
-          <p>
-            <b>Stock:</b> {product.stock}
-          </p>
+    <div className="product-details-content">
 
-          <p className="desc">{product.description}</p>
-
-          <button className="review-btn" onClick={() => setShowReview(true)}>
-            ⭐ Write Review
-          </button>
-        </div>
+      <div className="product-details-image">
+        <img
+          src={product.image}
+          alt={product.name}
+        />
       </div>
 
-      {/* RELATED PRODUCTS (AMAZON STYLE) */}
-      <div className="related-section">
-        <h2>Related Products</h2>
+      <div className="product-details-info">
 
-        <div className="related-grid">
-          {allProducts
-            ?.filter((p) => p.id !== product.id)
-            .slice(0, 5) // ✅ ONLY 5 PRODUCTS
-            .map((p) => (
-              <div
-                className="related-card"
-                key={p.id}
-                onClick={() => navigate(`/products/${p.id}`)}
-              >
-                <img src={p.image} />
-                <p>{p.name}</p>
-              </div>
-            ))}
-        </div>
+        <h1>{product.name}</h1>
+
+        <h2>Rs. {product.price}</h2>
+
+        <p>
+          <strong>Origin:</strong> {product.origin}
+        </p>
+
+        <p>
+          <strong>Weight:</strong> {product.weight}
+        </p>
+
+        <p>
+          <strong>Stock:</strong> {product.stock}
+        </p>
+
+        <button
+          className="review-btn"
+          onClick={() => setShowReview(true)}
+        >
+          ⭐ Write Review
+        </button>
+
       </div>
+
+    </div>
+
+    <div className="related-products-section">
+      <h3>Related Products</h3>
+
+      <div className="related-grid">
+        {allProducts
+          ?.filter((p) => p.id !== product.id)
+          .slice(0, 5)
+          .map((p) => (
+            <div
+              className="related-card"
+              key={p.id}
+              onClick={() =>
+                navigate(`/products/${p.id}`)
+              }
+            >
+              <img src={p.image} alt="" />
+              <p>{p.name}</p>
+            </div>
+          ))}
+      </div>
+
+    </div>
+
+  </div>
+</div>
 
       {/* REVIEW MODAL */}
       {showReview && (
@@ -173,7 +194,6 @@ const ProductDetails = () => {
         </div>
       )}
 
-      <Footer />
     </>
   );
 };
