@@ -18,7 +18,7 @@ import "./ProductsManager.css";
 
 const ProductsManager = () => {
   // STATES
-  const { fetchProducts, uploadImage } = useProducts();
+  const { fetchProducts, uploadImage,addProduct } = useProducts();
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [name, setName] = useState("");
@@ -42,31 +42,7 @@ useEffect(() => {
 
 
   
-  // ADD PRODUCT
-  const addProduct = async () => {
-    const { error } = await supabase.from("products").insert([
-      {
-        name,
-        price,
-        weight,
-        origin,
-        stock,
-        description,
-        image,
-      },
-    ]);
-
-    if (error) {
-      console.log(error);
-      alert(error.message);
-    } else {
-      alert("Product Added Successfully");
-      resetForm();
-      setIsFormOpen(false);
-
-      fetchProducts();
-    }
-  };
+ 
 
   // DELETE PRODUCT
   const handleDelete = async (id) => {

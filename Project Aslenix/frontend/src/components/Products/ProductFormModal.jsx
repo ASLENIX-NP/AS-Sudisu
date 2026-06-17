@@ -192,17 +192,21 @@ const ProductFormModal = ({
   </div>
 
   <button
-className={`product-submit-btn ${
-  editingId
-    ? "product-submit-update"
-    : "product-submit-add"
-}`}
-
-  >
-    {editingId
-      ? "Update Product"
-      : "Add Product"}
-  </button>
+  className={`product-submit-btn ${
+    editingId
+      ? "product-submit-update"
+      : "product-submit-add"
+  }`}
+  onClick={
+    editingId
+      ? handleUpdate
+      : addProduct
+  }
+>
+  {editingId
+    ? "Update Product"
+    : "Add Product"}
+</button>
 </div>
 
       </div>
