@@ -72,40 +72,82 @@ const Inquiries = () => {
 
         {/* STATS */}
 
-        <div className="inquiries-stats">
+<div className="inquiries-stats">
 
-          <div className="inquiry-stat">
-            <span>Total Inquiries</span>
-            <h2>{inquiries.length}</h2>
-          </div>
+  <div className="inquiry-stat total-card">
+    <div className="stat-icon">
+      📨
+    </div>
 
-          <div className="inquiry-stat">
-            <span>Search Results</span>
-            <h2>{filteredInquiries.length}</h2>
-          </div>
+    <div>
+      <p className="stat-label">
+        Total Inquiries
+      </p>
 
-          <div className="inquiry-stat">
-            <span>Status</span>
-            <h2 style={{ color: "#22c55e" }}>
-              Active
-            </h2>
-          </div>
+      <h2 className="stat-number">
+        {inquiries.length}
+      </h2>
+    </div>
+  </div>
 
-        </div>
+  <div className="inquiry-stat search-card">
+    <div className="stat-icon">
+      🔍
+    </div>
+
+    <div>
+      <p className="stat-label">
+        Search Results
+      </p>
+
+      <h2 className="stat-number">
+        {filteredInquiries.length}
+      </h2>
+    </div>
+  </div>
+
+  <div className="inquiry-stat active-card">
+    <div className="stat-icon">
+      🟢
+    </div>
+
+    <div>
+      <p className="stat-label">
+        System Status
+      </p>
+
+      <h2
+        className="stat-number"
+        style={{ color: "#22c55e" }}
+      >
+        Active
+      </h2>
+    </div>
+  </div>
+
+</div>
 
  
         {/* SEARCH */}
 
-        <div className="inquiry-search">
-          <input
-            type="text"
-            placeholder="Search by name or email..."
-            value={searchTerm}
-            onChange={(e) =>
-              setSearchTerm(e.target.value)
-            }
-          />
-        </div>
+<div className="inquiry-search">
+  <div className="search-wrapper">
+
+    <span className="search-icon">
+      🔍
+    </span>
+
+    <input
+      type="text"
+      placeholder="Search inquiries by customer, email or phone..."
+      value={searchTerm}
+      onChange={(e) =>
+        setSearchTerm(e.target.value)
+      }
+    />
+
+  </div>
+</div>
 
         {/* TABLE */}
 
@@ -113,12 +155,26 @@ const Inquiries = () => {
 
           {filteredInquiries.length === 0 ? (
 
-            <div className="empty-state">
-              <h3>No inquiries found</h3>
-              <p>
-                Customer messages will appear here.
-              </p>
-            </div>
+  <div className="empty-state">
+
+  <div className="empty-icon">
+    📨
+  </div>
+
+  <h3>
+    No Inquiries Yet
+  </h3>
+
+  <p>
+    Customer inquiries submitted from your
+    website will appear here.
+  </p>
+
+  <span className="empty-hint">
+    Waiting for customer messages...
+  </span>
+
+</div>
 
           ) : (
 
