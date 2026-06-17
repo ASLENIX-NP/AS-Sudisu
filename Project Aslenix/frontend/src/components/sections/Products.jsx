@@ -59,7 +59,6 @@ const Products = () => {
       <section className="products-section">
         <h2 className="products-title">Signature Spices</h2>
 
-
         <div className="products-grid">
           {products.map((item, index) => (
             <div className="product-card" key={item.id || index}>

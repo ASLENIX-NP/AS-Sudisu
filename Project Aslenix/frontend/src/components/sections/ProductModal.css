@@ -137,19 +137,29 @@
 .review-btn:hover {
   background: #e55d00;
 }
-
-.related-products-section {
-  border-top: 1px solid #ececec;
-
-  padding: 40px 70px;
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
 }
 
-.related-products-section h3 {
-  font-size: 34px;
-  font-weight: 700;
-
-  color: #111;
+.star {
+  font-size: 36px;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
+
+.star.active {
+  color: #ffc107;
+  text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
 
 @keyframes modalIn {
   from {

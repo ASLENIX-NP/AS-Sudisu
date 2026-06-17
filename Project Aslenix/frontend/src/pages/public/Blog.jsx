@@ -13,7 +13,7 @@ const Blog = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState([]);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
-
+const [selectedPost, setSelectedPost] = useState(null);
   useEffect(() => {
     fetchCertificates();
   }, []);

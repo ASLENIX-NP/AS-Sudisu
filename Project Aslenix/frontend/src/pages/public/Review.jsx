@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import "./Review.css";
-
-const Review = ({ productId, productName }) => {
+import toast from "react-hot-toast";
+import ReactStars from "react-stars";
+const Review = ({ productId, productName, onReviewSubmitted }) => {
   const [reviews, setReviews] = useState([]);
-
+const [formError, setFormError] = useState("");
   const [name, setName] = useState("");
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
@@ -31,137 +32,74 @@ const Review = ({ productId, productName }) => {
   const submitReview = async (e) => {
     e.preventDefault();
 
-    if (!name || !review) {
-      alert("Please fill all fields");
-      return;
-    }
+if (!name || !review) {
+  setFormError("⚠ Please fill all fields before submitting.");
+  return;
+}
 
-    const { error } = await supabase
-      .from("reviews")
-      .insert([
-        {
-          name,
-          rating,
-          review,
-          product_id: productId,
-          product_name: productName,
-          status: "Pending",
-        },
-      ]);
-
+    setFormError("");
+    const { error } = await supabase.from("reviews").insert([
+      {
+        name,
+        rating,
+        review,
+        product_id: productId,
+        product_name: productName,
+        status: "Pending",
+      },
+    ]);
     if (error) {
       alert("Failed to submit review");
       return;
     }
 
-    alert(
-      "Review submitted successfully. Waiting for approval."
-    );
+    toast.success("🎉 Review submitted successfully!");
 
     setName("");
     setRating(5);
     setReview("");
+
+   onReviewSubmitted();
   };
 
   return (
-    <div className="review-section">
-
-      <h2 className="review-title">
-        Customer Reviews ({reviews.length})
-      </h2>
+    <div id="review-section" className="review-section">
+      <h2 className="review-title">Customer Reviews ({reviews.length})</h2>
 
       {/* EXISTING REVIEWS */}
 
-      <div className="review-list">
-        {reviews.length === 0 ? (
-          <p className="no-reviews">
-            No reviews yet.
-          </p>
-        ) : (
-          reviews.map((item) => (
-            <div
-              key={item.id}
-              className="review-card"
-            >
-              <div className="review-stars">
-                {"⭐".repeat(
-                  item.rating || 0
-                )}
-              </div>
-
-              <p className="review-text">
-                {item.review}
-              </p>
-
-              <span className="review-name">
-                — {item.name}
-              </span>
-            </div>
-          ))
-        )}
-      </div>
-
       {/* REVIEW FORM */}
 
-      <form
-        onSubmit={submitReview}
-        className="review-form"
-      >
-        <h3>
-          Leave a Review
-        </h3>
-
+      <form onSubmit={submitReview} className="review-form">
+        <h3>Share Your Experience</h3>
+        {formError && <div className="review-error">{formError}</div>}
         <input
           type="text"
           placeholder="Your Name"
           value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
+          onChange={(e) => setName(e.target.value)}
         />
 
-        <select
-          value={rating}
-          onChange={(e) =>
-            setRating(
-              Number(e.target.value)
-            )
-          }
-        >
-          <option value={5}>
-            ⭐⭐⭐⭐⭐
-          </option>
+        <div className="modern-rating">
+          <label>Rate this Product</label>
 
-          <option value={4}>
-            ⭐⭐⭐⭐
-          </option>
-
-          <option value={3}>
-            ⭐⭐⭐
-          </option>
-
-          <option value={2}>
-            ⭐⭐
-          </option>
-
-          <option value={1}>
-            ⭐
-          </option>
-        </select>
-
+          <ReactStars
+            count={5}
+            value={rating}
+            onChange={(newRating) => setRating(newRating)}
+            size={40}
+            isHalf={true}
+            activeColor="#FFD700"
+          />
+        </div>
         <textarea
           placeholder="Write your review..."
           value={review}
-          onChange={(e) =>
-            setReview(e.target.value)
-          }
+          onChange={(e) => setReview(e.target.value)}
         />
 
-        <button type="submit">
-          Submit Review
-        </button>
+        <button type="submit">Submit Review</button>
       </form>
-
     </div>
   );
 };

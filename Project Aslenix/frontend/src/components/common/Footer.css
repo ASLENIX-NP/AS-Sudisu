@@ -15,17 +15,11 @@
 ========================= */
 
 .footer-top {
-  background:
-    linear-gradient(
-      135deg,
-      #111111,
-      #1a1a1a,
-      #0a0a0a
-    );
+  background: linear-gradient(135deg, #111111, #1a1a1a, #0a0a0a);
 
-  text-align: center;
+  text-align: left;
 
-  padding: 40px 8%;
+  padding: 40px 4%;
 
   border-top: 4px solid #dc2626;
 
@@ -71,26 +65,35 @@
 
   border-radius: 50%;
 }
+
+.footer-top {
+  text-align: left;
+}
+
+.footer-subtitle {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.footer-top p {
+  margin-left: 0;
+}
 /* HEADING */
 
 .footer-top h2 {
   color: white;
-
   font-size: 40px;
-
   font-weight: 900;
-
   max-width: 900px;
 
-  margin: auto;
+  margin-left: 0;
+  margin-right: auto;
 
   line-height: 1.1;
 
   position: relative;
-
   z-index: 2;
-}
-/* SUBTEXT */
+} /* SUBTEXT */
 
 .footer-top p {
   margin-top: 18px;
@@ -107,7 +110,7 @@
 .footer-subtitle {
   margin-top: 18px;
 
-  color: rgba(255,255,255,.75);
+  color: rgba(255, 255, 255, 0.75);
 
   font-size: 18px;
 
@@ -125,35 +128,31 @@
 
 /* CTA BUTTON */
 .cta-btn {
-  background:
-    linear-gradient(
-      135deg,
-      #dc2626,
-      #991b1b
-    );
+  background: linear-gradient(135deg, #dc2626, #991b1b);
 
   color: white;
-
   border: none;
 
   padding: 16px 40px;
-
   border-radius: 50px;
 
   font-size: 17px;
-
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
+
+  display: inline-block;
+
+  margin-top: 25px;
+  margin-left: 0;
 }
 
 .cta-btn:hover {
   transform: translateY(-3px);
 
-  box-shadow:
-    0 12px 30px rgba(220,38,38,.35);
+  box-shadow: 0 12px 30px rgba(220, 38, 38, 0.35);
 }
 /* SHINE EFFECT */
 
@@ -197,11 +196,33 @@
 
   font-weight: 700;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
+}
+
+.footer-product-btn:before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+
+  transition: 0.8s;
 }
 
 .footer-product-btn:hover {
   background: #2563eb;
+  left: 120%;
 }
 /* FOOTER GRID */
 
@@ -245,17 +266,14 @@
 }
 .footer-actions {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 
-  gap: 50px;
-
-  margin-top: 35px;
+  margin-top: 25px;
 }
 
 /* HOVER */
-
-
 
 .footer-map {
   display: block;
@@ -282,7 +300,6 @@
 
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 
 /* RESPONSIVE */
 

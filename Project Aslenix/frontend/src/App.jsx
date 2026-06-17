@@ -31,6 +31,7 @@ import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
 import NotificationsAdmin from "./pages/admin/NotificationsAdmin";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
+import CertificateRead from "./pages/public/Certificates";
 
 function App() {
   useEffect(() => {
@@ -86,6 +87,8 @@ function App() {
         <Route path="/about" element={<About />} />
 
         <Route path="/blog" element={<Blog />} />
+
+        <Route path="/certificates/:id" element={<CertificateRead />} />
 
         {/* ADMIN LOGIN */}
 
@@ -195,14 +198,8 @@ function App() {
             </AdminRoute>
           }
         />
-        <Route
-  path="/forgot-password"
-  element={<ForgotPassword />}
-/>
-<Route
-  path="/reset-password"
-  element={<ResetPassword />}
-/>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

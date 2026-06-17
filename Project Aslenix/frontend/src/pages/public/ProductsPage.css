@@ -1,7 +1,8 @@
 .products-page {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #360403, #360403);
-  padding: 60px -5in;
+  background: #fefcfc;
+  padding: 80px 5%;
+
 }
 
 /* PAGE TITLE */
@@ -32,7 +33,7 @@
 }
 
 .products-header p {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(222, 16, 16, 0.75);
   font-size: 20px;
   line-height: 1.6;
   max-width: 850px;
@@ -43,8 +44,8 @@
   max-width: 1500px;
   margin: 40px auto;
 
-  background: linear-gradient(180deg, #f7f3f3 0%, #ece5e5 100%);
-  border-radius: 0px;
+ background: transparent;
+  box-shadow: none;  border-radius: 0px;
 
   padding: 30px;
 
@@ -164,12 +165,10 @@
 ========================================= */
 
 .product-image {
-  width: 90% !important; /* 🔥 slightly wider for better fill */
-
-  height: 240px ; /* 🔥 taller to fill card better */
-
-  object-fit: cover;
-  margin: 10px 10px;
+     width: 100%;
+  height: 260px;
+  object-fit: contain;
+  margin: 0;
   object-position: center center;
 
   border-radius: 1px;
