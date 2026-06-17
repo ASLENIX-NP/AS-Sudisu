@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
+import toast from "react-hot-toast";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/CategoriesAdmin.css";
 
@@ -9,8 +10,9 @@ const CategoriesAdmin = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Active");
   const [editingId, setEditingId] = useState(null);
+  const [image, setImage] = useState(null);
   const [search, setSearch] = useState("");
-    const filteredCategories = categories.filter((category) =>
+  const filteredCategories = categories.filter((category) =>
       
     category.name
       ?.toLowerCase()
@@ -20,6 +22,7 @@ const CategoriesAdmin = () => {
   
   useEffect(() => {
     fetchCategories();
+    toast.success("Category deleted successfully");
   }, []);
 
   const fetchCategories = async () => {
@@ -52,13 +55,12 @@ const CategoriesAdmin = () => {
         },
       ]);
 
-    if (error) {
-      console.log(error);
-      alert(error.message);
-      return;
-    }
+  if (error) {
+  toast.error(error.message);
+  return;
+}
 
-    alert("Category Added Successfully");
+toast.success("Category updated successfully");
 
     setName("");
     setDescription("");
@@ -79,7 +81,7 @@ const CategoriesAdmin = () => {
     .eq("id", id);
 
   if (error) {
-    alert(error.message);
+    toast.error(error.message);
     return;
   }
   fetchCategories();
@@ -125,54 +127,64 @@ const updateCategory = async () => {
   </p>
 </div>
 <div className="categories-stats">
- <div className="category-stat-card">
-    <p
-      style={{
-        color: "#64748b",
-        marginBottom: "8px",
-      }}
-    >
+
+<div className="category-stat-card total-card">
+  <div className="stat-icon">📂</div>
+
+  <div>
+    <p className="stat-label">
       Total Categories
     </p>
 
-    <h2
-      style={{
-        fontSize: "40px",
-        color: "#0f172a",
-      }}
-    >
+    <h2 className="stat-number">
       {categories.length}
     </h2>
   </div>
-<div className="category-upload-box">
-  <label className="upload-label">
-    Category Image
-  </label>
-
+</div>
+<div className="category-upload-card">
   <input
     type="file"
+    id="category-image"
+    className="category-file-input"
     accept="image/*"
     onChange={(e) =>
       setImage(e.target.files[0])
     }
   />
+
+  <label
+  
+    htmlFor="category-image"
+    className="category-upload-label"
+  >
+  <div className="upload-icon">
+  ⬆
 </div>
-  <div className="category-stat-card">
-    <p
-      style={{
-        color: "#64748b",
-        marginBottom: "8px",
-      }}
-    >
+{image && (
+  <img
+    src={URL.createObjectURL(image)}
+    alt="preview"
+    className="category-preview"
+  />
+)}
+    <h4>Upload Category Image</h4>
+
+    <p>
+      Drag & Drop or Click to Browse
+    </p>
+
+ 
+  </label>
+</div>
+ <div className="category-stat-card active-card">
+  <div className="stat-icon">✅</div>
+
+  <div>
+    <p className="stat-label">
       Active Categories
     </p>
 
-    <h2
-      style={{
-        fontSize: "40px",
-        color: "#16a34a",
-      }}
-    >
+    <h2 className="stat-number">
       {
         categories.filter(
           (c) => c.status === "Active"
@@ -180,23 +192,17 @@ const updateCategory = async () => {
       }
     </h2>
   </div>
+</div>
 
-  <div className="category-stat-card">
-    <p
-      style={{
-        color: "#64748b",
-        marginBottom: "8px",
-      }}
-    >
+ <div className="category-stat-card inactive-card">
+  <div className="stat-icon">🚫</div>
+
+  <div>
+    <p className="stat-label">
       Inactive Categories
     </p>
 
-    <h2
-      style={{
-        fontSize: "40px",
-        color: "#dc2626",
-      }}
-    >
+    <h2 className="stat-number">
       {
         categories.filter(
           (c) => c.status === "Inactive"
@@ -204,6 +210,7 @@ const updateCategory = async () => {
       }
     </h2>
   </div>
+</div>
 </div>
         {/* Add Category Card */}
         <div className="categories-form-card">
@@ -266,10 +273,11 @@ const updateCategory = async () => {
   <input
     type="text"
     className="categories-search-input"
-    placeholder="🔍 Search categories..."
+   placeholder="Search categories by name..."
     value={search}
     onChange={(e) => setSearch(e.target.value)}
   />
+  
 </div>
         {/* Categories Table */}
         <div className="categories-table-card">
@@ -363,12 +371,5 @@ const tdStyle = {
   color: "#0f172a",
 };
 
-const statsCard = {
-  background: "#fff",
-  borderRadius: "20px",
-  padding: "24px",
-  border: "1px solid #e2e8f0",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-};
 
 export default CategoriesAdmin;

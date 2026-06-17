@@ -80,31 +80,41 @@ const Analytics = () => {
             <h2>+18%</h2>
             <small>Compared to last month</small>
           </div>
-
         </div>
 
         <div className="analytics-grid">
 
-          <div className="analytics-panel">
-            <h3>Performance Insights</h3>
+  <div className="analytics-panel analytics-chart">
 
-            <div className="insight-item">
-              Chilli Powder remains the most viewed product.
-            </div>
+  <div className="chart-header">
+    <h3>Analytics Overview</h3>
 
-            <div className="insight-item">
-              Inquiry volume increased this month.
-            </div>
+    <span>Last 6 Months</span>
+  </div>
 
-            <div className="insight-item">
-              Product catalog engagement remains strong.
-            </div>
+  <div className="fake-chart">
 
-            <div className="insight-item">
-              Traffic growth continues across Nepal.
-            </div>
-          </div>
+    <div className="chart-line"></div>
 
+    <div className="chart-point p1"></div>
+    <div className="chart-point p2"></div>
+    <div className="chart-point p3"></div>
+    <div className="chart-point p4"></div>
+    <div className="chart-point p5"></div>
+    <div className="chart-point p6"></div>
+
+    <div className="chart-months">
+      <span>Jan</span>
+      <span>Feb</span>
+      <span>Mar</span>
+      <span>Apr</span>
+      <span>May</span>
+      <span>Jun</span>
+    </div>
+
+  </div>
+
+</div>
           <div className="analytics-panel">
             <h3>System Overview</h3>
 

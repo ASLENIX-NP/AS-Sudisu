@@ -81,22 +81,68 @@ const ContactAdmin = () => {
         </div>
 
         <div className="contact-stats">
-          <div className="contact-stat-card">
-            <span>Email</span>
-            <h2>✓</h2>
-          </div>
 
-          <div className="contact-stat-card">
-            <span>Phone</span>
-            <h2>✓</h2>
-          </div>
+  <div className="contact-stat-card email-card">
+    <div className="stat-icon">
+      📧
+    </div>
 
-          <div className="contact-stat-card">
-            <span>Social Links</span>
-            <h2>4</h2>
-          </div>
-        </div>
+    <div>
+      <p className="stat-label">
+        Email
+      </p>
 
+      <h2 className="stat-number">
+        Active
+      </h2>
+
+      <span className="stat-sub">
+        Configured
+      </span>
+    </div>
+  </div>
+
+  <div className="contact-stat-card phone-card">
+    <div className="stat-icon">
+      📱
+    </div>
+
+    <div>
+      <p className="stat-label">
+        Phone
+      </p>
+
+      <h2 className="stat-number">
+        Active
+      </h2>
+
+      <span className="stat-sub">
+        Configured
+      </span>
+    </div>
+  </div>
+
+  <div className="contact-stat-card social-card">
+    <div className="stat-icon">
+      🌐
+    </div>
+
+    <div>
+      <p className="stat-label">
+        Social Links
+      </p>
+
+      <h2 className="stat-number">
+        4
+      </h2>
+
+      <span className="stat-sub">
+        Platforms Connected
+      </span>
+    </div>
+  </div>
+
+</div>
         <div className="contact-card">
 
           {saved && (
