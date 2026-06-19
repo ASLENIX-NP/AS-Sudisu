@@ -49,7 +49,7 @@ const HeroNavbar = ({
 
   return (
     <Component ref={heroRef} className={className} {...props}>
-      {showNavbar && <Navbar />}
+      <Navbar />
       {children}
     </Component>
   );
