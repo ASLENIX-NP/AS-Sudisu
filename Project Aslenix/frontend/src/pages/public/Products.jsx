@@ -19,7 +19,7 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sliderProducts, setSliderProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const productsPerPage = 24;
+  const productsPerPage = 12;
 
   const totalPages = Math.ceil((products?.length || 0) / productsPerPage);
 
@@ -31,9 +31,17 @@ const ProductsPage = () => {
     indexOfLastProduct,
   );
 
+  console.log("Products Length:", products.length);
+  console.log("Products:", products);
+  console.log("Current Page:", currentPage);
+  console.log("Total Pages:", totalPages);
+
   useEffect(() => {
     fetchProducts();
   }, []);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [products.length]);
 
   const fetchProducts = async () => {
     try {
@@ -48,12 +56,52 @@ const ProductsPage = () => {
 
   return (
     <>
-      <HeroNavbar as="div" className="sudisu-product-showcase">
-        <img
-          src={heroProducts}
-          alt="Sudisu Products"
-          className="sudisu-main-products"
-        />
+      <HeroNavbar as="section" className="products-hero">
+        <div className="products-hero-left">
+          <span className="hero-badge">🌶 Premium Nepali Spices</span>
+          <h1>
+            Best Selling
+            <span> Spices Collection</span>
+          </h1>
+          <p>
+            Crafted with authentic Nepali ingredients, delivering unmatched
+            aroma, freshness and flavor in every meal.
+          </p>
+          <div className="customer-review">
+            ⭐⭐⭐⭐⭐
+            <p>
+              Loved by thousands of families across Nepal for authentic taste
+              and premium quality.
+            </p>
+          </div>
+          <div className="hero-stats">
+            <div>
+              <h3>50+</h3>
+              <p>Premium Products</p>
+            </div>
+
+            <div>
+              <h3>5000+</h3>
+              <p>Happy Customers</p>
+            </div>
+
+            <div>
+              <h3>100%</h3>
+              <p>Pure Ingredients</p>
+            </div>
+          </div>{" "}
+        </div>
+
+        <div className="products-hero-right">
+          <div className="slider-card">
+            <img
+              src={heroProducts}
+              alt="Sudisu Products"
+              className="hero-slider-image"
+            />
+          </div>
+        </div>
+     
       </HeroNavbar>
 
       <section className="products-page">
@@ -80,8 +128,8 @@ const ProductsPage = () => {
                     <h3>{product.name}</h3>
 
                     <button onClick={() => setSelectedProduct(product)}>
-                       View Details
-                       </button>
+                      View Details
+                    </button>
                   </div>
                 ))}
               </div>

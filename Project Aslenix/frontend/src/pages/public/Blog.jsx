@@ -36,35 +36,7 @@ const [selectedPost, setSelectedPost] = useState(null);
         <HeroNavbar as="section" className="sudisu-blog-hero">
           <div className="sudisu-blog-container">
             {" "}
-            <div className="sudisu-blog-text">
-              <span className="blog-tag">SUDISU SPICES</span>
-
-              <h1>The Taste That Brings Every Meal To Life</h1>
-
-              <p>
-                In every Nepali kitchen, spices are more than ingredients — they
-                are memories, traditions, and emotions passed from one
-                generation to another. At Sudisu, we carefully craft every spice
-                blend to deliver the authentic taste of Nepal with unmatched
-                freshness and purity.
-              </p>
-
-              <p>
-                From rich turmeric and aromatic coriander to bold chilli and
-                flavorful cumin, our products are prepared with premium
-                ingredients that enhance every meal naturally.
-              </p>
-
-              <p>
-                Sudisu stands for quality you can trust, flavor you can feel,
-                and health your family deserves. Every pack is hygienically
-                processed and carefully sealed to preserve its original aroma,
-                texture, and natural goodness.
-              </p>
-            </div>
-            <div className="sudisu-blog-image">
-              <img src={blogImage} alt="Sudisu Spices" />
-            </div>
+           
           </div>
         </HeroNavbar>
 
