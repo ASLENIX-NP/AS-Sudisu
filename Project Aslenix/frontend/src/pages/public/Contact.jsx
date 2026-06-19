@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
-
+import toast from "react-hot-toast";
 import "./Contact.css";
 import { FaEnvelope, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -64,13 +64,15 @@ const Contact = () => {
     const requiredLength = countryPhoneRules[formData.country];
 
     if (requiredLength && formData.phone.length !== requiredLength) {
-      alert(`Phone number must contain exactly ${requiredLength} digits`);
-      return;
+    toast.error(
+  `Phone number must contain exactly ${requiredLength} digits`
+);
+return;
     }
 
     if (formData.country === "Nepal" && !/^9[78]\d{8}$/.test(formData.phone)) {
-      alert("Please enter a valid Nepal mobile number");
-      return;
+     toast.error("Please enter a valid Nepal mobile number");
+return;
     }
 
     try {
@@ -90,7 +92,7 @@ const Contact = () => {
       const data = await response.json();
 
       if (data.success) {
-        alert("Inquiry sent successfully");
+       toast.success("Inquiry sent successfully");
 
         setFormData({
           fullName: "",
@@ -103,11 +105,11 @@ const Contact = () => {
           message: "",
         });
       } else {
-        alert("Failed to send inquiry");
+       toast.error("Failed to send inquiry");
       }
     } catch (error) {
       console.error(error);
-      alert("Server error");
+     toast.error("Server error");
     }
   };
 

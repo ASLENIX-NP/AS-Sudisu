@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { supabase } from "../../lib/supabase";
 import logo from "../../assets/logo/sudiisu-logo.png";
 import "./login.css";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,21 +16,25 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+  toast.error("Please fill all fields");
+  return;
+}
 
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address");
-      return;
-    }
+   if (!emailRegex.test(email)) {
+  toast.error("Please enter a valid email address");
+  return;
+}
 
-    if (password.length < 8) {
-      alert(
-        "Password must be at least 8 characters"
-      );
-      return;
-    }
+ if (password.length < 8) {
+  toast.error(
+    "Password must be at least 8 characters"
+  );
+  return;
+}
 
     const { data, error } =
       await supabase.auth.signInWithPassword({
@@ -37,14 +42,18 @@ const Login = () => {
         password,
       });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+ if (error) {
+  toast.error(error.message);
+  return;
+}
 
-    if (data.user) {
-      navigate("/admin/dashboard");
-    }
+ if (data.user) {
+  toast.success("Login successful");
+
+  setTimeout(() => {
+    navigate("/admin/dashboard");
+  }, 800);
+}
   };
 
   return (

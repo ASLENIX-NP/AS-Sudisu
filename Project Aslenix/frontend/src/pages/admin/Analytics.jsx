@@ -9,10 +9,20 @@ import {
   FaUsers,
   FaChartLine,
 } from "react-icons/fa";
-
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  Tooltip,
+} from "recharts";
 const Analytics = () => {
   const [productCount, setProductCount] = useState(0);
-  const [inquiryCount, setInquiryCount] = useState(0);
+const [inquiryCount, setInquiryCount] = useState(0);
+
+const [visitorCount, setVisitorCount] = useState(0);
+const [growth, setGrowth] = useState(0);
+const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     fetchAnalytics();
@@ -34,13 +44,72 @@ const Analytics = () => {
 
       if (data.success) {
         setInquiryCount(data.inquiries.length);
+        const { data: visitors } = await supabase
+  .from("Website_Visitors")
+  .select("created_at");
+
+setVisitorCount(visitors?.length || 0);
+
+const monthlyData = [
+  { month: "Jan", visitors: 0 },
+  { month: "Feb", visitors: 0 },
+  { month: "Mar", visitors: 0 },
+  { month: "Apr", visitors: 0 },
+  { month: "May", visitors: 0 },
+  { month: "Jun", visitors: 0 },
+  { month: "Jul", visitors: 0 },
+  { month: "Aug", visitors: 0 },
+  { month: "Sep", visitors: 0 },
+  { month: "Oct", visitors: 0 },
+  { month: "Nov", visitors: 0 },
+  { month: "Dec", visitors: 0 },
+];
+
+visitors?.forEach((v) => {
+  const monthIndex = new Date(
+    v.created_at
+  ).getMonth();
+
+  monthlyData[monthIndex].visitors += 1;
+});
+
+setChartData([
+  { month: "Jan", visitors: 20 },
+  { month: "Feb", visitors: 40 },
+  { month: "Mar", visitors: 15 },
+  { month: "Apr", visitors: 60 },
+  { month: "May", visitors: 35 },
+  { month: "Jun", visitors: 90 },
+]);
+console.log("Visitors:", visitors);
+console.log("Monthly Data:", monthlyData);
+
+const currentMonth =
+  monthlyData[new Date().getMonth()]
+    ?.visitors || 0;
+
+const previousMonth =
+  monthlyData[
+    new Date().getMonth() - 1
+  ]?.visitors || 0;
+
+if (previousMonth > 0) {
+  setGrowth(
+    (
+      ((currentMonth - previousMonth) /
+        previousMonth) *
+      100
+    ).toFixed(0)
+  );
+}
       }
     } catch (error) {
       console.log(error);
     }
   };
-
+console.log("Chart Data:", chartData);
   return (
+    
     <AdminLayout>
       <div className="analytics-page">
 
@@ -70,14 +139,14 @@ const Analytics = () => {
           <div className="analytics-card">
             <FaUsers className="analytics-icon orange" />
             <span>Visitors</span>
-            <h2>1.2K</h2>
+            <h2>{visitorCount}</h2>
             <small>Monthly traffic</small>
           </div>
 
           <div className="analytics-card">
             <FaChartLine className="analytics-icon purple" />
             <span>Growth</span>
-            <h2>+18%</h2>
+            <h2>+{growth}%</h2>
             <small>Compared to last month</small>
           </div>
         </div>
@@ -92,27 +161,18 @@ const Analytics = () => {
     <span>Last 6 Months</span>
   </div>
 
-  <div className="fake-chart">
-
-    <div className="chart-line"></div>
-
-    <div className="chart-point p1"></div>
-    <div className="chart-point p2"></div>
-    <div className="chart-point p3"></div>
-    <div className="chart-point p4"></div>
-    <div className="chart-point p5"></div>
-    <div className="chart-point p6"></div>
-
-    <div className="chart-months">
-      <span>Jan</span>
-      <span>Feb</span>
-      <span>Mar</span>
-      <span>Apr</span>
-      <span>May</span>
-      <span>Jun</span>
-    </div>
-
-  </div>
+<ResponsiveContainer width="100%" height={350}>
+  <AreaChart data={chartData}>
+    <XAxis dataKey="month" />
+    <Tooltip />
+    <Area
+      type="monotone"
+      dataKey="visitors"
+      stroke="#2563eb"
+      fill="#93c5fd"
+    />
+  </AreaChart>
+</ResponsiveContainer>
 
 </div>
           <div className="analytics-panel">

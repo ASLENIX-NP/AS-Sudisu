@@ -1,6 +1,7 @@
 import AdminLayout from "../../layouts/AdminLayout";
 import { useEffect, useState } from "react";
 import "../../styles/Settings.css";
+import toast from "react-hot-toast";
 
 const Settings = () => {
   const [settings, setSettings] = useState({
@@ -42,29 +43,34 @@ const Settings = () => {
     });
   };
 
-  const handleSave = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/settings",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(settings),
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Settings Saved Successfully ✅");
+const handleSave = async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/settings",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(settings),
       }
-    } catch (error) {
-      console.log(error);
-      alert("Failed to save settings");
+    );
+
+    const data = await response.json();
+
+    if (!data.success) {
+      toast.error("Failed to save settings");
+      return;
     }
-  };
+
+    toast.success(
+      "Settings updated successfully"
+    );
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to save settings");
+  }
+};
 
   return (
     <AdminLayout>

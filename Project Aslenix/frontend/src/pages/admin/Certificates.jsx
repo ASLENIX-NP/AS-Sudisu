@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/Certificates.css";
 import AdminLayout from "../../layouts/AdminLayout";
+import toast from "react-hot-toast";
 
 const Certificates = () => {
   const [title, setTitle] = useState("");
@@ -28,6 +29,15 @@ const Certificates = () => {
 
 const submit = async () => {
   try {
+    if (!title.trim()) {
+  toast.error("Certificate title is required");
+  return;
+}
+
+if (!image) {
+  toast.error("Please select a certificate image");
+  return;
+}
     const formData = new FormData();
 
     formData.append("title", title);
@@ -41,7 +51,7 @@ const submit = async () => {
 
     console.log("SUCCESS:", res.data);
 
-    alert("Certificate Added Successfully");
+    toast.success("Certificate uploaded successfully");
 
     setTitle("");
     setDescription("");
@@ -51,11 +61,11 @@ const submit = async () => {
   } catch (err) {
     console.log("ERROR:", err);
 
-    alert(
-      err?.response?.data?.error ||
-      err.message ||
-      "Upload Failed"
-    );
+  toast.error(
+  err?.response?.data?.error ||
+  err.message ||
+  "Upload Failed"
+);
   }
 };
 
@@ -72,9 +82,14 @@ const submit = async () => {
       );
 
       fetchCertificates();
+      toast.success("Certificate deleted successfully");
     } catch (err) {
-      console.log(err);
-    }
+  console.log(err);
+
+  toast.error(
+    "Failed to delete certificate"
+  );
+}
   };
 
   const filteredCertificates =
@@ -163,6 +178,8 @@ const submit = async () => {
           <button onClick={submit}>
             Upload Certificate
           </button>
+          const [uploading, setUploading] =
+            useState(false);
         </div>
 
         {/* SEARCH */}

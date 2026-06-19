@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
 import { deleteProduct, updateProduct } from "../services/productService";
+import toast from "react-hot-toast";
 
 export const useProducts = () => {
 
@@ -27,11 +28,11 @@ const addProduct = async (
 
   if (error) {
     console.log(error);
-    alert(error.message);
+    toast.error(error.message);
     return;
   }
 
-  alert("Product Added Successfully");
+ toast.success("Product Added Successfully");
 
   resetForm();
   setIsFormOpen(false);
@@ -65,7 +66,7 @@ const uploadImage = async (
 
     if (error) {
       console.log(error);
-      alert("Image upload failed");
+     toast.error("Image upload failed");
       return;
     }
 
@@ -75,7 +76,7 @@ const uploadImage = async (
 
     setImage(data.publicUrl);
 
-    alert("Image Uploaded Successfully ✅");
+   toast.success("Image Uploaded Successfully");
   } catch (error) {
     console.log(error);
   } finally {

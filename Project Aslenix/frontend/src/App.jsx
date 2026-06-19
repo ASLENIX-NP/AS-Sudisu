@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useEffect } from "react";
 import { supabase } from "./lib/supabase";
+import { Toaster } from "react-hot-toast";
 
 import Inquiries from "./pages/admin/Inquiries";
 import Login from "./pages/admin/Login";
@@ -16,7 +17,7 @@ import ProductDetails from "./pages/public/ProductDetails";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
-import { Toaster } from "react-hot-toast";
+
 
 /* Admin Pages */
 import ProductsManager from "./pages/admin/ProductsManager";
@@ -69,9 +70,48 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Toaster position="top-right" />
-      <Routes>
+ <Router>
+
+  <Toaster
+    position="top-right"
+    gutter={12}
+    containerStyle={{
+      top: 20,
+      right: 20,
+    }}
+    toastOptions={{
+      duration: 4000,
+
+      style: {
+        background: "rgba(255,255,255,0.85)",
+        color: "#0f172a",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(255,255,255,0.6)",
+        borderRadius: "18px",
+        padding: "16px 18px",
+        boxShadow: "0 20px 45px rgba(15,23,42,.12)",
+        fontSize: "14px",
+        fontWeight: "600",
+      },
+
+      success: {
+        iconTheme: {
+          primary: "#22c55e",
+          secondary: "#ffffff",
+        },
+      },
+
+      error: {
+        iconTheme: {
+          primary: "#ef4444",
+          secondary: "#ffffff",
+        },
+      },
+    }}
+  />
+
+  <Routes>
         {/* PUBLIC PAGES */}
 
         <Route path="/" element={<Home />} />
@@ -198,6 +238,7 @@ function App() {
             </AdminRoute>
           }
         />
+   
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>

@@ -3,12 +3,14 @@ import { supabase } from "../../lib/supabase";
 import "./Review.css";
 import toast from "react-hot-toast";
 import ReactStars from "react-stars";
+
+
 const Review = ({ productId, productName, onReviewSubmitted }) => {
   const [reviews, setReviews] = useState([]);
-const [formError, setFormError] = useState("");
   const [name, setName] = useState("");
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
+const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     fetchReviews();
@@ -33,11 +35,11 @@ const [formError, setFormError] = useState("");
     e.preventDefault();
 
 if (!name || !review) {
-  setFormError("⚠ Please fill all fields before submitting.");
+  toast.error("Please fill all fields before submitting");
   return;
 }
 
-    setFormError("");
+  
     const { error } = await supabase.from("reviews").insert([
       {
         name,
@@ -48,12 +50,14 @@ if (!name || !review) {
         status: "Pending",
       },
     ]);
-    if (error) {
-      alert("Failed to submit review");
-      return;
-    }
+ if (error) {
+  toast.error("Failed to submit review");
+  return;
+}
 
-    toast.success("🎉 Review submitted successfully!");
+    toast.success(
+  "Thank you! Your review has been submitted for approval."
+);
 
     setName("");
     setRating(5);

@@ -20,10 +20,9 @@ const CategoriesAdmin = () => {
   );
   
   
-  useEffect(() => {
-    fetchCategories();
-    toast.success("Category deleted successfully");
-  }, []);
+useEffect(() => {
+  fetchCategories();
+}, []);
 
   const fetchCategories = async () => {
     const { data, error } = await supabase
@@ -40,11 +39,10 @@ const CategoriesAdmin = () => {
   };
 
   const addCategory = async () => {
-    if (!name.trim()) {
-      alert("Category name is required");
-      return;
-    }
-
+   if (!name.trim()) {
+  toast.error("Category name is required");
+  return;
+}
     const { error } = await supabase
       .from("categories")
       .insert([
@@ -60,13 +58,14 @@ const CategoriesAdmin = () => {
   return;
 }
 
-toast.success("Category updated successfully");
+toast.success("Category created successfully");
 
     setName("");
     setDescription("");
     setStatus("Active");
 
     fetchCategories();
+
   };
  const deleteCategory = async (id) => {
   const confirmed = window.confirm(
@@ -85,6 +84,7 @@ toast.success("Category updated successfully");
     return;
   }
   fetchCategories();
+  toast.success("Category deleted successfully");
 };
 const editCategory = (category) => {
   setEditingId(category.id);
@@ -102,10 +102,10 @@ const updateCategory = async () => {
     })
     .eq("id", editingId);
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+ if (error) {
+  toast.error(error.message);
+  return;
+}
 
   setEditingId(null);
   setName("");
@@ -113,6 +113,7 @@ const updateCategory = async () => {
   setStatus("Active");
 
   fetchCategories();
+  toast.success("Category updated successfully");
 };
   return (
     <AdminLayout>

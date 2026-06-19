@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/BlogAdmin.css";
+import toast from "react-hot-toast";
 
 const BlogAdmin = () => {
   const [blogs, setBlogs] = useState([]);
@@ -32,9 +33,9 @@ const BlogAdmin = () => {
 
   const saveBlog = async () => {
     if (!title.trim()) {
-      alert("Title required");
-      return;
-    }
+  toast.error("Blog title is required");
+  return;
+}
 
     let error;
 
@@ -64,12 +65,18 @@ const BlogAdmin = () => {
     }
 
     if (error) {
-      alert(error.message);
-      return;
-    }
+  toast.error(error.message);
+  return;
+}
 
-    resetForm();
-    fetchBlogs();
+  resetForm();
+fetchBlogs();
+
+toast.success(
+  editingId
+    ? "Blog updated successfully"
+    : "Blog published successfully"
+);
   };
 
   const editBlog = (blog) => {
@@ -81,16 +88,27 @@ const BlogAdmin = () => {
     setStatus(blog.status);
   };
 
-  const deleteBlog = async (id) => {
-    if (!window.confirm("Delete this blog?")) return;
+const deleteBlog = async (id) => {
+  const confirmed = window.confirm(
+    "Delete this blog?"
+  );
 
-    await supabase
-      .from("blogs")
-      .delete()
-      .eq("id", id);
+  if (!confirmed) return;
 
-    fetchBlogs();
-  };
+  const { error } = await supabase
+    .from("blogs")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    toast.error(error.message);
+    return;
+  }
+
+  fetchBlogs();
+
+  toast.success("Blog deleted successfully");
+};
 
   const resetForm = () => {
     setEditingId(null);

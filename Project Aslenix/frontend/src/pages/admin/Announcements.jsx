@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/Announcements.css";
+import toast from "react-hot-toast";
 
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -29,10 +30,10 @@ const Announcements = () => {
     setAnnouncements(data || []);
   };
 const saveAnnouncement = async () => {
-  if (!title.trim()) {
-    alert("Title is required");
-    return;
-  }
+if (!title.trim()) {
+  toast.error("Title is required");
+  return;
+}
 
   const { error } = await supabase
     .from("Announcement")
@@ -44,23 +45,24 @@ const saveAnnouncement = async () => {
       },
     ]);
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+ if (error) {
+  toast.error(error.message);
+  return;
+}
 
   setTitle("");
   setMessage("");
   setStatus("Active");
 
   fetchAnnouncements();
+  toast.success("Announcement created successfully");
 };
 
   const addAnnouncement = async () => {
-    if (!title.trim()) {
-      alert("Title is required");
-      return;
-    }
+   if (!title.trim()) {
+  toast.error("Title is required");
+  return;
+}
 
     const { error } = await supabase
       .from("Announcement")
@@ -72,16 +74,17 @@ const saveAnnouncement = async () => {
         },
       ]);
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+   if (error) {
+  toast.error(error.message);
+  return;
+}
 
     setTitle("");
     setMessage("");
     setStatus("Active");
 
     fetchAnnouncements();
+  toast.success("Announcement created successfully");
   };
 
   const editAnnouncement = (item) => {
@@ -101,10 +104,10 @@ const saveAnnouncement = async () => {
       })
       .eq("id", editingId);
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+if (error) {
+  toast.error(error.message);
+  return;
+}
 
     setEditingId(null);
     setTitle("");
@@ -112,9 +115,11 @@ const saveAnnouncement = async () => {
     setStatus("Active");
 
     fetchAnnouncements();
+    toast.success("Announcement updated successfully");
   };
 
   const deleteAnnouncement = async (id) => {
+  
     const confirmed = window.confirm(
       "Delete this announcement?"
     );
@@ -127,11 +132,11 @@ const saveAnnouncement = async () => {
       .eq("id", id);
 
     if (error) {
-      alert(error.message);
-      return;
-    }
-
+  toast.error(error.message);
+  return;
+}
     fetchAnnouncements();
+toast.success("Announcement deleted successfully");
   };
 
   const filteredAnnouncements =

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import toast from "react-hot-toast";
 import "./login.css";
 
 const ResetPassword = () => {
@@ -14,14 +15,14 @@ const ResetPassword = () => {
     e.preventDefault();
 
     if (password.length < 8) {
-      alert(
+      toast.error(
         "Password must be at least 8 characters"
       );
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -31,13 +32,17 @@ const ResetPassword = () => {
       });
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
       return;
     }
 
-    alert("Password updated successfully");
+    toast.success(
+      "Password updated successfully"
+    );
 
-    navigate("/admin");
+    setTimeout(() => {
+      navigate("/admin");
+    }, 1500);
   };
 
   return (
@@ -60,7 +65,9 @@ const ResetPassword = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) =>
-              setConfirmPassword(e.target.value)
+              setConfirmPassword(
+                e.target.value
+              )
             }
           />
 

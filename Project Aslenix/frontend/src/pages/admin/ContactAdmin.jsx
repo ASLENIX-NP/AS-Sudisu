@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/ContactAdmin.css";
+import toast from "react-hot-toast";
 
 const ContactAdmin = () => {
   const [formData, setFormData] = useState({
@@ -54,12 +55,13 @@ const ContactAdmin = () => {
       .eq("id", 1);
 
     if (error) {
-      alert("Failed to save");
-      console.log(error);
-      return;
-    }
+  toast.error("Failed to save contact settings");
+  console.log(error);
+  return;
+}
 
-    setSaved(true);
+    toast.success("Contact settings saved successfully");
+setSaved(true);
 
     setTimeout(() => {
       setSaved(false);

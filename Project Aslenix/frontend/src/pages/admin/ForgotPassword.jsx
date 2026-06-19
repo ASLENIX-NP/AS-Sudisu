@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import "./login.css";
+import toast from "react-hot-toast";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -15,11 +16,10 @@ const ForgotPassword = () => {
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address");
-      return;
-    }
-
+if (!emailRegex.test(email)) {
+  toast.error("Please enter a valid email address");
+  return;
+}
     setLoading(true);
 
     const { error } =
@@ -33,18 +33,18 @@ const ForgotPassword = () => {
 
     setLoading(false);
 
-    if (error) {
-      console.log(error);
+if (error) {
+  console.log(error);
 
-      alert(
-        "If the email exists, a reset link has been sent."
-      );
-      return;
-    }
+  toast.error(error.message);
+  return;
+}
 
-    alert(
-      "If the email exists, a reset link has been sent."
-    );
+toast.success(
+  "Password reset link sent successfully"
+);
+
+setEmail("");
   };
 
   return (

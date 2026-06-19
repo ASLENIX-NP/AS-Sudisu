@@ -4,6 +4,7 @@ import ProductStats from "../../components/products/ProductStats";
 import ProductTable from "../../components/products/ProductTable";
 import ProductFormModal from "../../components/products/ProductFormModal";
 import { useProducts } from "../../hooks/useProducts";
+import toast from "react-hot-toast";
 
 import {
   FaBoxes,
@@ -39,10 +40,6 @@ const ProductsManager = () => {
 useEffect(() => {
   fetchProducts(setProducts);
 }, []);
-
-
-  
- 
 
   // DELETE PRODUCT
   const handleDelete = async (id) => {
@@ -99,15 +96,15 @@ useEffect(() => {
       image,
     });
 
-    if (success) {
-      alert("Product Updated Successfully ✅");
+if (success) {
+  toast.success("Product updated successfully");
 
-   setEditingId(null);
-   resetForm();
-    setIsFormOpen(false);
+  setEditingId(null);
+  resetForm();
+  setIsFormOpen(false);
 
-      fetchProducts();
-    }
+  fetchProducts(setProducts);
+}
   };
   // RESET FORM
   const resetForm = () => {

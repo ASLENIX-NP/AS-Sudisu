@@ -196,7 +196,12 @@
   background: #a855f7;
 }
 .analytics-chart {
-  min-height: 340px;
+  height: 450px;
+}
+
+.analytics-chart .recharts-responsive-container {
+  width: 100% !important;
+  height: 350px !important;
 }
 .chart-header {
   display: flex;
@@ -210,78 +215,7 @@
   color: #64748b;
   font-size: 14px;
 }
-.fake-chart {
-  position: relative;
 
-  height: 320px;
-
-  border-radius: 20px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(37,99,235,.05),
-      rgba(37,99,235,.01)
-    );
-
-  overflow: hidden;
-}
-.chart-line {
-  position: absolute;
-
-  left: 40px;
-  right: 40px;
-  top: 50px;
-  bottom: 60px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(37,99,235,.15),
-    rgba(96,165,250,.25)
-  );
-
-  clip-path: polygon(
-    0% 80%,
-    18% 65%,
-    35% 70%,
-    50% 40%,
-    70% 55%,
-    85% 20%,
-    100% 0%
-  );
-}
-.chart-point {
-  position: absolute;
-
-  width: 12px;
-  height: 12px;
-
-  background: #2563eb;
-
-  border-radius: 50%;
-
-  box-shadow:
-    0 0 0 6px rgba(37,99,235,.12);
-}
-.p1 { left: 40px; bottom: 90px; }
-.p2 { left: 140px; bottom: 120px; }
-.p3 { left: 240px; bottom: 110px; }
-.p4 { left: 340px; bottom: 160px; }
-.p5 { left: 470px; bottom: 140px; }
-.p6 { right: 40px; bottom: 200px; }
-.chart-months {
-  position: absolute;
-
-  left: 40px;
-  right: 40px;
-  bottom: 15px;
-
-  display: flex;
-  justify-content: space-between;
-
-  color: #94a3b8;
-  font-size: 13px;
-}
 .system-left{
   display:flex;
   align-items:center;
@@ -393,4 +327,15 @@
     box-shadow:
       0 0 0 0 rgba(37,99,235,0);
   }
+}
+.recharts-wrapper {
+  font-size: 13px;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #64748b;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none;
 }
