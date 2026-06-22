@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
 import "../../styles/NotificationsAdmin.css";
+import { useSearchParams } from "react-router-dom";
 
 const NotificationsAdmin = () => {
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
+
   const [pendingReviews, setPendingReviews] = useState(0);
   const [inquiryCount, setInquiryCount] = useState(0);
   const [databaseStatus, setDatabaseStatus] = useState("Checking");
@@ -54,7 +59,7 @@ const NotificationsAdmin = () => {
             : "No unseen customer inquiries right now.",
         count: inquiryCount,
         action: "Open inquiries",
-        path: "/admin/inquiries",
+       path: "/admin/notifications?type=inquiries",
         tone: "blue",
       },
       {
@@ -67,7 +72,7 @@ const NotificationsAdmin = () => {
             : "No pending reviews right now.",
         count: pendingReviews,
         action: "Manage reviews",
-        path: "/admin/reviews",
+          path: "/admin/notifications?type=reviews",
         tone: "amber",
       },
       {
@@ -80,7 +85,7 @@ const NotificationsAdmin = () => {
             : "Database connection needs attention.",
         count: databaseStatus === "Healthy" ? 0 : 1,
         action: "Open dashboard",
-        path: "/admin/dashboard",
+      path: "/admin/notifications?type=dashboard",
         tone: "green",
       },
     ],
@@ -120,6 +125,50 @@ const NotificationsAdmin = () => {
               }`}
               onClick={() => navigate(item.path)}
             >
+              {type === "reviews" && (
+  <div className="notification-detail-box">
+    <h3>Pending Reviews</h3>
+    <p>
+      {pendingReviews} reviews are waiting for approval.
+    </p>
+
+    <button
+      onClick={() => navigate("/admin/reviews")}
+    >
+      Open Reviews
+    </button>
+  </div>
+)}
+
+{type === "inquiries" && (
+  <div className="notification-detail-box">
+    <h3>Customer Inquiries</h3>
+    <p>
+      {inquiryCount} inquiry messages need review.
+    </p>
+
+    <button
+      onClick={() => navigate("/admin/inquiries")}
+    >
+      Open Inquiries
+    </button>
+  </div>
+)}
+
+{type === "dashboard" && (
+  <div className="notification-detail-box">
+    <h3>System Status</h3>
+    <p>
+      Database Status: {databaseStatus}
+    </p>
+
+    <button
+      onClick={() => navigate("/admin/dashboard")}
+    >
+      Open Dashboard
+    </button>
+  </div>
+)}
               <span className="notifications-admin-icon">{item.icon}</span>
 
               <span className="notifications-admin-content">

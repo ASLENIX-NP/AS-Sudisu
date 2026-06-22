@@ -1,16 +1,45 @@
-import { useEffect, useMemo, useState } from "react";
-import { FaBell, FaCheck, FaEnvelope, FaStar } from "react-icons/fa";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import "./AdminTopbar.css";
+  import {
+  FaBell,
+  FaCheck,
+  FaEnvelope,
+  FaStar
+} from "react-icons/fa6";
 
 const AdminTopbar = () => {
   const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [pendingReviews, setPendingReviews] = useState(0);
   const [inquiries, setInquiries] = useState(0);
+   const notificationRef = useRef(null);   
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      notificationRef.current &&
+      !notificationRef.current.contains(event.target)
+    ) {
+      setIsNotificationsOpen(false);
+    }
+  };
+
+  document.addEventListener(
+    "mousedown",
+    handleClickOutside
+  );
+
+  return () => {
+    document.removeEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+  };
+}, []);
 
   useEffect(() => {
+
     const fetchNotificationCounts = async () => {
       const { count: reviewsCount } = await supabase
         .from("reviews")
@@ -30,6 +59,7 @@ const AdminTopbar = () => {
         setInquiries(0);
       }
     };
+ 
 
     fetchNotificationCounts();
   }, []);
@@ -45,7 +75,7 @@ const AdminTopbar = () => {
             ? `${inquiries} inquiry messages need review`
             : "No new inquiry messages",
         count: inquiries,
-        path: "/admin/inquiries",
+         path: "/admin/notifications?type=inquiries",
       },
       {
         id: "reviews",
@@ -56,7 +86,7 @@ const AdminTopbar = () => {
             ? `${pendingReviews} reviews are waiting approval`
             : "No reviews waiting approval",
         count: pendingReviews,
-        path: "/admin/reviews",
+        path: "/admin/notifications?type=reviews",
       },
     ],
     [inquiries, pendingReviews],
@@ -78,7 +108,10 @@ const AdminTopbar = () => {
       />
 
       <div className="admin-actions">
-        <div className="admin-notification-wrapper">
+        <div
+          className="admin-notification-wrapper"
+            ref={notificationRef}
+             >
           <button
             type="button"
             className={`admin-notification-button ${
@@ -88,7 +121,14 @@ const AdminTopbar = () => {
             aria-label="Open admin notifications"
             aria-expanded={isNotificationsOpen}
           >
-            <FaBell />
+            <button className="admin-notification-button">
+  🔔
+  {unreadCount > 0 && (
+    <span className="admin-notification-badge">
+      {unreadCount}
+    </span>
+  )}
+</button>
             {unreadCount > 0 && (
               <span className="admin-notification-badge">{unreadCount}</span>
             )}
@@ -115,6 +155,9 @@ const AdminTopbar = () => {
                     }`}
                     onClick={() => handleNotificationClick(item.path)}
                   >
+                    <div style={{ fontSize: "50px", color: "red" }}>
+                    <FaBell />
+                     </div>
                     <span className="admin-notification-icon">{item.icon}</span>
                     <span>
                       <strong>{item.title}</strong>

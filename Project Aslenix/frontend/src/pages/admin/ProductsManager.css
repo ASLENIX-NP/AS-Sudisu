@@ -884,7 +884,7 @@
 
 .product-action-btn:hover::after {
   color: #ffffff;
-}
+} 
 
 @media (max-width: 1100px) {
   .products-admin-page {

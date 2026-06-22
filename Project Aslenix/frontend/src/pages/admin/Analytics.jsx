@@ -9,15 +9,19 @@ import {
   FaUsers,
   FaChartLine,
 } from "react-icons/fa";
+
 import {
   ResponsiveContainer,
   AreaChart,
   Area,
   XAxis,
+  YAxis,
   Tooltip,
+  CartesianGrid,
 } from "recharts";
+
 const Analytics = () => {
-  const [productCount, setProductCount] = useState(0);
+const [productCount, setProductCount] = useState(0);
 const [inquiryCount, setInquiryCount] = useState(0);
 
 const [visitorCount, setVisitorCount] = useState(0);
@@ -27,86 +31,121 @@ const [chartData, setChartData] = useState([]);
   useEffect(() => {
     fetchAnalytics();
   }, []);
+const fetchAnalytics = async () => {
+  try {
+    // PRODUCTS
 
-  const fetchAnalytics = async () => {
+    const { data: products } = await supabase
+      .from("products")
+      .select("*");
+
+    setProductCount(products?.length || 0);
+
+    // INQUIRIES
+
     try {
-      const { data: products } = await supabase
-        .from("products")
-        .select("*");
-
-      setProductCount(products?.length || 0);
-
       const response = await fetch(
         "http://localhost:5000/api/inquiries"
       );
 
-      const data = await response.json();
+      const inquiryData = await response.json();
 
-      if (data.success) {
-        setInquiryCount(data.inquiries.length);
-        const { data: visitors } = await supabase
-  .from("Website_Visitors")
-  .select("created_at");
+      if (inquiryData.success) {
+        setInquiryCount(
+          inquiryData.inquiries.length
+        );
+      }
+    } catch (err) {
+      console.log(
+        "Inquiry API Failed:",
+        err
+      );
+    }
 
-setVisitorCount(visitors?.length || 0);
+    // VISITORS
 
-const monthlyData = [
-  { month: "Jan", visitors: 0 },
-  { month: "Feb", visitors: 0 },
-  { month: "Mar", visitors: 0 },
-  { month: "Apr", visitors: 0 },
-  { month: "May", visitors: 0 },
-  { month: "Jun", visitors: 0 },
-  { month: "Jul", visitors: 0 },
-  { month: "Aug", visitors: 0 },
-  { month: "Sep", visitors: 0 },
-  { month: "Oct", visitors: 0 },
-  { month: "Nov", visitors: 0 },
-  { month: "Dec", visitors: 0 },
-];
+    const { data: visitors } = await supabase
+      .from("Website_Visitors")
+      .select("created_at");
+    console.log("Visitors:", visitors);
+    console.log("Visitor Count:", visitors?.length);
+    setVisitorCount(visitors?.length || 0);
 
-visitors?.forEach((v) => {
-  const monthIndex = new Date(
-    v.created_at
-  ).getMonth();
+    const monthlyData = [
+      { month: "Jan", visitors: 0 },
+      { month: "Feb", visitors: 0 },
+      { month: "Mar", visitors: 0 },
+      { month: "Apr", visitors: 0 },
+      { month: "May", visitors: 0 },
+      { month: "Jun", visitors: 0 },
+      { month: "Jul", visitors: 0 },
+      { month: "Aug", visitors: 0 },
+      { month: "Sep", visitors: 0 },
+      { month: "Oct", visitors: 0 },
+      { month: "Nov", visitors: 0 },
+      { month: "Dec", visitors: 0 },
+    ];
 
-  monthlyData[monthIndex].visitors += 1;
-});
+    visitors?.forEach((v) => {
+      const monthIndex = new Date(
+        v.created_at
+      ).getMonth();
 
-setChartData([
-  { month: "Jan", visitors: 20 },
-  { month: "Feb", visitors: 40 },
-  { month: "Mar", visitors: 15 },
-  { month: "Apr", visitors: 60 },
-  { month: "May", visitors: 35 },
-  { month: "Jun", visitors: 90 },
-]);
-console.log("Visitors:", visitors);
-console.log("Monthly Data:", monthlyData);
+      monthlyData[monthIndex].visitors++;
+    });
 
-const currentMonth =
-  monthlyData[new Date().getMonth()]
-    ?.visitors || 0;
+    const currentMonthIndex =
+  new Date().getMonth();
 
-const previousMonth =
-  monthlyData[
-    new Date().getMonth() - 1
-  ]?.visitors || 0;
+const last6Months = [];
 
-if (previousMonth > 0) {
-  setGrowth(
-    (
-      ((currentMonth - previousMonth) /
-        previousMonth) *
-      100
-    ).toFixed(0)
+for (let i = 5; i >= 0; i--) {
+  const index =
+    (currentMonthIndex - i + 12) % 12;
+
+  last6Months.push(
+    monthlyData[index]
   );
 }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+setChartData(last6Months);
+    
+
+const previousMonthIndex =
+  currentMonthIndex === 0
+    ? 11
+    : currentMonthIndex - 1;
+
+const currentMonthVisitors =
+  monthlyData[currentMonthIndex]
+    ?.visitors || 0;
+
+const previousMonthVisitors =
+  monthlyData[previousMonthIndex]
+    ?.visitors || 0;
+
+if (previousMonthVisitors > 0) {
+  setGrowth(
+    Math.round(
+      (
+        (currentMonthVisitors -
+          previousMonthVisitors) /
+        previousMonthVisitors
+      ) * 100
+    )
+  );
+} else {
+  setGrowth(0);
+}
+
+    console.log(
+      "Chart Data:",
+      monthlyData
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
 console.log("Chart Data:", chartData);
   return (
     
@@ -163,13 +202,49 @@ console.log("Chart Data:", chartData);
 
 <ResponsiveContainer width="100%" height={350}>
   <AreaChart data={chartData}>
-    <XAxis dataKey="month" />
+    <defs>
+      <linearGradient
+        id="visitorsGradient"
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="1"
+      >
+        <stop
+          offset="5%"
+          stopColor="#2563eb"
+          stopOpacity={0.35}
+        />
+        <stop
+          offset="95%"
+          stopColor="#2563eb"
+          stopOpacity={0}
+        />
+      </linearGradient>
+    </defs>
+
+    <CartesianGrid
+      strokeDasharray="4 4"
+      stroke="#e2e8f0"
+    />
+   <YAxis
+  tickLine={false}
+  axisLine={false}
+/>
+    <XAxis
+      dataKey="month"
+      tickLine={false}
+      axisLine={false}
+    />
+
     <Tooltip />
+
     <Area
       type="monotone"
       dataKey="visitors"
       stroke="#2563eb"
-      fill="#93c5fd"
+      strokeWidth={3}
+      fill="url(#visitorsGradient)"
     />
   </AreaChart>
 </ResponsiveContainer>
