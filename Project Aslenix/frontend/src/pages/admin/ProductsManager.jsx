@@ -177,13 +177,21 @@ if (success) {
       value: `Rs. ${productStats.inventoryValue.toLocaleString()}`,
       subtitle: "Current Inventory Worth",
     },
-    {
-      className: "products-stat-red",
-      icon: <FaExclamationTriangle />,
-      title: "Low Stock",
-      value: productStats.lowStock,
-      subtitle: "Need Restocking",
-    },
+{
+  className: "products-stat-red",
+  icon: <FaExclamationTriangle />,
+  title: "Inventory Health",
+  value:
+    productStats.totalProducts > 0
+      ? `${Math.round(
+          ((productStats.totalProducts -
+            productStats.lowStock) /
+            productStats.totalProducts) *
+            100
+        )}%`
+      : "100%",
+  subtitle: "Stock Performance",
+}
   ];
   return (
     <AdminLayout>
@@ -226,6 +234,27 @@ if (success) {
         </div>
 
         <ProductStats statCards={statCards} />
+        <div className="products-filters">
+  <button className="active">
+    All Products
+  </button>
+
+  <button>
+    Featured
+  </button>
+
+  <button>
+    Flash Sale
+  </button>
+
+  <button>
+    Best Seller
+  </button>
+
+  <button>
+    Low Stock
+  </button>
+</div>
 
 {isFormOpen && (
   <ProductFormModal

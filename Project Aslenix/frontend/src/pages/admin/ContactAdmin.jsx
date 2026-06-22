@@ -84,65 +84,60 @@ setSaved(true);
 
         <div className="contact-stats">
 
-  <div className="contact-stat-card email-card">
-    <div className="stat-icon">
-      📧
-    </div>
-
-    <div>
-      <p className="stat-label">
-        Email
-      </p>
-
-      <h2 className="stat-number">
-        Active
-      </h2>
-
-      <span className="stat-sub">
-        Configured
-      </span>
-    </div>
+ <div className="contact-stat-card email-card">
+  <div className="stat-icon">
+    📧
   </div>
 
-  <div className="contact-stat-card phone-card">
-    <div className="stat-icon">
-      📱
-    </div>
+  <div>
+    <p className="stat-label">
+      Business Email
+    </p>
 
-    <div>
-      <p className="stat-label">
-        Phone
-      </p>
+    <h2 className="stat-number">
+      {formData.email || "Not Set"}
+    </h2>
+  </div>
+</div>
 
-      <h2 className="stat-number">
-        Active
-      </h2>
-
-      <span className="stat-sub">
-        Configured
-      </span>
-    </div>
+<div className="contact-stat-card phone-card">
+  <div className="stat-icon">
+    📱
   </div>
 
-  <div className="contact-stat-card social-card">
-    <div className="stat-icon">
-      🌐
-    </div>
+  <div>
+    <p className="stat-label">
+      Contact Number
+    </p>
 
-    <div>
-      <p className="stat-label">
-        Social Links
-      </p>
-
-      <h2 className="stat-number">
-        4
-      </h2>
-
-      <span className="stat-sub">
-        Platforms Connected
-      </span>
-    </div>
+    <h2 className="stat-number">
+      {formData.phone || "Not Set"}
+    </h2>
   </div>
+</div>
+
+<div className="contact-stat-card social-card">
+  <div className="stat-icon">
+    🌐
+  </div>
+
+  <div>
+    <p className="stat-label">
+      Social Platforms
+    </p>
+
+    <h2 className="stat-number">
+      {
+        [
+          formData.whatsapp,
+          formData.facebook,
+          formData.instagram,
+          formData.tiktok,
+        ].filter(Boolean).length
+      }
+    </h2>
+  </div>
+</div>
 
 </div>
         <div className="contact-card">
