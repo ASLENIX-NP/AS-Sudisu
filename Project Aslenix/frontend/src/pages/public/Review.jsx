@@ -4,13 +4,14 @@ import "./Review.css";
 import toast from "react-hot-toast";
 import ReactStars from "react-stars";
 
-
 const Review = ({ productId, productName, onReviewSubmitted }) => {
   const [reviews, setReviews] = useState([]);
   const [name, setName] = useState("");
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
-const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     fetchReviews();
@@ -34,12 +35,11 @@ const [submitting, setSubmitting] = useState(false);
   const submitReview = async (e) => {
     e.preventDefault();
 
-if (!name || !review) {
-  toast.error("Please fill all fields before submitting");
-  return;
-}
+    if (!name || !review) {
+      toast.error("Please fill all fields before submitting");
+      return;
+    }
 
-  
     const { error } = await supabase.from("reviews").insert([
       {
         name,
@@ -50,20 +50,18 @@ if (!name || !review) {
         status: "Pending",
       },
     ]);
- if (error) {
-  toast.error("Failed to submit review");
-  return;
-}
+    if (error) {
+      toast.error("Failed to submit review");
+      return;
+    }
 
-    toast.success(
-  "Thank you! Your review has been submitted for approval."
-);
+    toast.success("Thank you! Your review has been submitted for approval.");
 
     setName("");
     setRating(5);
     setReview("");
 
-   onReviewSubmitted();
+    onReviewSubmitted();
   };
 
   return (

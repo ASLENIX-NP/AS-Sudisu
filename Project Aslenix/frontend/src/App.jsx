@@ -17,9 +17,9 @@ import ProductDetails from "./pages/public/ProductDetails";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
-
-
-/* Admin Pages */
+import CertificateDetails from "./pages/public/CertificateDetails";
+import WhatsAppFloat from "./pages/public/WhatsAppFloat"; /* 
+/*Admin Pages */
 import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
 import ContactAdmin from "./pages/admin/ContactAdmin";
@@ -70,48 +70,47 @@ function App() {
   }, []);
 
   return (
- <Router>
+    <Router>
+      <Toaster
+        position="top-right"
+        gutter={12}
+        containerStyle={{
+          top: 20,
+          right: 20,
+        }}
+        toastOptions={{
+          duration: 4000,
 
-  <Toaster
-    position="top-right"
-    gutter={12}
-    containerStyle={{
-      top: 20,
-      right: 20,
-    }}
-    toastOptions={{
-      duration: 4000,
+          style: {
+            background: "rgba(255,255,255,0.85)",
+            color: "#0f172a",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255,255,255,0.6)",
+            borderRadius: "18px",
+            padding: "16px 18px",
+            boxShadow: "0 20px 45px rgba(15,23,42,.12)",
+            fontSize: "14px",
+            fontWeight: "600",
+          },
 
-      style: {
-        background: "rgba(255,255,255,0.85)",
-        color: "#0f172a",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.6)",
-        borderRadius: "18px",
-        padding: "16px 18px",
-        boxShadow: "0 20px 45px rgba(15,23,42,.12)",
-        fontSize: "14px",
-        fontWeight: "600",
-      },
+          success: {
+            iconTheme: {
+              primary: "#22c55e",
+              secondary: "#ffffff",
+            },
+          },
 
-      success: {
-        iconTheme: {
-          primary: "#22c55e",
-          secondary: "#ffffff",
-        },
-      },
+          error: {
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#ffffff",
+            },
+          },
+        }}
+      />
 
-      error: {
-        iconTheme: {
-          primary: "#ef4444",
-          secondary: "#ffffff",
-        },
-      },
-    }}
-  />
-
-  <Routes>
+      <Routes>
         {/* PUBLIC PAGES */}
 
         <Route path="/" element={<Home />} />
@@ -130,6 +129,7 @@ function App() {
 
         <Route path="/certificates/:id" element={<CertificateRead />} />
 
+        <Route path="/certificate/:id" element={<CertificateDetails />} />
         {/* ADMIN LOGIN */}
 
         <Route path="/admin" element={<Login />} />
@@ -238,10 +238,11 @@ function App() {
             </AdminRoute>
           }
         />
-   
+
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+      <WhatsAppFloat />
     </Router>
   );
 }

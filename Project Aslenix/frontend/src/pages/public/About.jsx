@@ -14,40 +14,44 @@ const About = () => {
   return (
     <>
       {/* FLOATING BUTTONS */}
-      <HeroNavbar
-        className="about-section"
-        style={{
-          backgroundImage: `
-      linear-gradient(
-        rgba(0, 0, 0, 0.55),
-        rgba(0, 0, 0, 0.55)
-      ),
-      url(${cookingWomen})
-    `,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <HeroNavbar  className="about-section">
         <div className="about-container">
           <div className="about-text">
-            <h1>About Us</h1>
+            <span className="about-tag">SUDIISU SPICES</span>
 
+            <h1>
+              More than Spices <span>A Story Of Passion</span>
+              <br />
+              And Excellence
+            </h1>
             <p>
-              Sudiisu Pride is a premium Nepali spice brand dedicated to
-              preserving authenticity, purity and traditional craftsmanship.
+              Behind every pack of Sudiisu Pride is a team of passionate
+              individuals committed to bringing authentic Nepali flavors to
+              every kitchen.
             </p>
 
             <p>
-              Rooted in Nepal’s rich culinary heritage, our spices are carefully
-              sourced from trusted local farmers and processed with strict
-              quality standards.
+              The people you see in this photograph are the heart of our
+              journey. From sourcing premium ingredients to carefully preparing
+              every spice blend, each member plays a vital role in preserving
+              the taste, tradition, and trust that define our brand.
             </p>
 
             <p>
-              Every product is crafted to deliver natural aroma, rich flavor and
-              uncompromised freshness.
+              We work closely with local farmers and communities, ensuring that
+              every product reflects Nepal's rich culinary heritage while
+              maintaining the highest standards of quality and purity.
             </p>
+
+            <p>
+              At Sudiisu Pride, we believe food is more than nourishment—it is a
+              way to connect families, celebrate culture, and create
+              unforgettable memories around the dining table.
+            </p>
+          </div>
+
+          <div className="about-image">
+            <img src={cookingWomen} alt="Sudiisu Pride Team" />
           </div>
         </div>
       </HeroNavbar>

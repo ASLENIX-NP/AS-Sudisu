@@ -50,7 +50,7 @@ export default function Footer() {
 
           <div className="footer-actions">
             <button className="cta-btn" onClick={() => setOpenPopup(true)}>
-              Connect With Us
+              Bussiness with SUDISU
             </button>
 
             <Link to="/products" className="footer-product-btn">
@@ -113,7 +113,8 @@ export default function Footer() {
               rel="noreferrer"
               className="social-link"
             >
-              <FaInstagram /> Instagram
+              <FaInstagram className="footer-icon instagram-icon" />
+              Instagram
             </a>
 
             <a
@@ -122,7 +123,8 @@ export default function Footer() {
               rel="noreferrer"
               className="social-link"
             >
-              <FaFacebook /> Facebook
+              <FaFacebook className="footer-icon facebook-icon" />
+              Facebook
             </a>
 
             <a
@@ -131,7 +133,8 @@ export default function Footer() {
               rel="noreferrer"
               className="social-link"
             >
-              <FaWhatsapp /> Whatsapp
+              <FaWhatsapp className="footer-icon whatsapp-icon" />
+              Whatsapp
             </a>
           </div>
         </div>

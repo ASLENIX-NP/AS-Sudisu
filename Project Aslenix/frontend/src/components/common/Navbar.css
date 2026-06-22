@@ -15,7 +15,21 @@
   width: auto;
   height: 75px;
 
-  background: rgba(0, 0, 0, 0.92);
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(220, 38, 38, 0.28),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(250, 204, 21, 0.14),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #151515 0%, #090909 55%, #000000 100%);
+
+  border-top: 5px solid #dc2626;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.12);
   backdrop-filter: blur(15px);
 
   border: 1px solid rgba(255, 255, 255, 0.08);

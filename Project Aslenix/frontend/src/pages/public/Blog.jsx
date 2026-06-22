@@ -36,24 +36,50 @@ const [selectedPost, setSelectedPost] = useState(null);
         <HeroNavbar as="section" className="sudisu-blog-hero">
           <div className="sudisu-blog-container">
             {" "}
-           
+            <div className="sudisu-blog-text">
+              <span className="blog-tag">🌶 SUDISU SPICES BLOG</span>
+
+              <h1>
+                Bringing Authentic
+                <span> Nepali Flavors </span>
+                To Every Kitchen
+              </h1>
+
+              <p className="hero-description">
+                Discover the stories behind our spices, traditional recipes,
+                quality standards, and the passion that goes into every Sudisu
+                product.
+              </p>
+
+              <div className="blog-highlights">
+                <div className="highlight-card">
+                  <h3>100% Pure</h3>
+                  <p>Carefully sourced premium ingredients.</p>
+                </div>
+
+                <div className="highlight-card">
+                  <h3>Authentic Taste</h3>
+                  <p>Traditional Nepali recipes and flavors.</p>
+                </div>
+
+                <div className="highlight-card">
+                  <h3>Trusted Quality</h3>
+                  <p>Certified and quality-tested products.</p>
+                </div>
+              </div>
+
+              <button className="blog-cta-btn">Explore Our Story</button>
+            </div>
+            {/* RIGHT SIDE IMAGE */}
+            <div className="sudisu-blog-image">
+              <div className="product-showcase-3d">
+                <img src={blogImage} alt="Sudisu Products" />
+              </div>
+            </div>
           </div>
         </HeroNavbar>
 
         {/* WHY SUDISU */}
-
-        <div className="sudisu-blog-bottom">
-          <div className="bottom-card">
-            <h2>Why Families Choose Sudisu</h2>
-
-            <p>
-              Trusted by households who value authentic taste and purity, Sudisu
-              spices are made to bring warmth, tradition, and healthy flavor
-              into every kitchen. Our commitment to quality ensures that every
-              meal becomes richer, fresher, and more memorable.
-            </p>
-          </div>
-        </div>
 
         {/* CERTIFICATES */}
 
@@ -73,21 +99,30 @@ const [selectedPost, setSelectedPost] = useState(null);
               Certificates will be available soon.{" "}
             </div>
           ) : (
-            <div className="cert-grid">
-              {certificates.map((item) => (
-                <div key={item.id} className="cert-card">
-                  <div className="cert-image-wrapper">
+            <div className="certificates-showcase">
+              {certificates.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`certificate-showcase ${
+                    index % 2 !== 0 ? "reverse" : ""
+                  }`}
+                >
+                  <div className="certificate-image">
                     <img src={item.image_url} alt={item.title} />
                   </div>
 
-                  <div className="cert-content">
+                  <div className="certificate-info">
+                    <span className="certificate-badge">
+                      Quality Certificate
+                    </span>
+
                     <h3>{item.title}</h3>
 
                     <p>{item.description}</p>
 
                     <button
                       className="cert-view-btn"
-                      onClick={() => setSelectedCertificate(item)}
+                      onClick={() => navigate(`/certificate/${item.id}`)}
                     >
                       View Certificate
                     </button>

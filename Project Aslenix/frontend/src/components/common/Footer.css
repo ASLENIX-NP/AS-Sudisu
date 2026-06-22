@@ -91,10 +91,10 @@
 .footer-top h2 {
   max-width: 900px;
 
-  margin: 0;
+  margin:10px 0px;
 
   color: #ffffff;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 950;
   line-height: 1.05;
   letter-spacing: -1.5px;
@@ -119,7 +119,7 @@
   margin: 24px 0 0;
 
   color: rgba(255, 255, 255, 0.84);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.75;
 }
 
@@ -141,9 +141,10 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
 
-  margin-top: 34px;
+  margin-top: 30px;
+  margin-bottom:10px
 }
 
 .cta-btn,
@@ -178,7 +179,7 @@
   color: #ffffff;
 
   background: linear-gradient(135deg, #b91c1c, #dc2626, #f59e0b);
-
+  font-size:16px;
   box-shadow:
     0 16px 36px rgba(220, 38, 38, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
@@ -551,4 +552,43 @@
     font-size: 13px;
     padding: 22px 5%;
   }
+}
+.footer-icon {
+  margin-right: 10px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+/* Contact Icons */
+.phone-icon {
+  color: #22c55e;
+}
+
+.email-icon {
+  color: #f59e0b;
+}
+
+.location-icon {
+  color: #ef4444;
+}
+
+/* Social Icons */
+.instagram-icon {
+  color: #E4405F;
+  background: #f8fafc;
+}
+
+.facebook-icon {
+  color: #1877F2;
+  background: #f8fafc;
+}
+
+.whatsapp-icon {
+  color: #04c311;
+  background: #f8fafcc8;
+}
+
+/* Hover */
+.footer a:hover .footer-icon {
+  transform: scale(1.15);
 }

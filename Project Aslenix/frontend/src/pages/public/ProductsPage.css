@@ -98,9 +98,7 @@ input {
   position: absolute;
   inset: 0;
 
-  background-image:
-    linear-gradient(rgba(185, 28, 28, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(185, 28, 28, 0.05) 1px, transparent 1px);
+ 
 
   background-size: 46px 46px;
   mask-image: linear-gradient(to bottom, black, transparent 80%);
@@ -583,6 +581,7 @@ input {
 .product-card::before {
   content: "";
   position: absolute;
+  
   inset: auto -60px -95px;
 
   height: 170px;
