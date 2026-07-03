@@ -10,7 +10,8 @@ const Certificates = () => {
   const [image, setImage] = useState(null);
   const [certificates, setCertificates] = useState([]);
   const [search, setSearch] = useState("");
-
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedCertificate, setSelectedCertificate] = useState(null);
   useEffect(() => {
     fetchCertificates();
   }, []);
@@ -69,28 +70,29 @@ if (!image) {
   }
 };
 
-  const deleteCertificate = async (id) => {
-    const confirmed = window.confirm(
-      "Delete certificate?"
+const deleteCertificate = async () => {
+  if (!selectedCertificate) return;
+
+  try {
+    await axios.delete(
+      `http://localhost:5000/api/certificates/${selectedCertificate}`
     );
 
-    if (!confirmed) return;
+    fetchCertificates();
 
-    try {
-      await axios.delete(
-        `http://localhost:5000/api/certificates/${id}`
-      );
+    toast.success("Certificate deleted successfully");
 
-      fetchCertificates();
-      toast.success("Certificate deleted successfully");
-    } catch (err) {
-  console.log(err);
+  } catch (err) {
 
-  toast.error(
-    "Failed to delete certificate"
-  );
-}
-  };
+    console.log(err);
+
+    toast.error("Failed to delete certificate");
+
+  }
+
+  setShowDeleteModal(false);
+  setSelectedCertificate(null);
+};
 
   const filteredCertificates =
     certificates.filter((c) =>
@@ -226,14 +228,15 @@ if (!image) {
 
                   <p>{c.description}</p>
 
-                  <button
-                    className="cert-delete-btn"
-                    onClick={() =>
-                      deleteCertificate(c.id)
-                    }
-                  >
-                    Delete
-                  </button>
+                <button
+  className="cert-delete-btn"
+  onClick={() => {
+    setSelectedCertificate(c.id);
+    setShowDeleteModal(true);
+  }}
+>
+  Delete
+</button>
 
                 </div>
               </div>
@@ -243,6 +246,49 @@ if (!image) {
         )}
 
       </div>
+      {showDeleteModal && (
+
+  <div className="delete-modal-overlay">
+
+    <div className="delete-modal">
+
+      <div className="delete-modal-icon">
+        🗑️
+      </div>
+
+      <h2>Delete Certificate?</h2>
+
+      <p>
+        This action cannot be undone.
+        This certificate will be permanently deleted.
+      </p>
+
+      <div className="delete-modal-actions">
+
+        <button
+          className="cancel-delete-btn"
+          onClick={() => {
+            setShowDeleteModal(false);
+            setSelectedCertificate(null);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="confirm-delete-btn"
+          onClick={deleteCertificate}
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
     </AdminLayout>
   );
 };

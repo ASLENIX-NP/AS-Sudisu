@@ -96,58 +96,88 @@ const NotificationsAdmin = () => {
 
   return (
     <AdminLayout>
-      <div className="notifications-admin-page">
-        <div className="notifications-admin-header">
-          <div>
-            <span className="notifications-eyebrow">
-              <FaBell /> Admin center
-            </span>
-            <h1>Notifications</h1>
-            <p>
-              Track customer messages, pending approvals, and admin alerts from
-              one place.
-            </p>
-          </div>
-
-          <div className="notifications-total-card">
-            <span>Yet to see</span>
-            <strong>{totalPending}</strong>
-          </div>
-        </div>
-
-        <div className="notifications-admin-grid">
-          {notifications.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              className={`notifications-admin-card ${item.tone} ${
-                item.count > 0 ? "has-pending" : ""
-              }`}
-              onClick={() => navigate(item.path)}
-            >
-              {type === "reviews" && (
-  <div className="notification-detail-box">
-    <h3>Pending Reviews</h3>
-    <p>
-      {pendingReviews} reviews are waiting for approval.
-    </p>
-
-    <button
-      onClick={() => navigate("/admin/reviews")}
-    >
-      Open Reviews
-    </button>
+<div className="notifications-admin-page">
+  <div className="notifications-admin-header">
+  
   </div>
-)}
 
+  {!type && (
+    <div className="notifications-admin-grid">
+      {notifications.map((item) => (
+        <button
+          type="button"
+          key={item.id}
+          className={`notifications-admin-card ${item.tone} ${
+            item.count > 0 ? "has-pending" : ""
+          }`}
+          onClick={() => navigate(item.path)}
+        >
+          <span className="notifications-admin-icon">
+            {item.icon}
+          </span>
+
+          <span className="notifications-admin-content">
+            <span>
+              <strong>{item.title}</strong>
+              <small>{item.description}</small>
+            </span>
+
+            <span className="notifications-admin-action">
+              {item.action}
+            </span>
+          </span>
+
+          <span className="notifications-admin-count">
+            {item.count}
+          </span>
+        </button>
+      ))}
+    </div>
+  )}
 {type === "inquiries" && (
   <div className="notification-detail-box">
-    <h3>Customer Inquiries</h3>
-    <p>
-      {inquiryCount} inquiry messages need review.
-    </p>
+    <h2>📩 Customer Inquiries</h2>
+
+    <div className="notification-info">
+      <div className="info-row">
+        <strong>Status:</strong>
+        <span>
+          {inquiryCount > 0
+            ? `${inquiryCount} New Inquiries`
+            : "No New Inquiries"}
+        </span>
+      </div>
+
+      <div className="info-row">
+        <strong>Priority:</strong>
+        <span>
+          {inquiryCount > 5
+            ? "High"
+            : inquiryCount > 0
+            ? "Medium"
+            : "Low"}
+        </span>
+      </div>
+
+      <div className="info-row">
+        <strong>Description:</strong>
+        <span>
+          Customer messages submitted through the website
+          contact form are waiting for review.
+        </span>
+      </div>
+
+      <div className="info-row">
+        <strong>Action Required:</strong>
+        <span>
+          Open the inquiries page and reply to customer
+          messages.
+        </span>
+      </div>
+    </div>
 
     <button
+      className="notification-action-btn"
       onClick={() => navigate("/admin/inquiries")}
     >
       Open Inquiries
@@ -155,38 +185,75 @@ const NotificationsAdmin = () => {
   </div>
 )}
 
-{type === "dashboard" && (
+{type === "reviews" && (
   <div className="notification-detail-box">
-    <h3>System Status</h3>
-    <p>
-      Database Status: {databaseStatus}
-    </p>
+    <h2>⭐ Pending Reviews</h2>
+
+    <div className="notification-info">
+      <div className="info-row">
+        <strong>Pending Reviews:</strong>
+        <span>{pendingReviews}</span>
+      </div>
+
+      <div className="info-row">
+        <strong>Description:</strong>
+        <span>
+          Customer reviews require approval before they
+          appear publicly on products.
+        </span>
+      </div>
+
+      <div className="info-row">
+        <strong>Action Required:</strong>
+        <span>
+          Approve genuine reviews and reject spam reviews.
+        </span>
+      </div>
+    </div>
 
     <button
+      className="notification-action-btn"
+      onClick={() => navigate("/admin/reviews")}
+    >
+      Manage Reviews
+    </button>
+  </div>
+)}
+
+</div>
+{type === "dashboard" && (
+  <div className="notification-detail-box">
+    <h2>🖥️ System Status</h2>
+
+    <div className="notification-info">
+      <div className="info-row">
+        <strong>Database:</strong>
+        <span>{databaseStatus}</span>
+      </div>
+
+      <div className="info-row">
+        <strong>Server:</strong>
+        <span>Running</span>
+      </div>
+
+      <div className="info-row">
+        <strong>Description:</strong>
+        <span>
+          Monitor database connectivity and overall system
+          health.
+        </span>
+      </div>
+    </div>
+
+    <button
+      className="notification-action-btn"
       onClick={() => navigate("/admin/dashboard")}
     >
       Open Dashboard
     </button>
   </div>
 )}
-              <span className="notifications-admin-icon">{item.icon}</span>
-
-              <span className="notifications-admin-content">
-                <span>
-                  <strong>{item.title}</strong>
-                  <small>{item.description}</small>
-                </span>
-
-                <span className="notifications-admin-action">
-                  {item.action}
-                </span>
-              </span>
-
-              <span className="notifications-admin-count">{item.count}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+export default NotificationsAdmin;
     </AdminLayout>
   );
 };

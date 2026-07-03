@@ -134,40 +134,6 @@ const AdminTopbar = () => {
             )}
           </button>
 
-          {isNotificationsOpen && (
-            <div className="admin-notification-panel">
-              <div className="admin-notification-panel-header">
-                <div>
-                  <h3>Notifications</h3>
-                  <p>{unreadCount > 0 ? `${unreadCount} updates` : "All clear"}</p>
-                </div>
-
-                <FaCheck />
-              </div>
-
-              <div className="admin-notification-list">
-                {notifications.map((item) => (
-                  <button
-                    type="button"
-                    key={item.id}
-                    className={`admin-notification-item ${
-                      item.count > 0 ? "has-updates" : ""
-                    }`}
-                    onClick={() => handleNotificationClick(item.path)}
-                  >
-                    <div style={{ fontSize: "50px", color: "red" }}>
-                    <FaBell />
-                     </div>
-                    <span className="admin-notification-icon">{item.icon}</span>
-                    <span>
-                      <strong>{item.title}</strong>
-                      <small>{item.message}</small>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="admin-profile">
