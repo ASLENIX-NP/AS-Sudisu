@@ -20,7 +20,10 @@
 }
 
 .review-card {
-  background: white;
+
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95), rgba(255, 237, 213, 0.58) 42%, rgba(254, 215, 170, 0.55) 100%),
+    linear-gradient(160deg, #fff 0%, #ffedd5 100%);
   border: 1px solid #e5e7eb;
   border-radius: 18px;
   padding: 20px;

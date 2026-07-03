@@ -62,7 +62,7 @@ const ProductDetails = () => {
               </p>
 
               <p>
-                <strong>Stock:</strong> {product.stock}
+                <strong>Incredients:</strong> {product.stock}
               </p>
 
               <button

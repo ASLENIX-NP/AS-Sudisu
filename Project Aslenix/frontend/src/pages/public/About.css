@@ -10,6 +10,7 @@
   align-items: center;
 
   padding: 140px 8% 100px;
+  
 
   background-size: cover;
   background-position: center;
@@ -40,10 +41,22 @@
    CONTENT
    ========================= */
 .about-section {
- background:
-    radial-gradient(circle at 10% 15%, rgba(255, 199, 44, 0.24), transparent 28%),
-    radial-gradient(circle at 88% 20%, rgba(220, 38, 38, 0.18), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(245, 158, 11, 0.2), transparent 32%),
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(255, 199, 44, 0.24),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 20%,
+      rgba(220, 38, 38, 0.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(245, 158, 11, 0.2),
+      transparent 32%
+    ),
     linear-gradient(135deg, #fff8ea 0%, #fff3df 38%, #fffdf8 100%);
 }
 
@@ -79,7 +92,7 @@
 .about-text h1 {
   font-size: 3.5rem;
   font-weight: 900;
-  line-height: 1.0;
+  line-height: 1;
   color: #0f172a;
 
   margin-bottom: 20px;
@@ -102,19 +115,18 @@
   font-weight: 500;
 
   padding-left: 18px;
-
 }
 
 .about-image {
   width: 90%;
-  height:70vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
 }
 
 .about-image img {
   width: 110%;
-  height:500px;
+  height: 500px;
 
   object-fit: cover;
 
@@ -142,7 +154,6 @@
   }
 }
 
-
 .our-reach {
   width: 100%;
   padding: 40px 0;
@@ -191,4 +202,95 @@
   height: auto;
   display: block;
   object-fit: contain;
+}
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .about-section {
+    min-height: auto;
+    padding: 80px 20px 60px;
+  }
+
+  .about-container {
+    display: flex;
+    gap: 35px;
+    padding: 0;
+    flex-direction: column;
+  }
+
+  /* =========================
+   IMAGE
+========================= */
+
+  .about-image {
+    width: 100%;
+    height: auto;
+    justify-content: center;
+  }
+
+  .about-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  /* =========================
+   TEXT
+========================= */
+
+  .about-text {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
+  .about-tag {
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .about-text h1 {
+    font-size: 34px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+
+  .about-text h1 span {
+    display: block;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 18px;
+    color: #374151;
+  }
+
+  /* =========================
+   BUTTON (if you have one)
+========================= */
+
+  .about-btn {
+    margin: 20px auto 0;
+  }
+
+  /* =========================
+   REACH IMAGE
+========================= */
+
+  .our-reach {
+    padding: 20px 0;
+  }
+
+  .reach-image {
+    width: 100%;
+    padding: 0 10px;
+  }
 }

@@ -77,28 +77,26 @@ export default function Footer() {
 
           <div>
             <h4>Contact</h4>
-
             {/* PHONE */}
             <a href="tel:057590436">
-              <FaPhone />
-              Phone: 057-590436
+              <FaPhone className="footer-icon phone-icon" />
+              <span>Phone: 057-590436</span>
             </a>
 
             {/* EMAIL */}
             <a href="mailto:info@fortunegroup.com.np">
-              <FaEnvelope />
-              info@fortunegroup.com.np
+              <FaEnvelope className="footer-icon email-icon" />
+              <span>info@fortunegroup.com.np</span>
             </a>
 
             {/* LOCATION */}
-
             <a
               href="https://www.google.com/maps/search/Fortune+group+of+industries+Pvt+LTD/@27.5395879,84.8074828,81m"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaMapMarkerAlt />
-              Manahari-07, Makwanpur, Nepal
+              <FaMapMarkerAlt className="footer-icon location-icon" />
+              <span>Manahari-07, Makwanpur, Nepal</span>
             </a>
           </div>
 

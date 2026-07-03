@@ -28,13 +28,18 @@ const Hero = () => {
             THE NEW TASTE OF <span>NEPAL</span>
           </h1>
           <div className="hero-line"></div>
-          <p className="hero-desc">
-            Handcrafted with tradition, purity, and rich flavors of Nepal.
-          </p>
+          <div className="hero-desktop-content">
+            <p className="hero-desc">
+              Handcrafted with tradition, purity, and rich flavors of Nepal.
+            </p>
 
-          <button className="hero-btn" onClick={() => navigate("/products")}>
-            Explore Our Products →
-          </button>
+            <button
+              className="hero-btn desktop-btn"
+              onClick={() => navigate("/products")}
+            >
+              Explore Our Products →
+            </button>
+          </div>
         </div>
 
         {/* RIGHT SIDE (NO hero1/hero2 ERROR ANYMORE) */}
@@ -42,7 +47,18 @@ const Hero = () => {
           <div className="product-stack" />
         </div>
       </div>
-
+      {/* MOBILE BUTTON */}
+      <div className="hero-mobile-content">
+        <p className="hero-desc">
+          Handcrafted with tradition, purity, and rich flavors of Nepal.
+        </p>
+        <button
+          className="hero-btn hero-mobile-btn"
+          onClick={() => navigate("/products")}
+        >
+          Explore Our Products →
+        </button>
+      </div>
       {/* BOTTOM FEATURES BAR (EXACT STYLE LIKE IMAGE 2) */}
       <div className="hero-features-bar">
         <div className="feature-item">
@@ -59,7 +75,7 @@ const Hero = () => {
           <GiCookingPot className="feature-icon" />
           <div>
             <p className="feature-title">TRADITIONAL RECIPE</p>
-            <p className="feature-sub">Authentic Nepali Taste</p>
+            <p className="feature-sub">Authentic Taste</p>
           </div>
         </div>
 

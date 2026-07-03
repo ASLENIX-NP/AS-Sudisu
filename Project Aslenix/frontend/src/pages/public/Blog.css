@@ -17,7 +17,7 @@
 .sudisu-blog-hero {
   min-height: 100vh;
 
-  padding: 30px 8% 90px;
+  padding: 30px 8% 30px;
 
   position: relative;
 }
@@ -222,7 +222,7 @@
 
 .certificates-showcase {
   max-width: 1400px;
-  margin: 80px auto;
+  margin: 10px auto 60px;
 }
 
 .certificate-showcase {
@@ -318,4 +318,166 @@
 
 .cert-view-btn:hover {
   transform: translateY(-3px);
+}
+/* =========================================
+   TABLET RESPONSIVE
+===
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .sudisu-blog-hero {
+    padding: 100px 20px 60px;
+  }
+
+  .sudisu-blog-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .blog-tag {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .sudisu-blog-text h1 {
+    font-size: 42px;
+    line-height: 1.1;
+    word-break: break-word;
+  }
+
+  .sudisu-blog-text p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .blog-highlights {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+ .highlight-card {
+  width: 100;
+ 
+
+  padding: 1px 1px;   /* Reduced from 20px */
+
+  border-radius: 16px;
+}
+
+  .product-showcase-3d {
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 24px;
+    transform: none;
+  }
+
+  .product-showcase-3d img {
+    border-radius: 16px;
+  }
+
+  .trust-points {
+    grid-template-columns: 1fr;
+  }
+.certificate-showcase {
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-bottom: 60px;
+  padding: 0 20px;
+}
+
+  .certificate-showcase.reverse {
+    direction: ltr;
+  }
+
+  .certificate-image {
+  display: flex;
+  justify-content: center;
+}
+
+.certificate-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+}
+
+  .certificate-info {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .certificate-info h3 {
+    font-size: 2rem;
+  }
+
+  .certificate-info p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .certificate-badge {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .cert-view-btn {
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+@media (max-width: 480px) {
+
+  .sudisu-blog-hero {
+    padding: 90px 15px 50px;
+  }
+
+  .sudisu-blog-text h1 {
+    font-size: 34px;
+  }
+
+  .sudisu-blog-text p {
+    font-size: 15px;
+  }
+
+  .blog-tag {
+    font-size: 12px;
+  }
+
+  .highlight-card {
+    padding: 5px;
+     text-align: center;
+  }
+
+  .highlight-card h3 {
+    font-size: 16px;
+  }
+
+  .certificate-info h3 {
+    font-size: 1.7rem;
+  }
+
+  .certificate-info p {
+    font-size: 14px;
+  }
+  .certificate-showcase {
+  padding: 0 15px;
+}
+  .cert-view-btn {
+    font-size: 14px;
+  }
+}
+
+
+/* PREVENT HORIZONTAL SCROLL */
+html,
+body,
+#root {
+  overflow-x: hidden;
+  width: 100%;
 }

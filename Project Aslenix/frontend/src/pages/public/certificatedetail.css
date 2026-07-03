@@ -63,3 +63,120 @@
 
   line-height: 2;
 }
+/* =========================================
+   MOBILE RESPONSIVE - DESKTOP STYLE
+========================================= */
+@media (max-width: 768px) {
+
+  .certificate-details-page {
+  min-height: 100vh;
+  padding: 60px 7% 100px;   /* was 160px */
+  margin-top: -80px;        /* pulls section upward */
+}
+
+  .certificate-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .certificate-left img {
+    width: 100%;
+    border-radius: 16px;
+
+    box-shadow:
+      0 15px 35px rgba(0,0,0,.12);
+  }
+
+  .certificate-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+  }
+
+  .certificate-right h1 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .certificate-right p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE - DESKTOP STYLE
+========================================= */
+@media (max-width: 768px) {
+
+  .certificate-details-page {
+    padding: 100px 15px 50px;
+  }
+
+  .certificate-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .certificate-left img {
+    width: 100%;
+    border-radius: 16px;
+
+    box-shadow:
+      0 15px 35px rgba(0,0,0,.12);
+  }
+
+  .certificate-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+  }
+
+  .certificate-right h1 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .certificate-right p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+@media (max-width: 768px) {
+
+  .certificate-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .certificate-left {
+    flex: 1;
+  }
+
+  .certificate-right {
+    flex: 1;
+    text-align: left;
+  }
+
+  .certificate-left img {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .certificate-right h1 {
+    font-size: 1.4rem;
+  }
+
+  .certificate-right p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}

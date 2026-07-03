@@ -25,8 +25,8 @@ body {
   height: auto;
 
   margin: 0 0;
-  padding: 10px;
-  padding-bottom: 10px;
+  padding: 0px;
+  padding-bottom: 0px;
   margin-bottom: 0;
   padding-top: 0;
   background:
@@ -37,7 +37,6 @@ body {
    
  
 }
-
 /* ================================
    HERO IMAGE FULL WIDTH
 ================================ */
@@ -53,7 +52,52 @@ body {
 /* HEADING */
 
 /* FORM */
+.contact-link {
+    color: #000 !important;
+  text-decoration: none !important;
+  display: inline-block;
+}
 
+
+.contact-box-link {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  text-decoration: none;
+  color: inherit;
+
+ 
+}
+
+.contact-box h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+.contact-box p,
+.contact-box a {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.contact-box-link h3,
+.contact-box-link p {
+  color: inherit;
+}
+
+.icon-circle {
+  cursor: pointer;
+}
+
+.icon-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
 .contact-form {
   display: grid;
 
@@ -61,7 +105,44 @@ body {
 
   gap: 28px;
 }
+/* =========================================
+   CONTACT HOVER EFFECTS
+========================================= */
+.contact-box h3,
+.contact-link{
+    transition: all .3s ease;
+}
 
+.contact-link{
+    position: relative;
+    display: inline-block;
+}
+
+.contact-link::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 0;
+    height: 2px;
+
+    background: #b91c1c;
+
+    transition: width .35s ease;
+}
+
+.contact-box:hover h3{
+    color: #b91c1c;
+}
+
+.contact-box:hover .contact-link{
+    color: #b91c1c !important;
+}
+
+.contact-box:hover .contact-link::after{
+    width: 100%;
+}
 /* GROUP */
 
 .form-group {
@@ -171,31 +252,6 @@ body {
 
 /* MOBILE */
 
-@media (max-width: 768px) {
-  .info-card {
-    padding: 32px 24px;
-    border-radius: 24px;
-  }
-
-  .info-card h2 {
-    font-size: 42px;
-  }
-
-  .contact-form {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-submit-btn {
-    width: 100%;
-  }
-}
-
-/* CARD HEADING */
-
-
-/* INFO ITEM */
-
-
 
 
 
@@ -266,41 +322,40 @@ body {
   flex: 1;
   height: 60px !important;
 }
-@media (max-width: 768px) {
-  .next-btn,
-  .back-btn,
-  .nav-float,
-  .nav-left,
-  .nav-right {
-    display: none !important;
-  }
-}
 .info-card h2 {
   font-size: 35px !important;
   text-align: center !important;
 }
-
+.blog-tag{
+    display:inline-block;
+    margin-top:40px;
+    transform: translateY(35px);
+}
 /* ====================================
    NEW CONTACT PAGE LAYOUT
 ==================================== */
 
 .contact-navbar-wrapper {
-  min-height: 180px;
+  
   position: relative;
 }
+.contact-page-wrapper{
+    min-height:100vh;
+    padding:30px 8% 30px;
+    position:relative;
+}
 
-.contact-layout {
-  width: 90%;
-  max-width: 1600px;
+.contact-layout{
+    display:grid;
+    grid-template-columns:0.95fr 1.05fr;
+    align-items:center;
+    gap:45px;
 
- margin: 20px auto 20px;
+    min-height:100vh;
 
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-
-  gap: 40px;
-
-  align-items: start;
+    width:100%;
+    max-width:1500px;
+    margin:0 auto;
 }
 
 /* LEFT SIDE */
@@ -314,17 +369,14 @@ body {
 
   box-shadow: none;
 }
-
 .company-name {
   font-size: 70px;
-
   font-weight: 700;
-
   color: #9d0404;
-
   line-height: 1;
-  margin-top: -20px;
-  margin-bottom: -4px;
+
+  margin-top: 20px;      /* Increase this to move it lower */
+  margin-bottom: 1px;
 
   user-select: none;
 }
@@ -334,7 +386,7 @@ body {
 
   color: #9d0404;
 
-  margin-bottom: 30px;
+  margin-bottom: 3px;
 }
 
 .company-description {
@@ -358,11 +410,9 @@ body {
 
   margin-bottom: 30px;
 }
-
 .icon-circle {
   width: 65px;
   height: 65px;
-
   min-width: 65px;
 
   border-radius: 50%;
@@ -377,13 +427,26 @@ body {
   align-items: center;
   justify-content: center;
 
-  color: rgb(252, 247, 247);
+  color: #fff;
 
   font-size: 28px;
 
-  box-shadow: 0 8px 20px rgba(246, 240, 240, 0.337);
+  box-shadow: 0 8px 20px rgba(246,240,240,.33);
+
+  transition: all .35s ease;
 }
 
+.icon-circle:hover{
+    transform: scale(1.12) rotate(10deg);
+
+    background: linear-gradient(
+        135deg,
+        #c1121f,
+        #ff7a00
+    );
+
+    box-shadow: 0 15px 35px rgba(185,28,28,.35);
+}
 
 
 .map-wrapper {
@@ -455,47 +518,7 @@ body {
   font-size: 36px;
 }
 
-/* MOBILE */
 
-@media (max-width: 992px) {
-  .contact-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .company-name {
-    font-size: 42px;
-  }
-
-  .company-slogan {
-    font-size: 22px;
-  }
-
-  .feedback-card {
-    padding: 30px;
-  }
-}
-
-@media (max-width: 768px) {
-  .contact-layout {
-    width: 94%;
-  }
-
-  .company-name {
-    font-size: 34px;
-  }
-
-  .company-slogan {
-    font-size: 18px;
-  }
-
-  .company-description {
-    font-size: 16px;
-  }
-
-  .map-wrapper iframe {
-    height: 220px;
-  }
-}
 
 .contact-submit-btn {
   position: relative;
@@ -507,7 +530,7 @@ body {
 
   position: absolute;
   top: 0;
-  left: -100%;
+ 
 
   width: 100%;
   height: 100%;
@@ -524,4 +547,96 @@ body {
 
 .contact-submit-btn:hover::before {
   left: 100%;
+}
+
+/* =========================================
+   MOBILE - HERO LAYOUT
+========================================= */
+
+@media (max-width: 768px) {
+  /* ==========================
+   HERO MOBILE
+========================== */
+
+.contact-page-wrapper{
+    padding: 75px 20px 40px;
+}
+.contact-layout{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: stretch;
+    min-height: auto;
+}
+
+.map-wrapper{
+    width: 100%;
+    max-width: 100%;
+    order: 3;
+    margin-top: 25px;
+}
+.contact-info{
+    width: 100%;
+    max-width: 100%;
+    order: 1;
+}
+.blog-tag{
+    margin-top: 0;
+    transform: none;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+.company-name{
+    font-size: 44px;
+    line-height: 1;
+    white-space: nowrap;
+    margin-bottom: 8px;
+}
+
+.company-slogan{
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.company-description{
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+.feedback-card{
+    width: 100%;
+    max-width: 100%;
+    order: 2;
+    padding: 28px;
+    box-sizing: border-box;
+}
+.contact-box{
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.icon-circle{
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    font-size: 24px;
+}
+
+.contact-box h3{
+    font-size: 17px;
+}
+.contact-form{
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.full-width{
+    grid-column:auto;
+}
+.contact-box p,
+.contact-box a{
+    font-size: 15px;
+}
 }
