@@ -9,8 +9,11 @@ const Announcements = () => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("Active");
-  const [editingId, setEditingId] = useState(null);
-  const [search, setSearch] = useState("");
+const [editingId, setEditingId] = useState(null);
+const [search, setSearch] = useState("");
+
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
   useEffect(() => {
     fetchAnnouncements();
@@ -117,27 +120,27 @@ if (error) {
     fetchAnnouncements();
     toast.success("Announcement updated successfully");
   };
+const deleteAnnouncement = async () => {
 
-  const deleteAnnouncement = async (id) => {
-  
-    const confirmed = window.confirm(
-      "Delete this announcement?"
-    );
+  if (!selectedAnnouncement) return;
 
-    if (!confirmed) return;
+  const { error } = await supabase
+    .from("Announcement")
+    .delete()
+    .eq("id", selectedAnnouncement);
 
-    const { error } = await supabase
-      .from("Announcement")
-      .delete()
-      .eq("id", id);
+  if (error) {
+    toast.error(error.message);
+    return;
+  }
 
-    if (error) {
-  toast.error(error.message);
-  return;
-}
-    fetchAnnouncements();
-toast.success("Announcement deleted successfully");
-  };
+  fetchAnnouncements();
+
+  toast.success("Announcement deleted successfully");
+
+  setShowDeleteModal(false);
+  setSelectedAnnouncement(null);
+};
 
   const filteredAnnouncements =
     announcements.filter((item) =>
@@ -146,230 +149,376 @@ toast.success("Announcement deleted successfully");
         .includes(search.toLowerCase())
     );
 
-  return (
-    <AdminLayout>
-      <div
-        style={{
-          padding: "10px 0",
-          width: "100%",
-        }}
+return (
+  <AdminLayout>
+
+    <div className="announcements-page">
+
+      <div className="announcement-header">
+
+    <div className="announcement-header-left">
+
+        <span className="announcement-badge">
+            📢 Content Management
+        </span>
+
+        <h1>Announcements</h1>
+
+        <p>
+            Create, edit and manage announcements that appear throughout your website.
+        </p>
+
+    </div>
+
+    <div className="announcement-header-right">
+
+        <button className="preview-btn">
+            👁 Preview
+        </button>
+
+        <button className="save-btn">
+            ➕ New Announcement
+        </button>
+
+    </div>
+
+</div>
+{/* Statistics */}
+
+<div className="stats-grid">
+
+  <div className="stat-card total-card">
+
+    <div className="stat-top">
+      <span className="stat-icon">📢</span>
+    </div>
+
+    <h4>Total Announcements</h4>
+
+    <h2>{announcements.length}</h2>
+
+    <p>All announcements created</p>
+
+  </div>
+
+  <div className="stat-card active-card">
+
+    <div className="stat-top">
+      <span className="stat-icon">✅</span>
+    </div>
+
+    <h4>Active</h4>
+
+    <h2>
+      {
+        announcements.filter(
+          (a) => a.status === "Active"
+        ).length
+      }
+    </h2>
+
+    <p>Currently visible</p>
+
+  </div>
+
+  <div className="stat-card inactive-card">
+
+    <div className="stat-top">
+      <span className="stat-icon">⏸</span>
+    </div>
+
+    <h4>Inactive</h4>
+
+    <h2>
+      {
+        announcements.filter(
+          (a) => a.status === "Inactive"
+        ).length
+      }
+    </h2>
+
+    <p>Hidden announcements</p>
+
+  </div>
+
+</div>
+
+     {/* Add / Edit Announcement */}
+
+<div className="announcements-card">
+
+  <div className="form-header">
+
+    <div className="form-title">
+
+      <div className="form-icon">
+        📢
+      </div>
+
+      <div>
+
+        <h2>
+          {editingId
+            ? "Edit Announcement"
+            : "Create Announcement"}
+        </h2>
+
+        <p>
+          Publish important updates that will appear on your website.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div className="form-grid">
+
+    <div className="form-group">
+
+      <label>Announcement Title</label>
+
+      <input
+        className="form-input"
+        placeholder="Enter announcement title..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+
+    </div>
+
+    <div className="form-group">
+
+      <label>Status</label>
+
+      <select
+        className="form-select"
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
       >
-        <div style={{ marginBottom: "24px" }}>
-          <h1
-            style={{
-              fontSize: "54px",
-              fontWeight: "800",
-              color: "#0f172a",
-              marginBottom: "10px",
-            }}
-          >
-            Announcements
-          </h1>
+        <option>Active</option>
+        <option>Inactive</option>
+      </select>
 
-          <p
-            style={{
-              color: "#64748b",
-            }}
-          >
-            Manage announcements for customers.
-          </p>
-        </div>
+    </div>
 
-        {/* Stats */}
+    <div className="form-group full-width">
+
+      <label>Announcement Message</label>
+
+      <textarea
+        className="form-textarea"
+        placeholder="Write your announcement here..."
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+
+    </div>
+
+    <div className="form-actions">
+
+      <button
+        className="publish-btn"
+        onClick={
+          editingId
+            ? updateAnnouncement
+            : addAnnouncement
+        }
+      >
+        {editingId
+          ? "💾 Update Announcement"
+          : "🚀 Publish Announcement"}
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+{/* Search Toolbar */}
+
+<div className="announcements-card">
+
+  <div className="table-toolbar">
+
+    <div className="search-wrapper">
+
+      <span className="search-icon">🔍</span>
+
+      <input
+        type="text"
+        placeholder="Search announcements..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="search-input"
+      />
+
+    </div>
+
+    <div className="table-count">
+
+      {filteredAnnouncements.length} Announcement
+      {filteredAnnouncements.length !== 1 && "s"}
+
+    </div>
+
+  </div>
+
+</div>
+
+{/* Announcement List */}
+
+<div className="announcements-card">
+
+  <div className="table-header">
+
+    <h2>Announcements</h2>
+
+    <p>
+      Manage all announcements published on your website.
+    </p>
+
+  </div>
+
+  {filteredAnnouncements.length === 0 ? (
+
+    <div className="empty-state">
+
+      <div className="empty-icon">📢</div>
+
+      <h3>No Announcements Found</h3>
+
+      <p>
+        Create your first announcement to keep visitors informed.
+      </p>
+
+    </div>
+
+  ) : (
+
+    <div className="announcement-list">
+
+      {filteredAnnouncements.map((item) => (
 
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(3, 1fr)",
-            gap: "20px",
-            marginBottom: "25px",
-          }}
+          className="announcement-row"
+          key={item.id}
         >
-          <div style={statsCard}>
-            <p>Total Announcements</p>
-            <h2>{announcements.length}</h2>
+<div className="announcement-content">
+
+  <div className="announcement-title">
+
+    <div className="empty-icon">
+
+    <div className="empty-circle">
+        📢
+    </div>
+
+</div>
+
+    <div>
+
+      <h3>{item.title}</h3>
+
+      <p>{item.message}</p>
+
+    </div>
+
+  </div>
+
+</div>
+
+          <div className="announcement-meta">
+
+            <span
+              className={
+                item.status === "Active"
+                  ? "status-active"
+                  : "status-inactive"
+              }
+            >
+              {item.status}
+            </span>
+
+            <div className="announcement-actions">
+
+              <button
+                className="edit-btn"
+                 title="edit Announcement"
+                onClick={() => editAnnouncement(item)}
+              >
+                ✏ Edit
+              </button>
+<button
+    className="delete-btn"
+    title="Delete Announcement"
+    onClick={() => {
+        setSelectedAnnouncement(item.id);
+        setShowDeleteModal(true);
+    }}
+>
+    🗑
+</button>
+
+            </div>
+
           </div>
 
-          <div style={statsCard}>
-            <p>Active</p>
-            <h2 style={{ color: "#16a34a" }}>
-              {
-                announcements.filter(
-                  (a) =>
-                    a.status === "Active"
-                ).length
-              }
-            </h2>
-          </div>
-
-          <div style={statsCard}>
-            <p>Inactive</p>
-            <h2 style={{ color: "#dc2626" }}>
-              {
-                announcements.filter(
-                  (a) =>
-                    a.status === "Inactive"
-                ).length
-              }
-            </h2>
-          </div>
         </div>
 
-        {/* Form */}
+      ))}
 
-        <div style={cardStyle}>
-          <h2 style={{ marginBottom: "20px" }}>
-            {editingId
-              ? "Edit Announcement"
-              : "Add Announcement"}
-          </h2>
+    </div>
 
-          <div
-            style={{
-              display: "grid",
-              gap: "15px",
-            }}
-          >
-            <input
-              placeholder="Title"
-              value={title}
-              onChange={(e) =>
-                setTitle(e.target.value)
-              }
-              style={inputStyle}
-            />
+  )}
 
-            <textarea
-              placeholder="Message"
-              value={message}
-              onChange={(e) =>
-                setMessage(e.target.value)
-              }
-              style={{
-                ...inputStyle,
-                minHeight: "120px",
-              }}
-            />
+</div>
+      </div>
+      {showDeleteModal && (
 
-            <select
-              value={status}
-              onChange={(e) =>
-                setStatus(e.target.value)
-              }
-              style={inputStyle}
-            >
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
+<div className="delete-modal-overlay">
+
+    <div className="delete-modal">
+
+        <div className="delete-modal-icon">
+            🗑️
+        </div>
+
+        <h2>Delete Announcement?</h2>
+
+        <p>
+            This action cannot be undone.
+            This announcement will be permanently deleted.
+        </p>
+
+        <div className="delete-modal-actions">
 
             <button
-              onClick={
-                editingId
-                  ? updateAnnouncement
-                  : addAnnouncement
-              }
-              style={saveButton}
+                className="cancel-delete-btn"
+                onClick={() => {
+                    setShowDeleteModal(false);
+                    setSelectedAnnouncement(null);
+                }}
             >
-              {editingId
-                ? "Update Announcement"
-                : "Save Announcement"}
+                Cancel
             </button>
-          </div>
+
+            <button
+                className="confirm-delete-btn"
+                onClick={deleteAnnouncement}
+            >
+                Delete
+            </button>
+
         </div>
 
-        {/* Search */}
+    </div>
 
-        <div
-          style={{
-            ...cardStyle,
-            marginTop: "20px",
-          }}
-        >
-          <input
-            placeholder="🔍 Search announcements..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-            style={inputStyle}
-          />
-        </div>
+</div>
 
-        {/* Table */}
-
-        <div
-          style={{
-            ...cardStyle,
-            marginTop: "20px",
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-            }}
-          >
-            <thead>
-              <tr>
-                <th style={thStyle}>Title</th>
-                <th style={thStyle}>Message</th>
-                <th style={thStyle}>Status</th>
-                <th style={thStyle}>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredAnnouncements.map(
-                (item) => (
-                  <tr key={item.id}>
-                    <td style={tdStyle}>
-                      {item.title}
-                    </td>
-
-                    <td style={tdStyle}>
-                      {item.message}
-                    </td>
-
-                    <td style={tdStyle}>
-                      {item.status}
-                    </td>
-
-                    <td style={tdStyle}>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "10px",
-                        }}
-                      >
-                        <button
-                          onClick={() =>
-                            editAnnouncement(
-                              item
-                            )
-                          }
-                        >
-                          ✏️ Edit
-                        </button>
-
-                        <button
-                          onClick={() =>
-                            deleteAnnouncement(
-                              item.id
-                            )
-                          }
-                        >
-                          🗑 Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+)}
     </AdminLayout>
   );
 };

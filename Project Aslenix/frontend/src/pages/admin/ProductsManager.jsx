@@ -35,26 +35,29 @@ const ProductsManager = () => {
 
   // EDIT STATE
   const [editingId, setEditingId] = useState(null);
-
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedProductId, setSelectedProductId] = useState(null);
   // FETCH PRODUCTS
 useEffect(() => {
   fetchProducts(setProducts);
 }, []);
 
   // DELETE PRODUCT
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this product?",
-    );
+const handleDelete = (id) => {
+  setSelectedProductId(id);
+  setShowDeleteModal(true);
+};
+const confirmDeleteProduct = async () => {
+  const success = await deleteProduct(selectedProductId);
 
-    if (!confirmDelete) return;
+  if (success) {
+    toast.success("Product deleted successfully");
+    fetchProducts(setProducts);
+  }
 
-    const success = await deleteProduct(id);
-
-    if (success) {
-      fetchProducts();
-    }
-  };
+  setShowDeleteModal(false);
+  setSelectedProductId(null);
+};
 
   // EDIT PRODUCT
   const handleEdit = (product) => {
@@ -180,17 +183,9 @@ if (success) {
 {
   className: "products-stat-red",
   icon: <FaExclamationTriangle />,
-  title: "Inventory Health",
-  value:
-    productStats.totalProducts > 0
-      ? `${Math.round(
-          ((productStats.totalProducts -
-            productStats.lowStock) /
-            productStats.totalProducts) *
-            100
-        )}%`
-      : "100%",
-  subtitle: "Stock Performance",
+  title: "Low Stock",
+  value: productStats.lowStock,
+  subtitle: "Needs Restocking",
 }
   ];
   return (
@@ -302,6 +297,49 @@ if (success) {
   handleEdit={handleEdit}
   handleDelete={handleDelete}
 />
+     {showDeleteModal && (
+
+  <div className="delete-modal-overlay">
+
+    <div className="delete-modal">
+
+      <div className="delete-modal-icon">
+        🗑️
+      </div>
+
+      <h2>Delete Product?</h2>
+
+      <p>
+        This action cannot be undone.
+        This product will be permanently deleted.
+      </p>
+
+      <div className="delete-modal-actions">
+
+        <button
+          className="cancel-delete-btn"
+          onClick={() => {
+            setShowDeleteModal(false);
+            setSelectedProductId(null);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="confirm-delete-btn"
+          onClick={confirmDeleteProduct}
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
       </div>
     </AdminLayout>
   );

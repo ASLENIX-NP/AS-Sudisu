@@ -12,6 +12,8 @@ const CategoriesAdmin = () => {
   const [editingId, setEditingId] = useState(null);
   const [image, setImage] = useState(null);
   const [search, setSearch] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const filteredCategories = categories.filter((category) =>
       
     category.name
@@ -67,25 +69,28 @@ toast.success("Category created successfully");
     fetchCategories();
 
   };
- const deleteCategory = async (id) => {
-  const confirmed = window.confirm(
-    "Delete this category?"
-  );
+const deleteCategory = async () => {
 
-  if (!confirmed) return;
+  if (!selectedCategory) return;
 
   const { error } = await supabase
     .from("categories")
     .delete()
-    .eq("id", id);
+    .eq("id", selectedCategory);
 
   if (error) {
     toast.error(error.message);
     return;
   }
+
   fetchCategories();
+
   toast.success("Category deleted successfully");
+
+  setShowDeleteModal(false);
+  setSelectedCategory(null);
 };
+
 const editCategory = (category) => {
   setEditingId(category.id);
   setName(category.name);
@@ -339,11 +344,12 @@ const updateCategory = async () => {
   ✏️ Edit
 </button>
 
-   <button
+<button
   className="delete-btn"
-  onClick={() =>
-    deleteCategory(category.id)
-  }
+  onClick={() => {
+    setSelectedCategory(category.id);
+    setShowDeleteModal(true);
+  }}
 >
   🗑 Delete
 </button>
@@ -355,6 +361,49 @@ const updateCategory = async () => {
           </table>
         </div>
       </div>
+      {showDeleteModal && (
+
+  <div className="delete-modal-overlay">
+
+    <div className="delete-modal">
+
+      <div className="delete-modal-icon">
+        🗑️
+      </div>
+
+      <h2>Delete Category?</h2>
+
+      <p>
+        This action cannot be undone.
+        This category will be permanently deleted.
+      </p>
+
+      <div className="delete-modal-actions">
+
+        <button
+          className="cancel-delete-btn"
+          onClick={() => {
+            setShowDeleteModal(false);
+            setSelectedCategory(null);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="confirm-delete-btn"
+          onClick={deleteCategory}
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
     </AdminLayout>
   );
 };
