@@ -52,10 +52,12 @@ export default function Footer() {
             <button className="cta-btn" onClick={() => setOpenPopup(true)}>
               Bussiness with SUDISU
             </button>
-
-            <Link to="/products" className="footer-product-btn">
+            <Link
+              to="/products#products-section"
+              className="footer-product-btn"
+            >
               Explore Products
-            </Link>
+            </Link>{" "}
           </div>
         </div>
         {/* FOOTER GRID */}

@@ -3,7 +3,7 @@ import Hero from "../../components/sections/Hero";
 import { useNavigate } from "react-router-dom";
 import HomeProducts from "../../components/sections/HomeProducts";
 import WhyChoose from "../../components/sections/WhyChoose";
-import statsBg from "../../assets/images/finalContact.png";
+import statsBg from "../../assets/images/herostat.jpg";
 import "./home.css";
 import { useEffect, useRef, useState } from "react";
 import Counter from "../../components/common/Counter";

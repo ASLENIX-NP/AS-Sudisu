@@ -8,7 +8,7 @@ import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import inquiryRoutes from "./routes/inquiryRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
-
+import uploadRoutes from "./routes/uploadRoute.js";
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
 const app = express();
@@ -65,6 +65,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
 app.use("/api/settings", settingsRoutes);
+app.use("/api/upload", uploadRoutes);
 
 /* ADMIN AUTH ROUTE */
 app.use("/api/admin", adminAuthRoutes);

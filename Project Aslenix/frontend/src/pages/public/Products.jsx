@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getProducts } from "../../services/productService";
-
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 
@@ -13,13 +13,14 @@ import "./ProductsPage.css";
 
 import heroProducts from "../../assets/images/Sudiisu2.png";
 const ProductsPage = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sliderProducts, setSliderProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const productsPerPage = 12;
+  const productsPerPage = 8;
 
   const totalPages = Math.ceil((products?.length || 0) / productsPerPage);
 
@@ -53,6 +54,20 @@ const ProductsPage = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if (location.hash === "#products-section") {
+      const element = document.getElementById("products-section");
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   return (
     <>
@@ -101,10 +116,9 @@ const ProductsPage = () => {
             />
           </div>
         </div>
-     
       </HeroNavbar>
 
-      <section className="products-page">
+      <section id="products-section" className="products-page">
         <div className="products-header">
           <h1>Our Products</h1>
 
@@ -134,17 +148,40 @@ const ProductsPage = () => {
                 ))}
               </div>
               <div className="pagination">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                  disabled={currentPage === 1}
-                >
-                  ← Back
-                </button>
+                {currentPage > 1 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage((p) => Math.max(p - 1, 1));
+
+                      setTimeout(() => {
+                        document
+                          .getElementById("products-section")
+                          ?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
+                      }, 50);
+                    }}
+                  >
+                    ← Back
+                  </button>
+                )}
 
                 {Array.from({ length: totalPages }, (_, i) => (
                   <button
                     key={i}
-                    onClick={() => setCurrentPage(i + 1)}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+
+                      setTimeout(() => {
+                        document
+                          .getElementById("products-section")
+                          ?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
+                      }, 50);
+                    }}
                     className={currentPage === i + 1 ? "active" : ""}
                   >
                     {i + 1}
@@ -152,9 +189,18 @@ const ProductsPage = () => {
                 ))}
 
                 <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(p + 1, totalPages))
-                  }
+                  onClick={() => {
+                    setCurrentPage((p) => Math.min(p + 1, totalPages));
+
+                    setTimeout(() => {
+                      document
+                        .getElementById("products-section")
+                        ?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                    }, 50);
+                  }}
                   disabled={currentPage === totalPages}
                 >
                   Next →

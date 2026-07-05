@@ -19,7 +19,7 @@ import "./ProductsManager.css";
 
 const ProductsManager = () => {
   // STATES
-  const { fetchProducts, uploadImage,addProduct } = useProducts();
+  const { fetchProducts, uploadImage, addProduct } = useProducts();
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [name, setName] = useState("");
@@ -32,32 +32,45 @@ const ProductsManager = () => {
   const [selectedFileName, setSelectedFileName] = useState("");
   const [uploading, setUploading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const handleAddProduct = async () => {
+    const productData = {
+      name,
+      price,
+      weight,
+      origin,
+      stock,
+      description,
+      image,
+    };
+
+    await addProduct(productData, resetForm, setIsFormOpen, setProducts);
+  };
 
   // EDIT STATE
   const [editingId, setEditingId] = useState(null);
-const [showDeleteModal, setShowDeleteModal] = useState(false);
-const [selectedProductId, setSelectedProductId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
   // FETCH PRODUCTS
-useEffect(() => {
-  fetchProducts(setProducts);
-}, []);
+  useEffect(() => {
+    fetchProducts(setProducts);
+  }, []);
 
   // DELETE PRODUCT
-const handleDelete = (id) => {
-  setSelectedProductId(id);
-  setShowDeleteModal(true);
-};
-const confirmDeleteProduct = async () => {
-  const success = await deleteProduct(selectedProductId);
+  const handleDelete = (id) => {
+    setSelectedProductId(id);
+    setShowDeleteModal(true);
+  };
+  const confirmDeleteProduct = async () => {
+    const success = await deleteProduct(selectedProductId);
 
-  if (success) {
-    toast.success("Product deleted successfully");
-    fetchProducts(setProducts);
-  }
+    if (success) {
+      toast.success("Product deleted successfully");
+      fetchProducts(setProducts);
+    }
 
-  setShowDeleteModal(false);
-  setSelectedProductId(null);
-};
+    setShowDeleteModal(false);
+    setSelectedProductId(null);
+  };
 
   // EDIT PRODUCT
   const handleEdit = (product) => {
@@ -99,15 +112,15 @@ const confirmDeleteProduct = async () => {
       image,
     });
 
-if (success) {
-  toast.success("Product updated successfully");
+    if (success) {
+      toast.success("Product updated successfully");
 
-  setEditingId(null);
-  resetForm();
-  setIsFormOpen(false);
+      setEditingId(null);
+      resetForm();
+      setIsFormOpen(false);
 
-  fetchProducts(setProducts);
-}
+      fetchProducts(setProducts);
+    }
   };
   // RESET FORM
   const resetForm = () => {
@@ -180,13 +193,13 @@ if (success) {
       value: `Rs. ${productStats.inventoryValue.toLocaleString()}`,
       subtitle: "Current Inventory Worth",
     },
-{
-  className: "products-stat-red",
-  icon: <FaExclamationTriangle />,
-  title: "Low Stock",
-  value: productStats.lowStock,
-  subtitle: "Needs Restocking",
-}
+    {
+      className: "products-stat-red",
+      icon: <FaExclamationTriangle />,
+      title: "Low Stock",
+      value: productStats.lowStock,
+      subtitle: "Needs Restocking",
+    },
   ];
   return (
     <AdminLayout>
@@ -230,116 +243,90 @@ if (success) {
 
         <ProductStats statCards={statCards} />
         <div className="products-filters">
-  <button className="active">
-    All Products
-  </button>
+          <button className="active">All Products</button>
 
-  <button>
-    Featured
-  </button>
+          <button>Featured</button>
 
-  <button>
-    Flash Sale
-  </button>
+          <button>Flash Sale</button>
 
-  <button>
-    Best Seller
-  </button>
+          <button>Best Seller</button>
 
-  <button>
-    Low Stock
-  </button>
-</div>
+          <button>Low Stock</button>
+        </div>
 
-{isFormOpen && (
-  <ProductFormModal
-    editingId={editingId}
-    closeProductForm={closeProductForm}
-
-    name={name}
-    setName={setName}
-
-    price={price}
-    setPrice={setPrice}
-
-    weight={weight}
-    setWeight={setWeight}
-
-    origin={origin}
-    setOrigin={setOrigin}
-
-    stock={stock}
-    setStock={setStock}
-
-    description={description}
-    setDescription={setDescription}
-
-    image={image}
-    selectedFileName={selectedFileName}
-
-    uploading={uploading}
-    uploadImage={uploadImage}
-
-    addProduct={addProduct}
-    handleUpdate={handleUpdate}
-
-    inputStyle={inputStyle}
-  />
-)}
-<ProductSearchBar
-  searchTerm={searchTerm}
-  setSearchTerm={setSearchTerm}
-/>
+        {isFormOpen && (
+          <ProductFormModal
+            editingId={editingId}
+            closeProductForm={closeProductForm}
+            name={name}
+            setName={setName}
+            price={price}
+            setPrice={setPrice}
+            weight={weight}
+            setWeight={setWeight}
+            origin={origin}
+            setOrigin={setOrigin}
+            stock={stock}
+            setStock={setStock}
+            description={description}
+            setDescription={setDescription}
+            image={image}
+            setImage={setImage}
+            selectedFileName={selectedFileName}
+            setSelectedFileName={setSelectedFileName}
+            uploading={uploading}
+            setUploading={setUploading}
+            uploadImage={uploadImage}
+            
+            addProduct={handleAddProduct}
+            handleUpdate={handleUpdate}
+            inputStyle={inputStyle}
+          />
+        )}
+        <ProductSearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
         {/* PRODUCT TABLE */}
-          <ProductTable
-  filteredProducts={filteredProducts}
-  openAddProductForm={openAddProductForm}
-  handleEdit={handleEdit}
-  handleDelete={handleDelete}
-/>
-     {showDeleteModal && (
+        <ProductTable
+          filteredProducts={filteredProducts}
+          openAddProductForm={openAddProductForm}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+        {showDeleteModal && (
+          <div className="delete-modal-overlay">
+            <div className="delete-modal">
+              <div className="delete-modal-icon">🗑️</div>
 
-  <div className="delete-modal-overlay">
+              <h2>Delete Product?</h2>
 
-    <div className="delete-modal">
+              <p>
+                This action cannot be undone. This product will be permanently
+                deleted.
+              </p>
 
-      <div className="delete-modal-icon">
-        🗑️
-      </div>
+              <div className="delete-modal-actions">
+                <button
+                  className="cancel-delete-btn"
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setSelectedProductId(null);
+                  }}
+                >
+                  Cancel
+                </button>
 
-      <h2>Delete Product?</h2>
-
-      <p>
-        This action cannot be undone.
-        This product will be permanently deleted.
-      </p>
-
-      <div className="delete-modal-actions">
-
-        <button
-          className="cancel-delete-btn"
-          onClick={() => {
-            setShowDeleteModal(false);
-            setSelectedProductId(null);
-          }}
-        >
-          Cancel
-        </button>
-
-        <button
-          className="confirm-delete-btn"
-          onClick={confirmDeleteProduct}
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-)}
+                <button
+                  className="confirm-delete-btn"
+                  onClick={confirmDeleteProduct}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

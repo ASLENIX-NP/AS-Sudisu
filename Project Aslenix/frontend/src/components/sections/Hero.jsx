@@ -32,10 +32,9 @@ const Hero = () => {
             <p className="hero-desc">
               Handcrafted with tradition, purity, and rich flavors of Nepal.
             </p>
-
             <button
               className="hero-btn desktop-btn"
-              onClick={() => navigate("/products")}
+              onClick={() => navigate("/products#products-section")}
             >
               Explore Our Products →
             </button>

@@ -33,7 +33,7 @@ import NotificationsAdmin from "./pages/admin/NotificationsAdmin";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
 import CertificateRead from "./pages/public/Certificates";
-
+import ScrollToTop from "./components/common/ScrollToTop";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -109,7 +109,7 @@ function App() {
           },
         }}
       />
-
+      <ScrollToTop />
       <Routes>
         {/* PUBLIC PAGES */}
 

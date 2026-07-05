@@ -593,15 +593,6 @@ input {
   transition: 0.35s ease;
 }
 
-.product-card:hover {
-  transform: translateY(-12px);
-  border-color: rgba(220, 38, 38, 0.28);
-
-  box-shadow:
-    0 34px 70px rgba(124, 45, 18, 0.22),
-    0 0 0 1px rgba(220, 38, 38, 0.06);
-}
-
 .product-card:hover::before {
   opacity: 0.26;
   height: 210px;

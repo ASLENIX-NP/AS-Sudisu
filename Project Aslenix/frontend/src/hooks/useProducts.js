@@ -22,6 +22,10 @@ const addProduct = async (
   setIsFormOpen,
   setProducts
 ) => {
+    console.log("Product Data:", productData);
+    console.log("Type:", typeof productData);
+    console.log("JSON:", JSON.stringify(productData));
+
   const { error } = await supabase
     .from("products")
     .insert([productData]);
@@ -31,7 +35,6 @@ const addProduct = async (
     toast.error(error.message);
     return;
   }
-
  toast.success("Product Added Successfully");
 
   resetForm();
@@ -50,7 +53,7 @@ const uploadImage = async (
   file,
   setUploading,
   setSelectedFileName,
-  setImage
+  setImage,
 ) => {
   if (!file) return;
 
@@ -58,27 +61,28 @@ const uploadImage = async (
     setUploading(true);
     setSelectedFileName(file.name);
 
-    const fileName = `${Date.now()}-${file.name}`;
+    const formData = new FormData();
+    formData.append("image", file);
 
-    const { error } = await supabase.storage
-      .from("products")
-      .upload(fileName, file);
+    const response = await fetch("http://localhost:5000/api/upload", {
+      method: "POST",
+      body: formData,
+    });
 
-    if (error) {
-      console.log(error);
-     toast.error("Image upload failed");
+    const result = await response.json();
+
+    if (!result.success) {
+      toast.error("Image upload failed");
       return;
     }
 
-    const { data } = supabase.storage
-      .from("products")
-      .getPublicUrl(fileName);
+    // ImageKit URL
+    setImage(result.url);
 
-    setImage(data.publicUrl);
-
-   toast.success("Image Uploaded Successfully");
+    toast.success("Image uploaded successfully");
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    toast.error("Upload failed");
   } finally {
     setUploading(false);
   }

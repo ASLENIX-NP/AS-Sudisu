@@ -231,6 +231,7 @@ const Contact = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleCountryChange}
+                    className={formData.country ? "filled" : ""}
                   >
                     <option value="">Select Country</option>
 

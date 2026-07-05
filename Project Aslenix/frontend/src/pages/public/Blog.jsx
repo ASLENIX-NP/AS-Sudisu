@@ -1,7 +1,6 @@
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
-
 import "./Blog.css";
 
 import blogImage from "../../assets/images/sudisuPH3.jpg";
@@ -13,7 +12,7 @@ const Blog = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState([]);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
-const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
   useEffect(() => {
     fetchCertificates();
   }, []);
@@ -38,19 +37,16 @@ const [selectedPost, setSelectedPost] = useState(null);
             {" "}
             <div className="sudisu-blog-text">
               <span className="blog-tag">🌶 SUDISU SPICES BLOG</span>
-
               <h1>
                 Bringing Authentic
                 <span> Nepali Flavors </span>
                 To Every Kitchen
               </h1>
-
               <p className="hero-description">
                 Discover the stories behind our spices, traditional recipes,
                 quality standards, and the passion that goes into every Sudisu
                 product.
               </p>
-
               <div className="blog-highlights">
                 <div className="highlight-card">
                   <h3>100% Pure</h3>
@@ -67,8 +63,12 @@ const [selectedPost, setSelectedPost] = useState(null);
                   <p>Certified and quality-tested products.</p>
                 </div>
               </div>
-
-              <button className="blog-cta-btn">Explore Our Story</button>
+              <button
+                className="blog-cta-btn"
+                onClick={() => navigate("/about")}
+              >
+                Explore Our Story
+              </button>{" "}
             </div>
             {/* RIGHT SIDE IMAGE */}
             <div className="sudisu-blog-image">

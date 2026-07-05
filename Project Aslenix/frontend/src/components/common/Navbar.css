@@ -107,7 +107,10 @@
 .nav-links a:hover::after {
   width: 100%;
 }
-
+/* Hide mobile navigation on desktop */
+.mobile-nav-right {
+  display: none;
+}
 @media (max-width: 768px) {
   .navbar {
     padding: 0 10px;

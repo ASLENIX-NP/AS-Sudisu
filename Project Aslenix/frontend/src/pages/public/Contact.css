@@ -164,20 +164,19 @@ body {
 }
 
 /* INPUT */
+/* INPUT */
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-
   padding: 18px 20px;
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
+  border: 1px solid rgba(7, 6, 6, 0.12);
   border-radius: 16px;
 
   background: rgba(255, 255, 255, 0.08);
 
-  color: white;
+  color: #fff;
 
   font-size: 17px;
 
@@ -190,20 +189,37 @@ body {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255,255,255,.55);
 }
 
-/* FOCUS */
+/* FOCUS - keep transparent */
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #0a0801bc;
 
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255,255,255,.08);
 
-  box-shadow: 0 0 0 4px rgba(255, 195, 26, 0.12);
+  box-shadow: 0 0 0 4px rgba(255,195,26,.12);
 }
 
+/* AFTER USER TYPES */
+
+.form-group input:not(:placeholder-shown),
+.form-group textarea:not(:placeholder-shown) {
+  background: #fff;
+  color: #111;
+}
+
+.form-group select {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+}
+
+.form-group select.filled {
+    background: #fff;
+    color: #111;
+}
 /* TEXTAREA */
 
 .full-width {
@@ -639,4 +655,14 @@ body {
 .contact-box a{
     font-size: 15px;
 }
+}
+.form-group input,
+.form-group textarea {
+  background: transparent !important;
+}
+
+.form-group input:not(:placeholder-shown),
+.form-group textarea:not(:placeholder-shown) {
+  background: #fff !important;
+  color: #111 !important;
 }
