@@ -8,7 +8,8 @@ const ReviewsAdmin = () => {
   const [search, setSearch] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [selectedReview, setSelectedReview] = useState(null);
-  useEffect(() => {
+ const [activeFilter, setActiveFilter] = useState("All");
+useEffect(() => {
     fetchReviews();
   }, []);
 
@@ -68,16 +69,21 @@ const deleteReview = async () => {
   setSelectedReview(null);
 };
 
-  const filteredReviews = reviews.filter(
-    (review) =>
-      review.name
-        ?.toLowerCase()
-        .includes(search.toLowerCase()) ||
-      review.review
-        ?.toLowerCase()
-        .includes(search.toLowerCase())
-  );
+const filteredReviews = reviews.filter((review) => {
+  const matchesSearch =
+    review.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase()) ||
+    review.review
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
 
+  const matchesFilter =
+    activeFilter === "All" ||
+    review.status === activeFilter;
+
+  return matchesSearch && matchesFilter;
+});
   return (
     
     <AdminLayout>
@@ -117,33 +123,31 @@ const deleteReview = async () => {
 
 <div className="reviews-stats">
 
-  <div className="review-stat-card">
+  <div className="review-stat-card total-card">
 
     <div className="stat-icon">
       ⭐
     </div>
 
-    <div>
+    <div className="stat-content">
 
       <span>Total Reviews</span>
 
       <h2>{reviews.length}</h2>
 
-    </div>
+      <small>Customer reviews received</small>
 
-    <div className="stat-pill blue">
-      +{reviews.length}
     </div>
 
   </div>
 
-  <div className="review-stat-card">
+  <div className="review-stat-card pending-card">
 
     <div className="stat-icon">
       ⏳
     </div>
 
-    <div>
+    <div className="stat-content">
 
       <span>Pending Reviews</span>
 
@@ -155,21 +159,19 @@ const deleteReview = async () => {
         }
       </h2>
 
-    </div>
+      <small>Waiting for approval</small>
 
-    <div className="stat-pill orange">
-      Pending
     </div>
 
   </div>
 
-  <div className="review-stat-card">
+  <div className="review-stat-card approved-card">
 
     <div className="stat-icon">
       ✅
     </div>
 
-    <div>
+    <div className="stat-content">
 
       <span>Approved Reviews</span>
 
@@ -181,22 +183,52 @@ const deleteReview = async () => {
         }
       </h2>
 
-    </div>
+      <small>Visible on website</small>
 
-    <div className="stat-pill green">
-      Live
     </div>
 
   </div>
 
 </div>
 <div className="reviews-card">
+<div className="reviews-filters">
 
+  <button
+    className={activeFilter === "All" ? "active" : ""}
+    onClick={() => setActiveFilter("All")}
+  >
+    All Reviews
+  </button>
+
+  <button
+    className={activeFilter === "Pending" ? "active" : ""}
+    onClick={() => setActiveFilter("Pending")}
+  >
+    Pending
+  </button>
+
+  <button
+    className={activeFilter === "Approved" ? "active" : ""}
+    onClick={() => setActiveFilter("Approved")}
+  >
+    Approved
+  </button>
+
+  <button
+    className={activeFilter === "Rejected" ? "active" : ""}
+    onClick={() => setActiveFilter("Rejected")}
+  >
+    Rejected
+  </button>
+
+</div>
   <div className="reviews-toolbar">
 
     <div className="search-box">
 
-
+     <span className="search-icon">
+    🔍
+</span>
       <input
         type="text"
         placeholder="Search customer reviews..."
