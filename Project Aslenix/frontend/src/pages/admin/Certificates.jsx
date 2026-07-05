@@ -6,10 +6,13 @@ import toast from "react-hot-toast";
 
 const Certificates = () => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
-  const [certificates, setCertificates] = useState([]);
-  const [search, setSearch] = useState("");
+const [description, setDescription] = useState("");
+const [image, setImage] = useState(null);
+const [certificates, setCertificates] = useState([]);
+const [search, setSearch] = useState("");
+
+const [uploading, setUploading] = useState(false);
+
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [selectedCertificate, setSelectedCertificate] = useState(null);
   useEffect(() => {
@@ -106,101 +109,302 @@ const deleteCertificate = async () => {
       <div className="cert-admin-page">
 
         {/* HEADER */}
-        <div className="cert-header">
-          <h1 className="cert-page-title">
-            Certificates
-          </h1>
+<div className="cert-header">
 
-          <p className="cert-subtitle">
-            Manage certifications, approvals and
-            quality documents.
-          </p>
-        </div>
+  <div className="cert-header-left">
+
+    <div className="cert-badge">
+      🏆 Quality Management
+    </div>
+
+    <h1 className="cert-page-title">
+      Certificates
+    </h1>
+
+    <p className="cert-subtitle">
+      Upload and manage certifications, approvals and
+      quality documents from one place.
+    </p>
+
+  </div>
+
+  <div className="cert-header-right">
+
+    <button className="preview-btn">
+      👁 Preview
+    </button>
+
+    <button
+      className="primary-btn"
+      onClick={()=>{
+        setTitle("");
+        setDescription("");
+        setImage(null);
+      }}
+    >
+      ➕ Add Certificate
+    </button>
+
+  </div>
+
+</div>
 
         {/* STATS */}
-        <div className="cert-stats">
+<div className="cert-stats">
 
-          <div className="cert-stat-card">
-            <span>Total Certificates</span>
-            <h2>{certificates.length}</h2>
-          </div>
+  <div className="cert-stat-card total-card">
 
-          <div className="cert-stat-card">
-            <span>Uploaded</span>
-            <h2>{certificates.length}</h2>
-          </div>
+    <div className="cert-stat-icon">
+      📜
+    </div>
 
-          <div className="cert-stat-card">
-            <span>Status</span>
-            <h2 className="online">
-              Active
-            </h2>
-          </div>
+    <div className="cert-stat-content">
 
-        </div>
+      <span>Total Certificates</span>
+
+      <h2>{certificates.length}</h2>
+
+      <small>All uploaded certificates</small>
+
+    </div>
+
+  </div>
+
+  <div className="cert-stat-card uploaded-card">
+
+    <div className="cert-stat-icon">
+      ☁️
+    </div>
+
+    <div className="cert-stat-content">
+
+      <span>Uploaded</span>
+
+      <h2>{certificates.length}</h2>
+
+      <small>Stored successfully</small>
+
+    </div>
+
+  </div>
+
+  <div className="cert-stat-card status-card">
+
+    <div className="cert-stat-icon">
+      ✅
+    </div>
+
+    <div className="cert-stat-content">
+
+      <span>Status</span>
+
+      <h2>Active</h2>
+
+      <small>System online</small>
+
+    </div>
+
+  </div>
+
+</div>
 
         {/* FORM */}
-        <div className="cert-form">
-          <h2>Add New Certificate</h2>
+<div className="cert-form">
 
-          <div className="cert-form-grid">
+  <div className="cert-form-header">
 
-            <input
-              placeholder="Certificate Title"
-              value={title}
-              onChange={(e) =>
-                setTitle(e.target.value)
-              }
-            />
+    <div className="cert-form-icon">
+      📜
+    </div>
 
-            <input
-              type="file"
-              onChange={(e) =>
-                setImage(e.target.files[0])
-              }
-            />
-{image && (
-  <div className="cert-preview">
-    <img
-      src={URL.createObjectURL(image)}
-      alt="preview"
-    />
+    <div>
+      <h2>Add New Certificate</h2>
+      <p>
+        Upload certificates, approvals and quality documents.
+      </p>
+    </div>
+
   </div>
-)}
-          </div>
 
-          <textarea
-            placeholder="Description of the certificate"
-            value={description}
-            onChange={(e) =>
-              setDescription(e.target.value)
-            }
-          />
 
-          <button onClick={submit}>
-            Upload Certificate
-          </button>
-          const [uploading, setUploading] =
-            useState(false);
+  <div className="cert-form-grid">
+
+    {/* LEFT */}
+
+    <div className="cert-left">
+
+      <div className="form-group">
+
+        <label>
+          Certificate Title
+          <span>*</span>
+        </label>
+
+        <input
+          placeholder="Enter certificate title..."
+          value={title}
+          onChange={(e)=>setTitle(e.target.value)}
+        />
+
+      </div>
+
+    </div>
+
+
+    {/* RIGHT */}
+
+    <div className="cert-right">
+
+      <label>
+        Certificate Image
+        <span>*</span>
+      </label>
+
+      <label className="upload-box">
+
+        <input
+          type="file"
+          hidden
+          onChange={(e)=>setImage(e.target.files[0])}
+        />
+
+        <div className="upload-icon">
+          📤
         </div>
 
+        <h4>
+          {image ? image.name : "Choose Certificate"}
+        </h4>
+
+        <p>PNG, JPG or JPEG</p>
+
+        <small>
+          Click to browse or drag & drop
+        </small>
+
+      </label>
+
+    </div>
+
+  </div>
+
+
+  {image && (
+
+    <div className="cert-preview">
+
+      <img
+        src={URL.createObjectURL(image)}
+        alt="preview"
+      />
+
+    </div>
+
+  )}
+
+
+  <div className="form-group">
+
+    <label>Description</label>
+
+    <textarea
+      placeholder="Write a short description about this certificate..."
+      value={description}
+      onChange={(e)=>setDescription(e.target.value)}
+      maxLength={500}
+    />
+
+    <div className="char-counter">
+
+      {description.length}/500
+
+    </div>
+
+  </div>
+
+
+  <div className="cert-buttons">
+
+    <button
+      className="upload-cert-btn"
+      onClick={submit}
+    >
+      ⬆ Upload Certificate
+    </button>
+
+    <button
+      className="reset-btn"
+      type="button"
+      onClick={()=>{
+        setTitle("");
+        setDescription("");
+        setImage(null);
+      }}
+    >
+      ↻ Reset
+    </button>
+
+  </div>
+
+</div>
         {/* SEARCH */}
-        <div className="cert-search">
-          <input
-            type="text"
-            placeholder="🔍 Search certificates..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-          />
-        </div>
+<div className="cert-toolbar">
+
+  <div className="cert-search-box">
+
+    <span className="search-icon">
+      🔍
+    </span>
+
+    <input
+      type="text"
+      placeholder="Search certificates..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+
+  </div>
+
+  <div className="cert-toolbar-info">
+
+    Showing
+
+    <strong>
+      {" "}
+      {filteredCertificates.length}
+      {" "}
+    </strong>
+
+    of
+
+    <strong>
+      {" "}
+      {certificates.length}
+      {" "}
+    </strong>
+
+    certificates
+
+  </div>
+
+</div>
 
         {/* CERTIFICATES */}
         {filteredCertificates.length === 0 ? (
-          <div className="cert-empty">
-            No certificates found.
-          </div>
+         <div className="cert-empty">
+
+  <div className="cert-empty-icon">
+    📜
+  </div>
+
+  <h3>No Certificates Yet</h3>
+
+  <p>
+    Upload your first certificate to showcase your
+    company's achievements and quality standards.
+  </p>
+
+</div>
         ) : (
           <div className="cert-grid">
 

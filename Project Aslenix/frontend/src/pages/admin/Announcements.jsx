@@ -5,10 +5,10 @@ import "../../styles/Announcements.css";
 import toast from "react-hot-toast";
 
 const Announcements = () => {
-  const [announcements, setAnnouncements] = useState([]);
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState("Active");
+const [announcements, setAnnouncements] = useState([]);
+ const [title, setTitle] = useState("");
+ const [message, setMessage] = useState("");
+ const [status, setStatus] = useState("Active");
 const [editingId, setEditingId] = useState(null);
 const [search, setSearch] = useState("");
 
@@ -260,7 +260,7 @@ return (
         <h2>
           {editingId
             ? "Edit Announcement"
-            : "Create Announcement"}
+            : "Create Announcement"} 
         </h2>
 
         <p>
