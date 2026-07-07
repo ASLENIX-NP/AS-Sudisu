@@ -92,7 +92,6 @@ const AdminTopbar = () => {
 
   return (
     <div className="admin-topbar">
-      <input type="text" placeholder="Search..." className="admin-search" />
 
       <div className="admin-actions">
         <div className="admin-notification-wrapper" ref={notificationRef}>
