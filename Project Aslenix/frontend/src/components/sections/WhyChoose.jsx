@@ -3,7 +3,7 @@ import "./WhyChoose.css";
 export default function WhyChoose() {
   return (
     <section className="why">
-      <h2>Why Choose Sudiisu?</h2>
+      <h2>Why Choose Sudisu?</h2>
 
       <div className="why-grid">
         <div className="why-card">

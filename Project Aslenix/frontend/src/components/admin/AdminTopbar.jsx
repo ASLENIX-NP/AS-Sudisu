@@ -2,44 +2,32 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import "./AdminTopbar.css";
-  import {
-  FaBell,
-  FaCheck,
-  FaEnvelope,
-  FaStar
-} from "react-icons/fa6";
+import { FaBell, FaCheck, FaEnvelope, FaStar } from "react-icons/fa6";
 
 const AdminTopbar = () => {
   const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [pendingReviews, setPendingReviews] = useState(0);
   const [inquiries, setInquiries] = useState(0);
-   const notificationRef = useRef(null);   
+  const notificationRef = useRef(null);
   useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (
-      notificationRef.current &&
-      !notificationRef.current.contains(event.target)
-    ) {
-      setIsNotificationsOpen(false);
-    }
-  };
+    const handleClickOutside = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setIsNotificationsOpen(false);
+      }
+    };
 
-  document.addEventListener(
-    "mousedown",
-    handleClickOutside
-  );
+    document.addEventListener("mousedown", handleClickOutside);
 
-  return () => {
-    document.removeEventListener(
-      "mousedown",
-      handleClickOutside
-    );
-  };
-}, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
-
     const fetchNotificationCounts = async () => {
       const { count: reviewsCount } = await supabase
         .from("reviews")
@@ -59,7 +47,6 @@ const AdminTopbar = () => {
         setInquiries(0);
       }
     };
- 
 
     fetchNotificationCounts();
   }, []);
@@ -75,7 +62,7 @@ const AdminTopbar = () => {
             ? `${inquiries} inquiry messages need review`
             : "No new inquiry messages",
         count: inquiries,
-         path: "/admin/notifications?type=inquiries",
+        path: "/admin/notifications?type=inquiries",
       },
       {
         id: "reviews",
@@ -92,7 +79,10 @@ const AdminTopbar = () => {
     [inquiries, pendingReviews],
   );
 
-  const unreadCount = notifications.reduce((total, item) => total + item.count, 0);
+  const unreadCount = notifications.reduce(
+    (total, item) => total + item.count,
+    0,
+  );
 
   const handleNotificationClick = (path) => {
     setIsNotificationsOpen(false);
@@ -101,39 +91,23 @@ const AdminTopbar = () => {
 
   return (
     <div className="admin-topbar">
-      <input
-        type="text"
-        placeholder="Search..."
-        className="admin-search"
-      />
+      <input type="text" placeholder="Search..." className="admin-search" />
 
       <div className="admin-actions">
-        <div
-          className="admin-notification-wrapper"
-            ref={notificationRef}
-             >
+        <div className="admin-notification-wrapper" ref={notificationRef}>
           <button
             type="button"
             className={`admin-notification-button ${
               unreadCount > 0 ? "has-alerts" : ""
             }`}
-            onClick={() => setIsNotificationsOpen((prev) => !prev)}
+            onClick={() => navigate("/admin/notifications")}
             aria-label="Open admin notifications"
-            aria-expanded={isNotificationsOpen}
           >
-            <button className="admin-notification-button">
-  🔔
-  {unreadCount > 0 && (
-    <span className="admin-notification-badge">
-      {unreadCount}
-    </span>
-  )}
-</button>
+            🔔
             {unreadCount > 0 && (
               <span className="admin-notification-badge">{unreadCount}</span>
             )}
           </button>
-
         </div>
 
         <div className="admin-profile">

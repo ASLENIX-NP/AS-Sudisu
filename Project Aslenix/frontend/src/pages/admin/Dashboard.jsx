@@ -15,11 +15,12 @@ import {
 import {
   LineChart,
   Line,
-  CartesianGrid,
   XAxis,
   YAxis,
+  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 
 const Dashboard = () => {
@@ -43,25 +44,30 @@ const Dashboard = () => {
   const [reviewStatus, setReviewStatus] = useState("Checking...");
 
   const [lastUpdated, setLastUpdated] = useState("");
+  const [chartData, setChartData] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  const chartData = [
-    { day: "Mon", inquiries: 4 },
-    { day: "Tue", inquiries: 8 },
-    { day: "Wed", inquiries: 6 },
-    { day: "Thu", inquiries: 10 },
-    { day: "Fri", inquiries: 7 },
-    { day: "Sat", inquiries: 12 },
-    { day: "Sun", inquiries: 9 },
-  ];
   useEffect(() => {
     fetchStats();
   }, []);
 
   const fetchStats = async () => {
-    const { count: products } = await supabase
-      .from("products")
-      .select("*", { count: "exact", head: true });
+    const last7Days = [];
 
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+
+      last7Days.push({
+        date: date.toISOString().split("T")[0],
+        day: date.toLocaleDateString("en-US", {
+          weekday: "long",
+        }),
+        inquiries: 0,
+        reviews: 0,
+      });
+    }
     let inquiryCountValue = 0;
 
     try {
@@ -74,11 +80,49 @@ const Dashboard = () => {
       if (data.success) {
         inquiryCountValue = data.inquiries.length;
 
+        data.inquiries.forEach((item) => {
+          const inquiryDate = new Date(item.createdAt)
+            .toISOString()
+            .split("T")[0];
+
+          const day = last7Days.find((d) => d.date === inquiryDate);
+
+          if (day) {
+            day.inquiries++;
+          }
+        });
+
+        const { data: reviewData } = await supabase
+          .from("reviews")
+          .select("created_at");
+
+        reviewData?.forEach((item) => {
+          const reviewDate = new Date(item.created_at)
+            .toISOString()
+            .split("T")[0];
+
+          const day = last7Days.find((d) => d.date === reviewDate);
+
+          if (day) {
+            day.reviews++;
+          }
+        });
+        setChartData(
+          last7Days.map((item) => ({
+            day: item.day,
+            inquiries: item.inquiries,
+            reviews: item.reviews,
+          })),
+        );
         console.log("Dashboard Inquiry Count:", inquiryCountValue);
       }
     } catch (error) {
       console.log("Dashboard Error:", error);
     }
+
+    const { count: products } = await supabase
+      .from("products")
+      .select("*", { count: "exact", head: true });
 
     const { count: categories } = await supabase
       .from("categories")
@@ -87,9 +131,12 @@ const Dashboard = () => {
     const { count: certificates } = await supabase
       .from("certificates")
       .select("*", { count: "exact", head: true });
+
     const { count: reviews } = await supabase
       .from("reviews")
       .select("*", { count: "exact", head: true });
+
+ 
     const { count: pending } = await supabase
       .from("reviews")
       .select("*", { count: "exact", head: true })
@@ -119,7 +166,8 @@ const Dashboard = () => {
       .from("reviews")
       .select("product_id, product_name")
       .eq("status", "Approved");
-
+    
+    console.log("Approved Reviews:", approvedReviews);
     const productRanking = {};
 
     approvedReviews?.forEach((review) => {
@@ -278,15 +326,53 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
+
                 <XAxis dataKey="day" />
+
                 <YAxis />
-                <Tooltip />
+
+                <Tooltip
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+
+                      return (
+                        <div
+                          style={{
+                            background: "#fff",
+                            border: "1px solid #ddd",
+                            borderRadius: "10px",
+                            padding: "12px",
+                          }}
+                        >
+                          <p>
+                            <strong>{label}</strong>
+                          </p>
+
+                          <p style={{ color: "#2563eb" }}>
+                            ● Inquiries : {data.inquiries}
+                          </p>
+
+                          <p style={{ color: "#16a34a" }}>
+                            ● Reviews : {data.reviews}
+                          </p>
+                        </div>
+                      );
+                    }
+
+                    return null;
+                  }}
+                />
+
+                <Legend />
 
                 <Line
                   type="monotone"
                   dataKey="inquiries"
                   stroke="#2563eb"
                   strokeWidth={3}
+                  name="Inquiries"
+                  name="Reviews"
                 />
               </LineChart>
             </ResponsiveContainer>
