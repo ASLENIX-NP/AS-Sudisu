@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabase";
+import API from "../../api/api";
 import "./login.css";
 import toast from "react-hot-toast";
 
@@ -14,12 +14,6 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     const cleanEmail = email.trim();
-
-    if (!cleanEmail) {
-      toast.error("Please enter your email address");
-      return;
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(cleanEmail)) {
@@ -27,24 +21,26 @@ const ForgotPassword = () => {
       return;
     }
 
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const redirectUrl = `${window.location.origin}/reset-password`;
+      const { data } = await API.post("/admin/forgot-password", {
+        email: cleanEmail,
+      });
 
-    const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
-      redirectTo: redirectUrl,
-    });
+      toast.success(data.message || "OTP sent successfully");
 
-    setLoading(false);
-
-    if (error) {
-      console.log("Password reset error:", error);
-      toast.error(error.message || "Failed to send reset email");
-      return;
+      navigate("/reset-password", {
+        state: { email: cleanEmail },
+      });
+    } catch (error) {
+      console.log("Forgot password OTP error:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to send OTP. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
-
-    toast.success("Password reset link sent. Please check your email.");
-    setEmail("");
   };
 
   return (
@@ -55,13 +51,13 @@ const ForgotPassword = () => {
         <form onSubmit={handleReset}>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter admin email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <button type="submit" disabled={loading}>
-            {loading ? "Sending..." : "Send Reset Link"}
+            {loading ? "Sending OTP..." : "Send OTP"}
           </button>
 
           <p className="back-site-link" onClick={() => navigate("/admin")}>
