@@ -13,38 +13,38 @@ const ForgotPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
 
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const cleanEmail = email.trim();
 
-if (!emailRegex.test(email)) {
-  toast.error("Please enter a valid email address");
-  return;
-}
+    if (!cleanEmail) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(cleanEmail)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
     setLoading(true);
 
-    const { error } =
-      await supabase.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo:
-            "http://localhost:5173/reset-password",
-        }
-      );
+    const redirectUrl = `${window.location.origin}/reset-password`;
+
+    const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
+      redirectTo: redirectUrl,
+    });
 
     setLoading(false);
 
-if (error) {
-  console.log(error);
+    if (error) {
+      console.log("Password reset error:", error);
+      toast.error(error.message || "Failed to send reset email");
+      return;
+    }
 
-  toast.error(error.message);
-  return;
-}
-
-toast.success(
-  "Password reset link sent successfully"
-);
-
-setEmail("");
+    toast.success("Password reset link sent. Please check your email.");
+    setEmail("");
   };
 
   return (
@@ -57,21 +57,14 @@ setEmail("");
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <button type="submit">
-            {loading
-              ? "Sending..."
-              : "Send Reset Link"}
+          <button type="submit" disabled={loading}>
+            {loading ? "Sending..." : "Send Reset Link"}
           </button>
 
-          <p
-            className="back-site-link"
-            onClick={() => navigate("/admin")}
-          >
+          <p className="back-site-link" onClick={() => navigate("/admin")}>
             ← Back to Login
           </p>
         </form>
