@@ -1,8 +1,21 @@
 import "./WhatsAppFloat.css";
-import { MessageCircle } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function WhatsAppFloat() {
+  const location = useLocation();
+
+  // Hide WhatsApp widget on admin/auth pages
+  const hiddenRoutes = ["/admin", "/forgot-password", "/reset-password"];
+
+  const shouldHide = hiddenRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
+
+  if (shouldHide) {
+    return null;
+  }
+
   const phone = "9779816259642";
 
   const handleClick = () => {
@@ -11,7 +24,7 @@ export default function WhatsAppFloat() {
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-      "_blank",
+      "_blank"
     );
   };
 
