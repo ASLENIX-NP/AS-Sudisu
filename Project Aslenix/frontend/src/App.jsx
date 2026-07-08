@@ -17,6 +17,7 @@ import ProductDetails from "./pages/public/ProductDetails";
 import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
+import BlogDetail from "./pages/public/BlogDetail";
 import CertificateDetails from "./pages/public/CertificateDetails";
 import WhatsAppFloat from "./pages/public/WhatsAppFloat"; /* 
 /*Admin Pages */
@@ -33,7 +34,7 @@ import NotificationsAdmin from "./pages/admin/NotificationsAdmin";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
 import CertificateRead from "./pages/public/Certificates";
-import ScrollToTop from "./components/common/ScrollToTop";
+import ScrollToTop from "./components/common/scrolltotop";
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -126,6 +127,8 @@ function App() {
         <Route path="/about" element={<About />} />
 
         <Route path="/blog" element={<Blog />} />
+
+        <Route path="/blog/:id" element={<BlogDetail />} />
 
         <Route path="/certificates/:id" element={<CertificateRead />} />
 
