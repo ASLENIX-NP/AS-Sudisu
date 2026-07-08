@@ -67,15 +67,7 @@
 }
 
 .preview-btn,
-.save-btn{
 
-    height:48px;
-    padding:0 22px;
-    border-radius:14px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.25s;
-}
 
 .preview-btn{
 
@@ -89,19 +81,9 @@
     background:#eff6ff;
 }
 
-.save-btn{
 
-    border:none;
-    background:#2563eb;
-    color:white;
-    box-shadow:0 12px 25px rgba(37,99,235,.25);
-}
 
-.save-btn:hover{
 
-    transform:translateY(-2px);
-    background:#1d4ed8;
-}
 
 @media(max-width:900px){
 
@@ -463,6 +445,96 @@
     background:#1d4ed8;
 }
 
+/* ==========================================
+   SAVE BUTTON - UPDATED DESIGN
+========================================== */
+
+.save-about-btn {
+    width: 100%;
+    padding: 18px 32px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+/* ==========================================
+   SAVE BUTTON - SMALL & RIGHT ALIGNED
+========================================== */
+.save-about-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    margin-bottom: 20px;
+}
+
+.save-about-btn {
+    padding: 12px 24px;
+    min-width: 180px;
+    width: auto;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all .3s ease;
+
+    box-shadow: 0 6px 18px rgba(37,99,235,.25);
+
+    position: relative;
+    overflow: hidden;
+
+    letter-spacing: .3px;
+}
+
+.save-about-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+
+.save-about-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.save-about-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Clear float after the button */
+.about-admin-page::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+/* Mobile responsive */
+@media(max-width: 768px) {
+    .save-about-btn {
+        float: none;
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+}
 /* ===========================
    MOBILE
 =========================== */

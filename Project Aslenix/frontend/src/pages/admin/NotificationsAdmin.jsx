@@ -96,164 +96,152 @@ const NotificationsAdmin = () => {
 
   return (
     <AdminLayout>
-<div className="notifications-admin-page">
-  <div className="notifications-admin-header">
-  
-  </div>
+      <div className="notifications-admin-page">
+        <div className="notifications-admin-header"></div>
 
-  {!type && (
-    <div className="notifications-admin-grid">
-      {notifications.map((item) => (
-        <button
-          type="button"
-          key={item.id}
-          className={`notifications-admin-card ${item.tone} ${
-            item.count > 0 ? "has-pending" : ""
-          }`}
-          onClick={() => navigate(item.path)}
-        >
-          <span className="notifications-admin-icon">
-            {item.icon}
-          </span>
+        {!type && (
+          <div className="notifications-admin-grid">
+            {notifications.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                className={`notifications-admin-card ${item.tone} ${
+                  item.count > 0 ? "has-pending" : ""
+                }`}
+                onClick={() => navigate(item.path)}
+              >
+                <span className="notifications-admin-icon">{item.icon}</span>
 
-          <span className="notifications-admin-content">
-            <span>
-              <strong>{item.title}</strong>
-              <small>{item.description}</small>
-            </span>
+                <span className="notifications-admin-content">
+                  <span>
+                    <strong>{item.title}</strong>
+                    <small>{item.description}</small>
+                  </span>
 
-            <span className="notifications-admin-action">
-              {item.action}
-            </span>
-          </span>
+                  <span className="notifications-admin-action">
+                    {item.action}
+                  </span>
+                </span>
 
-          <span className="notifications-admin-count">
-            {item.count}
-          </span>
-        </button>
-      ))}
-    </div>
-  )}
-{type === "inquiries" && (
-  <div className="notification-detail-box">
-    <h2>📩 Customer Inquiries</h2>
+                <span className="notifications-admin-count">{item.count}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        {type === "inquiries" && (
+          <div className="notification-detail-box">
+            <h2>📩 Customer Inquiries</h2>
 
-    <div className="notification-info">
-      <div className="info-row">
-        <strong>Status:</strong>
-        <span>
-          {inquiryCount > 0
-            ? `${inquiryCount} New Inquiries`
-            : "No New Inquiries"}
-        </span>
+            <div className="notification-info">
+              <div className="info-row">
+                <strong>Status:</strong>
+                <span>
+                  {inquiryCount > 0
+                    ? `${inquiryCount} New Inquiries`
+                    : "No New Inquiries"}
+                </span>
+              </div>
+
+              <div className="info-row">
+                <strong>Priority:</strong>
+                <span>
+                  {inquiryCount > 5
+                    ? "High"
+                    : inquiryCount > 0
+                      ? "Medium"
+                      : "Low"}
+                </span>
+              </div>
+
+              <div className="info-row">
+                <strong>Description:</strong>
+                <span>
+                  Customer messages submitted through the website contact form
+                  are waiting for review.
+                </span>
+              </div>
+
+              <div className="info-row">
+                <strong>Action Required:</strong>
+                <span>
+                  Open the inquiries page and reply to customer messages.
+                </span>
+              </div>
+            </div>
+
+            <button
+              className="notification-action-btn"
+              onClick={() => navigate("/admin/inquiries")}
+            >
+              Open Inquiries
+            </button>
+          </div>
+        )}
+
+        {type === "reviews" && (
+          <div className="notification-detail-box">
+            <h2>⭐ Pending Reviews</h2>
+
+            <div className="notification-info">
+              <div className="info-row">
+                <strong>Pending Reviews:</strong>
+                <span>{pendingReviews}</span>
+              </div>
+
+              <div className="info-row">
+                <strong>Description:</strong>
+                <span>
+                  Customer reviews require approval before they appear publicly
+                  on products.
+                </span>
+              </div>
+
+              <div className="info-row">
+                <strong>Action Required:</strong>
+                <span>Approve genuine reviews and reject spam reviews.</span>
+              </div>
+            </div>
+            <button
+              className="notification-action-btn"
+              onClick={() => navigate("/admin/reviews")}
+            >
+              Manage Reviews
+            </button>
+          </div>
+        )}
+
+        {type === "dashboard" && (
+          <div className="notification-detail-box">
+            <h2>🖥️ System Status</h2>
+
+            <div className="notification-info">
+              <div className="info-row">
+                <strong>Database:</strong>
+                <span>{databaseStatus}</span>
+              </div>
+
+              <div className="info-row">
+                <strong>Server:</strong>
+                <span>Running</span>
+              </div>
+
+              <div className="info-row">
+                <strong>Description:</strong>
+                <span>
+                  Monitor database connectivity and overall system health.
+                </span>
+              </div>
+            </div>
+
+            <button
+              className="notification-action-btn"
+              onClick={() => navigate("/admin/dashboard")}
+            >
+              Open Dashboard
+            </button>
+          </div>
+        )}
       </div>
-
-      <div className="info-row">
-        <strong>Priority:</strong>
-        <span>
-          {inquiryCount > 5
-            ? "High"
-            : inquiryCount > 0
-            ? "Medium"
-            : "Low"}
-        </span>
-      </div>
-
-      <div className="info-row">
-        <strong>Description:</strong>
-        <span>
-          Customer messages submitted through the website
-          contact form are waiting for review.
-        </span>
-      </div>
-
-      <div className="info-row">
-        <strong>Action Required:</strong>
-        <span>
-          Open the inquiries page and reply to customer
-          messages.
-        </span>
-      </div>
-    </div>
-
-    <button
-      className="notification-action-btn"
-      onClick={() => navigate("/admin/inquiries")}
-    >
-      Open Inquiries
-    </button>
-  </div>
-)}
-
-{type === "reviews" && (
-  <div className="notification-detail-box">
-    <h2>⭐ Pending Reviews</h2>
-
-    <div className="notification-info">
-      <div className="info-row">
-        <strong>Pending Reviews:</strong>
-        <span>{pendingReviews}</span>
-      </div>
-
-      <div className="info-row">
-        <strong>Description:</strong>
-        <span>
-          Customer reviews require approval before they
-          appear publicly on products.
-        </span>
-      </div>
-
-      <div className="info-row">
-        <strong>Action Required:</strong>
-        <span>
-          Approve genuine reviews and reject spam reviews.
-        </span>
-      </div>
-    </div>
-
-    <button
-      className="notification-action-btn"
-      onClick={() => navigate("/admin/reviews")}
-    >
-      Manage Reviews
-    </button>
-  </div>
-)}
-
-</div>
-{type === "dashboard" && (
-  <div className="notification-detail-box">
-    <h2>🖥️ System Status</h2>
-
-    <div className="notification-info">
-      <div className="info-row">
-        <strong>Database:</strong>
-        <span>{databaseStatus}</span>
-      </div>
-
-      <div className="info-row">
-        <strong>Server:</strong>
-        <span>Running</span>
-      </div>
-
-      <div className="info-row">
-        <strong>Description:</strong>
-        <span>
-          Monitor database connectivity and overall system
-          health.
-        </span>
-      </div>
-    </div>
-
-    <button
-      className="notification-action-btn"
-      onClick={() => navigate("/admin/dashboard")}
-    >
-      Open Dashboard
-    </button>
-  </div>
-)}
-export default NotificationsAdmin;
     </AdminLayout>
   );
 };
