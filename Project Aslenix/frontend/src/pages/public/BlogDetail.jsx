@@ -1,34 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 import { supabase } from "../../lib/supabase";
+
+import fallbackImage from "../../assets/images/sudisuPH3.jpg";
 import "./BlogDetail.css";
 
-import fallbackBlogImage from "../../assets/images/sudisuPH3.jpg";
+const formatDate = (dateValue) => {
+  if (!dateValue) return "Sudisu Blog";
+
+  return new Date(dateValue).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 const BlogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     fetchBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchBlog = async () => {
     setLoading(true);
+    setNotFound(false);
 
     const { data, error } = await supabase
       .from("blogs")
-      .select("id, title, excerpt, content, image_url, status, created_at")
+      .select("*")
       .eq("id", id)
       .single();
 
-    if (error) {
-      console.error("Blog detail fetch error:", error.message);
+    if (error || !data || data.status === "Draft") {
+      console.error("Blog detail fetch error:", error);
       setBlog(null);
+      setNotFound(true);
     } else {
       setBlog(data);
     }
@@ -36,30 +51,22 @@ const BlogDetail = () => {
     setLoading(false);
   };
 
-  const formatDate = (dateValue) => {
-    if (!dateValue) return "";
-
-    return new Date(dateValue).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const bodyText = blog?.content?.trim() || blog?.excerpt?.trim() || "";
-  const paragraphs = bodyText
-    .split(/\n+/)
-    .map((item) => item.trim())
-    .filter(Boolean);
+  const contentParagraphs = useMemo(() => {
+    const text = blog?.content || blog?.excerpt || "";
+    return text
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }, [blog]);
 
   return (
     <>
       <section className="blog-detail-page">
-        <HeroNavbar as="div" className="blog-detail-navbar-wrap">
-          <div className="blog-detail-container">
+        <HeroNavbar as="section" className="blog-detail-hero">
+          <div className="blog-detail-hero-inner">
             <button
               type="button"
-              className="blog-back-btn"
+              className="back-blog-btn"
               onClick={() => navigate("/blog")}
             >
               ← Back to Blogs
@@ -67,41 +74,49 @@ const BlogDetail = () => {
 
             {loading ? (
               <div className="blog-detail-state">Loading blog...</div>
-            ) : !blog ? (
-              <div className="blog-detail-state">Blog article not found.</div>
+            ) : notFound ? (
+              <div className="blog-detail-state">
+                <h1>Blog Not Found</h1>
+                <p>
+                  This blog may have been removed or changed to draft status.
+                </p>
+                <button type="button" onClick={() => navigate("/blog")}>
+                  View All Blogs
+                </button>
+              </div>
             ) : (
-              <article className="blog-detail-card">
-                <div className="blog-detail-image">
+              <>
+                <div className="blog-detail-title-block">
+                  <span className="blog-detail-tag">SUDISU BLOG</span>
+                  <h1>{blog.title}</h1>
+                  <p>{blog.excerpt}</p>
+                  <div className="blog-detail-meta">
+                    <span>{formatDate(blog.created_at)}</span>
+                    <span>•</span>
+                    <span>Sudisu Spices</span>
+                  </div>
+                </div>
+
+                <div className="blog-detail-image-card">
                   <img
-                    src={blog.image_url || fallbackBlogImage}
-                    alt={blog.title}
+                    src={blog.image_url || fallbackImage}
+                    alt={blog.title || "Sudisu blog"}
                     onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = fallbackBlogImage;
+                      e.currentTarget.src = fallbackImage;
                     }}
                   />
                 </div>
 
-                <div className="blog-detail-content">
-                  <span className="blog-detail-date">
-                    {formatDate(blog.created_at)}
-                  </span>
-
-                  <h1>{blog.title}</h1>
-
-                  {blog.excerpt && <p className="blog-detail-excerpt">{blog.excerpt}</p>}
-
-                  <div className="blog-detail-body">
-                    {paragraphs.length > 0 ? (
-                      paragraphs.map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                      ))
-                    ) : (
-                      <p>More details will be available soon.</p>
-                    )}
-                  </div>
-                </div>
-              </article>
+                <article className="blog-detail-content-card">
+                  {contentParagraphs.length > 0 ? (
+                    contentParagraphs.map((paragraph, index) => (
+                      <p key={`${paragraph}-${index}`}>{paragraph}</p>
+                    ))
+                  ) : (
+                    <p>Full blog details will be available soon.</p>
+                  )}
+                </article>
+              </>
             )}
           </div>
         </HeroNavbar>

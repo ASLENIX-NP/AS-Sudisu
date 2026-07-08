@@ -1,14 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import { useEffect } from "react";
-import { supabase } from "./lib/supabase";
 import { Toaster } from "react-hot-toast";
 
-import Inquiries from "./pages/admin/Inquiries";
-import Login from "./pages/admin/Login";
-import AdminRoute from "./routes/AdminRoute";
-import Analytics from "./pages/admin/Analytics";
-import Settings from "./pages/admin/Settings";
+import { supabase } from "./lib/supabase";
 
 /* Public Pages */
 import Home from "./pages/public/Home";
@@ -18,9 +12,13 @@ import Contact from "./pages/public/Contact";
 import About from "./pages/public/About";
 import Blog from "./pages/public/Blog";
 import BlogDetail from "./pages/public/BlogDetail";
-import CertificateDetails from "./pages/public/CertificateDetails";
-import WhatsAppFloat from "./pages/public/WhatsAppFloat"; /* 
-/*Admin Pages */
+import CertificateDetails from "./pages/public/certificatedetails";
+import CertificateRead from "./pages/public/certificates";
+import WhatsAppFloat from "./pages/public/WhatsAppFloat";
+
+/* Admin Pages */
+import Login from "./pages/admin/login";
+import AdminRoute from "./routes/AdminRoute";
 import ProductsManager from "./pages/admin/ProductsManager";
 import Dashboard from "./pages/admin/Dashboard";
 import ContactAdmin from "./pages/admin/ContactAdmin";
@@ -31,10 +29,14 @@ import AboutAdmin from "./pages/admin/AboutAdmin";
 import Announcements from "./pages/admin/Announcements";
 import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
 import NotificationsAdmin from "./pages/admin/NotificationsAdmin";
+import Inquiries from "./pages/admin/Inquiries";
+import Analytics from "./pages/admin/Analytics";
+import Settings from "./pages/admin/Settings";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
-import CertificateRead from "./pages/public/Certificates";
+
 import ScrollToTop from "./components/common/scrolltotop";
+
 function App() {
   useEffect(() => {
     console.log("Supabase Connected:", supabase);
@@ -42,28 +44,28 @@ function App() {
 
   useEffect(() => {
     const trackVisitor = async () => {
-      console.log("Visitor tracking started");
-      const existingVisitor = localStorage.getItem("sudisu_visitor");
+      try {
+        const existingVisitor = localStorage.getItem("sudisu_visitor");
+        if (existingVisitor) return;
 
-      if (existingVisitor) return;
+        const visitorId =
+          typeof crypto !== "undefined" && crypto.randomUUID
+            ? crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
-      const visitorId = crypto.randomUUID();
+        localStorage.setItem("sudisu_visitor", visitorId);
 
-      console.log("Generated Visitor ID:", visitorId);
+        const { error } = await supabase.from("Website_Visitors").insert([
+          {
+            visitor_id: visitorId,
+          },
+        ]);
 
-      localStorage.setItem("sudisu_visitor", visitorId);
-      const result = await supabase.from("Website_Visitors").insert([
-        {
-          visitor_id: visitorId,
-        },
-      ]);
-
-      console.log("Insert Result:", result);
-
-      if (result.error) {
-        console.error("Insert Error:", result.error);
-      } else {
-        console.log("Visitor inserted successfully");
+        if (error) {
+          console.error("Visitor insert error:", error);
+        }
+      } catch (error) {
+        console.error("Visitor tracking error:", error);
       }
     };
 
@@ -81,7 +83,6 @@ function App() {
         }}
         toastOptions={{
           duration: 4000,
-
           style: {
             background: "rgba(255,255,255,0.85)",
             color: "#0f172a",
@@ -94,14 +95,12 @@ function App() {
             fontSize: "14px",
             fontWeight: "600",
           },
-
           success: {
             iconTheme: {
               primary: "#22c55e",
               secondary: "#ffffff",
             },
           },
-
           error: {
             iconTheme: {
               primary: "#ef4444",
@@ -110,35 +109,25 @@ function App() {
           },
         }}
       />
+
       <ScrollToTop />
+
       <Routes>
-        {/* PUBLIC PAGES */}
-
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
-
         <Route path="/products" element={<Products />} />
-
         <Route path="/products/:id" element={<ProductDetails />} />
-
-        <Route path="/admin/certificates" element={<Certificates />} />
-
         <Route path="/contact" element={<Contact />} />
-
         <Route path="/about" element={<About />} />
-
         <Route path="/blog" element={<Blog />} />
-
         <Route path="/blog/:id" element={<BlogDetail />} />
-
         <Route path="/certificates/:id" element={<CertificateRead />} />
-
         <Route path="/certificate/:id" element={<CertificateDetails />} />
-        {/* ADMIN LOGIN */}
 
+        {/* Admin Login */}
         <Route path="/admin" element={<Login />} />
 
-        {/* ADMIN ROUTES */}
-
+        {/* Admin Routes */}
         <Route
           path="/admin/dashboard"
           element={
@@ -201,6 +190,16 @@ function App() {
             </AdminRoute>
           }
         />
+
+        <Route
+          path="/admin/certificates"
+          element={
+            <AdminRoute>
+              <Certificates />
+            </AdminRoute>
+          }
+        />
+
         <Route
           path="/admin/contact"
           element={
@@ -209,6 +208,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/about"
           element={
@@ -217,6 +217,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/blog"
           element={
@@ -225,6 +226,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/announcements"
           element={
@@ -233,6 +235,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/reviews"
           element={
@@ -245,6 +248,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+
       <WhatsAppFloat />
     </Router>
   );
