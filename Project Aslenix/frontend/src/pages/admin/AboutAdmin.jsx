@@ -468,4 +468,4 @@ const BlogAdmin = () => {
   );
 };
 
-export default BlogAdmin;
+export default AboutAdmin;

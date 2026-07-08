@@ -325,18 +325,16 @@
 ========================================== */
 
 .blog-posts-section{
-    width: 100%;
     max-width: 1400px;
-    margin: 90px auto 70px;
-    padding: 0 6%;
-    box-sizing: border-box;
+    width: 100%;
+    margin: 40px auto 9px;   /* move section down */
+    padding: 0 8%;            /* same width as hero */
 }
 
 .blog-posts-header{
-    width:100%;
-    max-width:1200px;
-    margin:0 auto 55px;
-    text-align:left;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 50px;
 }
 
 .blog-posts-header h2{
