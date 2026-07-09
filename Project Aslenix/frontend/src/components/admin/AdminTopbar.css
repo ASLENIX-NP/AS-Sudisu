@@ -247,9 +247,13 @@
 @media (max-width: 720px) {
   .admin-topbar {
     height: auto;
-    min-height: 72px;
+    min-height: 58px;
     gap: 12px;
-    padding: 12px 14px;
+    padding: 10px 12px;
+    justify-content: flex-end;
+    position: sticky;
+    top: 62px;
+    z-index: 30;
   }
 
   .admin-search {
@@ -261,8 +265,29 @@
     gap: 10px;
   }
 
+  .admin-notification-button {
+    width: 42px !important;
+    height: 42px !important;
+    border-width: 2px !important;
+  }
+
+  .admin-notification-button svg {
+    font-size: 22px !important;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
   .admin-profile > div:last-child {
     display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-topbar {
+    top: 58px;
   }
 }
 

@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.certificate-right {
+  transform: translateY(-34px);
+}
+
 .certificate-left img {
   width: 100%;
 
@@ -49,11 +53,12 @@
 }
 
 .certificate-right h1 {
-  font-size: 4rem;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
 
   color: #081228;
 
   margin-bottom: 20px;
+  line-height: 1.12;
 }
 
 .certificate-right p {
@@ -62,6 +67,31 @@
   font-size: 18px;
 
   line-height: 2;
+}
+
+.certificate-loading {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 55px 35px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(185, 28, 28, 0.12);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.certificate-loading h1 {
+  margin: 18px 0 12px;
+  color: #081228;
+  font-size: 2.8rem;
+  line-height: 1.1;
+}
+
+.certificate-loading p {
+  margin: 0;
+  color: #5b6470;
+  font-size: 17px;
+  line-height: 1.7;
 }
 /* =========================================
    MOBILE RESPONSIVE - DESKTOP STYLE
@@ -164,6 +194,7 @@
   .certificate-right {
     flex: 1;
     text-align: left;
+    transform: translateY(-10px);
   }
 
   .certificate-left img {
@@ -178,5 +209,17 @@
   .certificate-right p {
     font-size: 13px;
     line-height: 1.6;
+  }
+
+  .certificate-loading {
+    padding: 36px 20px;
+  }
+
+  .certificate-loading h1 {
+    font-size: 2rem;
+  }
+
+  .certificate-loading p {
+    font-size: 14px;
   }
 }

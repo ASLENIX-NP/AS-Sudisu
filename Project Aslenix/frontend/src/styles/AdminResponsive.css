@@ -1,0 +1,297 @@
+/* Shared responsive layer for every admin route. */
+
+.admin-content :where(
+  .dashboard-page,
+  .products-admin-page,
+  .products-manager-page,
+  .notifications-admin-page,
+  .inquiries-container,
+  .analytics-page,
+  .settings-page,
+  .categories-page,
+  .cert-admin-page,
+  .contact-page,
+  .about-admin-page,
+  .blog-admin-page,
+  .announcements-page,
+  .reviews-page
+) {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.admin-content :where(
+  .dashboard-header,
+  .products-page-header,
+  .products-manager-header,
+  .notifications-admin-header,
+  .inquiries-header,
+  .analytics-header,
+  .settings-header,
+  .categories-header,
+  .cert-header,
+  .contact-header,
+  .about-header,
+  .blog-header,
+  .announcement-header,
+  .reviews-header,
+  .reviews-toolbar,
+  .table-toolbar,
+  .cert-toolbar,
+  .product-action-row
+) {
+  min-width: 0;
+}
+
+.admin-content :where(
+  input,
+  textarea,
+  select,
+  button
+) {
+  max-width: 100%;
+}
+
+.admin-content :where(table) {
+  max-width: none;
+}
+
+.admin-content :where(
+  .inquiries-card,
+  .categories-table-card,
+  .products-table-panel
+) {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-content :where(
+  .inquiries-card table,
+  .categories-table,
+  .products-table
+) {
+  min-width: 720px;
+}
+
+.admin-content :where(
+  .dashboard-card,
+  .modern-kpi,
+  .admin-card,
+  .about-card,
+  .blog-card,
+  .announcements-card,
+  .contact-card,
+  .cert-form,
+  .settings-section,
+  .settings-card,
+  .reviews-card,
+  .analytics-panel,
+  .categories-card
+) {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .admin-content :where(
+    .about-header,
+    .blog-header,
+    .cert-header,
+    .announcement-header,
+    .reviews-header,
+    .products-page-header,
+    .products-manager-header,
+    .notifications-admin-header
+  ) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-content :where(
+    .about-header-right,
+    .blog-header-right,
+    .cert-header-right,
+    .announcement-header-right,
+    .products-header-actions,
+    .products-page-header > button,
+    .reviews-header-right
+  ) {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .admin-content :where(
+    .about-header-right button,
+    .blog-header-right button,
+    .cert-header-right button,
+    .announcement-header-right button,
+    .products-header-actions button,
+    .products-page-header > button,
+    .reviews-header-right button
+  ) {
+    flex: 1 1 160px;
+  }
+
+  .admin-content :where(
+    .about-form-grid,
+    .settings-form-grid,
+    .form-grid,
+    .contact-grid,
+    .cert-form-grid,
+    .image-upload-grid,
+    .settings-grid,
+    .products-form-grid,
+    .analytics-stats,
+    .notifications-admin-grid,
+    .inquiries-stats,
+    .stats-grid,
+    .contact-stats,
+    .cert-stats,
+    .reviews-stats,
+    .settings-stats,
+    .categories-stats
+  ) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-content :where(.cert-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    justify-content: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-content :where(
+    .dashboard-page,
+    .products-admin-page,
+    .products-manager-page,
+    .notifications-admin-page,
+    .inquiries-container,
+    .analytics-page,
+    .settings-page,
+    .categories-page,
+    .cert-admin-page,
+    .contact-page,
+    .about-admin-page,
+    .blog-admin-page,
+    .announcements-page,
+    .reviews-page
+  ) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .admin-content :where(
+    .dashboard-title,
+    .products-page-title,
+    .notifications-admin-title,
+    .inquiries-title h1,
+    .analytics-title,
+    .settings-title,
+    .categories-title,
+    .cert-page-title,
+    .contact-title,
+    .about-title,
+    .blog-title,
+    .announcement-title-main,
+    .reviews-title
+  ) {
+    font-size: clamp(1.45rem, 8vw, 2rem) !important;
+    line-height: 1.15;
+  }
+
+  .admin-content :where(
+    .dashboard-subtitle,
+    .products-page-subtitle,
+    .notifications-admin-subtitle,
+    .analytics-subtitle,
+    .settings-subtitle,
+    .cert-subtitle,
+    .contact-subtitle,
+    .about-subtitle,
+    .blog-subtitle,
+    .announcement-subtitle,
+    .reviews-subtitle
+  ) {
+    font-size: 0.9rem !important;
+  }
+
+  .admin-content :where(
+    .dashboard-card,
+    .about-card,
+    .blog-card,
+    .announcements-card,
+    .contact-card,
+    .cert-form,
+    .settings-section,
+    .settings-card,
+    .reviews-card,
+    .categories-card,
+    .categories-form-card,
+    .categories-table-card,
+    .products-table-panel
+  ) {
+    border-radius: 14px !important;
+    padding: 16px !important;
+  }
+
+  .admin-content :where(
+    .table-toolbar,
+    .cert-toolbar,
+    .reviews-toolbar,
+    .settings-actions,
+    .form-actions,
+    .cert-buttons,
+    .delete-modal-actions
+  ) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-content :where(
+    .table-toolbar button,
+    .cert-buttons button,
+    .delete-modal-actions button,
+    .save-about-btn,
+    .save-settings-btn,
+    .contact-save-btn,
+    .publish-btn,
+    .upload-cert-btn,
+    .reset-btn,
+    .settings-save-btn
+  ) {
+    width: 100%;
+  }
+
+  .admin-content :where(.announcement-row, .blog-list-item) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-content :where(.announcement-actions, .blog-actions) {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .admin-content :where(.delete-modal) {
+    width: min(100%, 360px);
+    padding: 22px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-content :where(
+    .inquiries-card table,
+    .categories-table,
+    .products-table
+  ) {
+    min-width: 640px;
+  }
+
+  .admin-content :where(
+    .dashboard-stats-grid,
+    .mini-stats,
+    .products-stats-grid
+  ) {
+    grid-template-columns: 1fr !important;
+  }
+}

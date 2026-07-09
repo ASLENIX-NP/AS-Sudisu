@@ -19,10 +19,13 @@ import {
   FaGraduationCap,
   FaStar,
   FaBell,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const [notificationCount, setNotificationCount] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     fetchNotificationCount();
@@ -55,21 +58,46 @@ const AdminSidebar = () => {
     window.location.href = "/admin";
   };
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <div className="admin-sidebar">
-      <div>
-        <div className="admin-logo">
+    <div className={`admin-sidebar ${isMobileMenuOpen ? "is-mobile-open" : ""}`}>
+      <button
+        type="button"
+        className="admin-sidebar-backdrop"
+        onClick={closeMobileMenu}
+        aria-label="Close admin menu"
+      />
+
+      <div className="admin-sidebar-main">
+        <div className="admin-sidebar-header">
+          <div className="admin-logo">
           <h2>
             SUDIISU
             <br />
             ADMIN
           </h2>
+          </div>
+
+          <button
+            type="button"
+            className="admin-menu-toggle"
+            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+            aria-label={isMobileMenuOpen ? "Close admin menu" : "Open admin menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
 
+        <div className="admin-mobile-drawer">
         <div className="admin-links">
 
           <NavLink
             to="/admin/dashboard"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -80,6 +108,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/products"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -90,6 +119,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/notifications"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -103,18 +133,11 @@ const AdminSidebar = () => {
             )}
           </NavLink>
 
-          <NavLink
-            to="/admin/categories"
-            className={({ isActive }) =>
-              isActive ? "admin-link active" : "admin-link"
-            }
-          >
-            <FaTags />
-            Categories
-          </NavLink>
+        
 
           <NavLink
             to="/admin/inquiries"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -125,6 +148,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/analytics"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -135,6 +159,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/contact"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -145,6 +170,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/about"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -153,18 +179,11 @@ const AdminSidebar = () => {
             About
           </NavLink>
 
-          <NavLink
-            to="/admin/announcements"
-            className={({ isActive }) =>
-              isActive ? "admin-link active" : "admin-link"
-            }
-          >
-            <FaBullhorn />
-            Announcements
-          </NavLink>
+          
 
           <NavLink
             to="/admin/blog"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -175,6 +194,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/reviews"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -185,6 +205,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/certificates"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -195,6 +216,7 @@ const AdminSidebar = () => {
 
           <NavLink
             to="/admin/settings"
+            onClick={closeMobileMenu}
             className={({ isActive }) =>
               isActive ? "admin-link active" : "admin-link"
             }
@@ -204,15 +226,16 @@ const AdminSidebar = () => {
           </NavLink>
 
         </div>
-      </div>
 
-      <button
-        onClick={logoutHandler}
-        className="logout-btn"
-      >
-        <FaSignOutAlt />
-        Logout
-      </button>
+          <button
+            onClick={logoutHandler}
+            className="logout-btn"
+          >
+            <FaSignOutAlt />
+            Logout
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -116,9 +116,9 @@ export default function HomeProducts() {
       </section>
       
       {selectedProduct && (
-        <div className="product-modal-overlay">
-          <div className="product-modal">
-            <button className="close-btn" onClick={closeProduct}>
+        <div className="home-product-modal-overlay">
+          <div className="home-product-modal">
+            <button className="home-product-modal-close" onClick={closeProduct}>
               ×
             </button>
 

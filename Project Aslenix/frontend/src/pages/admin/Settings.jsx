@@ -7,7 +7,7 @@ const Settings = () => {
   const [settings, setSettings] = useState({
     // Business Information
     companyName: "SUDISU",
-    businessEmail: "info@fortunegroup.com.np",
+    email: "info@fortunegroup.com.np",
     phone: "057590436",
     address: "Manahari-07, Makwanpur, Nepal",
     whatsappNumber: "+9779816259642",
@@ -74,6 +74,7 @@ const Settings = () => {
 
   const handleSave = async () => {
     try {
+      console.log(settings);
       const response = await fetch("http://localhost:5000/api/settings", {
         method: "PUT",
         headers: {
@@ -143,8 +144,8 @@ const Settings = () => {
             />
             <input
               type="email"
-              name="businessEmail"
-              value={settings.businessEmail}
+              name="email"
+              value={settings.email}
               onChange={handleChange}
               placeholder="Business Email"
               className="settings-input"

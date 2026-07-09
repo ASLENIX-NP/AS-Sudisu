@@ -1,154 +1,195 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { supabase } from "../../utils/supabase";
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
-import { supabase } from "../../lib/supabase";
-
-import blogImage from "../../assets/images/sudisuPH3.jpg";
+import { useNavigate } from "react-router-dom";
 import "./Blog.css";
-
-const formatDate = (dateValue) => {
-  if (!dateValue) return "Sudisu Blog";
-
-  return new Date(dateValue).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
-
-const makeExcerpt = (blog) => {
-  const text = blog?.excerpt || blog?.content || "";
-  if (text.length <= 140) return text;
-  return `${text.slice(0, 140).trim()}...`;
-};
+import blogImage from "../../assets/images/sudisuPH3.jpg";
+import axios from "axios";
 
 const Blog = () => {
   const navigate = useNavigate();
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [certificates, setCertificates] = useState([]);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
+  const [settings, setSettings] = useState({
+    hero_title: "Bringing Authentic Nepali Flavors To Every Kitchen",
+    hero_subtitle: "🌶 SUDISU SPICES BLOG",
+    hero_description:
+      "Discover the stories behind our spices, traditional recipes, quality standards, and the passion that goes into every Sudisu product.",
+    hero_image: "",
+    button_text: "Explore Our Story",
+    button_link: "/about",
+  });
 
+  // Fetch certificates from backend (KEPT AS IS)
   useEffect(() => {
-    fetchBlogs();
+    fetchCertificates();
   }, []);
 
-  const fetchBlogs = async () => {
-    setLoading(true);
-
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .eq("status", "Published")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Blog fetch error:", error);
-      setBlogs([]);
-    } else {
-      setBlogs(data || []);
+  const fetchCertificates = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/certificates");
+      setCertificates(res.data);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    setLoading(false);
+  // Fetch blog data
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const { data: settingsData, error: settingsError } = await supabase
+        .from("blog_settings")
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+      if (!settingsError && settingsData) {
+        setSettings({
+          hero_title:
+            settingsData.hero_title ||
+            "Bringing Authentic Nepali Flavors To Every Kitchen",
+          hero_subtitle: settingsData.hero_subtitle || "🌶 SUDISU SPICES BLOG",
+          hero_description:
+            settingsData.hero_description ||
+            "Discover the stories behind our spices, traditional recipes, quality standards, and the passion that goes into every Sudisu product.",
+          hero_image: settingsData.hero_image || "",
+          button_text: settingsData.button_text || "Explore Our Story",
+          button_link: settingsData.button_link || "/about",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching blog data:", error);
+    }
   };
 
   return (
     <>
-      <section className="sudisu-blog-page">
+      <section className="sudisu-blog-section">
+        {/* TOP CONTENT - KEPT EXACTLY AS ORIGINAL */}
         <HeroNavbar as="section" className="sudisu-blog-hero">
           <div className="sudisu-blog-container">
             <div className="sudisu-blog-text">
-              <span className="blog-tag">🌶 SUDISU SPICES BLOG</span>
-
-              <h1>
-                Stories, Recipes &
-                <span> Authentic Nepali Flavors</span>
-              </h1>
-
-              <p className="hero-description">
-                Read Sudisu updates, spice stories, kitchen tips, recipes, and
-                quality information prepared for families who love real flavor.
-              </p>
+              <span className="blog-tag">{settings.hero_subtitle}</span>
+              <h1>{settings.hero_title}</h1>
+              <p className="hero-description">{settings.hero_description}</p>
 
               <div className="blog-highlights">
                 <div className="highlight-card">
-                  <h3>Pure Spices</h3>
-                  <p>Stories behind our carefully selected ingredients.</p>
+                  <h3>100% Pure</h3>
+                  <p>Carefully sourced premium ingredients.</p>
                 </div>
-
                 <div className="highlight-card">
-                  <h3>Kitchen Tips</h3>
-                  <p>Simple ideas to make everyday food taste better.</p>
+                  <h3>Authentic Taste</h3>
+                  <p>Traditional Nepali recipes and flavors.</p>
                 </div>
-
                 <div className="highlight-card">
-                  <h3>Sudisu News</h3>
-                  <p>Updates from our products, quality, and journey.</p>
+                  <h3>Trusted Quality</h3>
+                  <p>Certified and quality-tested products.</p>
                 </div>
               </div>
+
+              <button
+                className="blog-cta-btn"
+                onClick={() => navigate(settings.button_link)}
+              >
+                {settings.button_text}
+              </button>
             </div>
 
             <div className="sudisu-blog-image">
               <div className="product-showcase-3d">
-                <img src={blogImage} alt="Sudisu spices" />
+                <img
+                  src={settings.hero_image || blogImage}
+                  alt="Sudisu Products"
+                />
               </div>
             </div>
           </div>
         </HeroNavbar>
 
-        <div className="blog-list-section">
-          <div className="blog-list-header-public">
-            <span className="blog-small-tag">LATEST ARTICLES</span>
-            <h2>Read Our Latest Blogs</h2>
+        {/* CERTIFICATES SECTION - KEPT EXACTLY AS ORIGINAL */}
+        <div className="cert-section">
+          <div className="cert-header">
+            <span className="cert-tag">QUALITY ASSURANCE</span>
+            <h2>Our Certifications & Trust Marks</h2>
             <p>
-              Explore our latest posts in a clean three-card layout. Click Read
-              More to open the full image and details on a separate page.
+              We maintain strict quality standards and follow approved food
+              safety practices to ensure every Sudisu product reaches your
+              family with purity, freshness, and trust.
             </p>
           </div>
 
-          {loading ? (
-            <div className="blog-state-box">Loading blogs...</div>
-          ) : blogs.length === 0 ? (
-            <div className="blog-state-box">
-              Blogs will be available soon.
+          {certificates.length === 0 ? (
+            <div className="cert-empty">
+              Certificates will be available soon.
             </div>
           ) : (
-            <div className="blog-card-grid">
-              {blogs.map((blog) => (
-                <article className="public-blog-card" key={blog.id}>
-                  <div className="public-blog-image-wrap">
-                    <img
-                      src={blog.image_url || blogImage}
-                      alt={blog.title || "Sudisu blog"}
-                      onError={(e) => {
-                        e.currentTarget.src = blogImage;
-                      }}
-                    />
+            <div className="certificates-showcase">
+              {certificates.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`certificate-showcase ${
+                    index % 2 !== 0 ? "reverse" : ""
+                  }`}
+                >
+                  <div className="certificate-image">
+                    <img src={item.image_url} alt={item.title} />
                   </div>
 
-                  <div className="public-blog-content">
-                    <span className="public-blog-date">
-                      {formatDate(blog.created_at)}
+                  <div className="certificate-info">
+                    <span className="certificate-badge">
+                      Quality Certificate
                     </span>
-
-                    <h3>{blog.title}</h3>
-
-                    <p>{makeExcerpt(blog)}</p>
-
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
                     <button
-                      type="button"
-                      className="read-more-btn"
-                      onClick={() => navigate(`/blog/${blog.id}`)}
+                      className="cert-view-btn"
+                      onClick={() =>
+                        navigate(`/certificate/${item.id}`, {
+                          state: { certificate: item },
+                        })
+                      }
                     >
-                      Read More
+                      View Certificate
                     </button>
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           )}
         </div>
       </section>
+
+      {/* Certificate Modal - KEPT EXACTLY AS ORIGINAL */}
+      {selectedCertificate && (
+        <div
+          className="certificate-modal-overlay"
+          onClick={() => setSelectedCertificate(null)}
+        >
+          <div
+            className="certificate-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="certificate-close-btn"
+              onClick={() => setSelectedCertificate(null)}
+            >
+              ×
+            </button>
+            <img
+              src={selectedCertificate.image_url}
+              alt={selectedCertificate.title}
+            />
+            <h3>{selectedCertificate.title}</h3>
+            <p>{selectedCertificate.description}</p>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

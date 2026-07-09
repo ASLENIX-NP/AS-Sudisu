@@ -81,7 +81,108 @@
     background:#eff6ff;
 }
 
+/* Image Upload Styles */
+.image-upload-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
 
+.image-upload-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: #2563eb;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.image-upload-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.remove-image-btn {
+  padding: 10px 18px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.remove-image-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+.image-preview {
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #dbeafe;
+  position: relative;
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.existing-image-label {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.image-hint {
+  display: block;
+  margin-top: 6px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Publish Button */
+.publish-blog-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+  margin-top: 20px;
+}
+
+.publish-blog-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+
+.publish-blog-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 
 
@@ -443,201 +544,4 @@
 .upload-btn:hover{
 
     background:#1d4ed8;
-}
-
-/* ==========================================
-   SAVE BUTTON - UPDATED DESIGN
-========================================== */
-
-.save-about-btn {
-    width: 100%;
-    padding: 18px 32px;
-    border: none;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
-}
-/* ==========================================
-   SAVE BUTTON - SMALL & RIGHT ALIGNED
-========================================== */
-.save-about-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 24px;
-    margin-bottom: 20px;
-}
-
-.save-about-btn {
-    padding: 12px 24px;
-    min-width: 180px;
-    width: auto;
-
-    border: none;
-    border-radius: 10px;
-
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    color: #fff;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-    transition: all .3s ease;
-
-    box-shadow: 0 6px 18px rgba(37,99,235,.25);
-
-    position: relative;
-    overflow: hidden;
-
-    letter-spacing: .3px;
-}
-
-.save-about-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-}
-
-.save-about-btn:active {
-    transform: translateY(0px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-.save-about-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-}
-
-/* Clear float after the button */
-.about-admin-page::after {
-    content: '';
-    display: table;
-    clear: both;
-}
-
-/* Mobile responsive */
-@media(max-width: 768px) {
-    .save-about-btn {
-        float: none;
-        width: 100%;
-        text-align: center;
-        padding: 14px 20px;
-        font-size: 16px;
-    }
-}
-/* ===========================
-   MOBILE
-=========================== */
-
-@media(max-width:900px){
-
-    .about-header{
-        flex-direction:column;
-    }
-
-    .about-header-actions{
-        width:100%;
-    }
-
-    .preview-btn,
-    .save-btn{
-        flex:1;
-    }
-
-    .about-header h1{
-        font-size:42px;
-    }
-
-}
-/* ==========================================
-   DRAG & DROP
-========================================== */
-.drag-upload-zone{
-    width:100%;
-
-    margin-top:20px;
-    margin-bottom:25px;
-
-    min-height:190px;
-
-    border:2px dashed #c7d8ff;
-    border-radius:20px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    background:#f8fbff;
-
-    position:relative;
-
-    transition:.3s;
-}
-
-.drag-upload-zone:hover{
-
-    border-color:#2563eb;
-
-    background:#f3f8ff;
-}
-
-.drag-upload-zone.dragging{
-
-    border-color:#2563eb;
-
-    background:#eaf3ff;
-
-    transform:scale(1.01);
-}
-
-.drag-icon{
-
-    font-size:55px;
-
-    margin-bottom:15px;
-}
-
-.drag-upload-zone h3{
-
-    margin:0;
-
-    font-size:24px;
-
-    color:#0f172a;
-}
-
-.drag-upload-zone p{
-
-    margin:10px 0;
-
-    color:#2563eb;
-
-    font-weight:600;
-}
-
-.drag-upload-zone small{
-
-    color:#94a3b8;
-}
-
-.drag-upload-zone input{
-
-    position:absolute;
-
-    inset:0;
-
-    opacity:0;
-
-    cursor:pointer;
 }

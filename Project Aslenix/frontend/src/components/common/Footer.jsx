@@ -133,7 +133,7 @@ export default function Footer() {
     { name: settings.quickLink3Name, url: settings.quickLink3Url },
     { name: settings.quickLink4Name, url: settings.quickLink4Url },
   ].filter((link) => link.name && link.name.trim() !== "");
-
+console.log("Footer Settings:", settings);
   return (
     <>
       <footer className="footer">

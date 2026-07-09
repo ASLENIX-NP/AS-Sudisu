@@ -22,7 +22,7 @@ const About = () => {
     team_image: "",
     reach_image: "",
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchAboutData();
@@ -50,14 +50,6 @@ const About = () => {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <>

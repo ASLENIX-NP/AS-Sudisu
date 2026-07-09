@@ -101,9 +101,16 @@ body {
 .contact-form {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   gap: 28px;
+}
+
+.contact-form *,
+.feedback-card,
+.contact-info,
+.map-wrapper {
+  box-sizing: border-box;
 }
 /* =========================================
    CONTACT HOVER EFFECTS
@@ -169,6 +176,7 @@ body {
 .form-group input,
 .form-group textarea {
   width: 100%;
+  min-width: 0;
   padding: 18px 20px;
 
   border: 1px solid rgba(7, 6, 6, 0.12);
@@ -281,6 +289,7 @@ body {
 
 .form-group select {
   width: 100%;
+  min-width: 0;
   height: 60px;
 
   padding: 0 25px;
@@ -302,6 +311,7 @@ body {
   gap: 20px;
   width: 100%;
   align-items: center;
+  min-width: 0;
 }
 
 /* PHONE CODE */
@@ -336,6 +346,7 @@ body {
 
 .phone-wrapper input[type="tel"] {
   flex: 1;
+  min-width: 0;
   height: 60px !important;
 }
 .info-card h2 {
@@ -569,6 +580,90 @@ body {
    MOBILE - HERO LAYOUT
 ========================================= */
 
+@media (max-width: 1180px) {
+  .contact-page-wrapper {
+    padding: 26px 5% 30px;
+  }
+
+  .contact-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+    gap: 32px;
+  }
+
+  .company-name {
+    font-size: 58px;
+  }
+
+  .company-slogan {
+    font-size: 28px;
+  }
+
+  .feedback-card {
+    padding: 34px;
+    border-radius: 30px;
+  }
+
+  .feedback-card h2 {
+    font-size: 32px;
+  }
+
+  .contact-form {
+    gap: 20px;
+  }
+
+  .phone-wrapper {
+    gap: 12px;
+  }
+
+  .phone-code {
+    width: 98px !important;
+    min-width: 98px;
+  }
+}
+
+@media (max-width: 980px) {
+  .contact-page-wrapper {
+    padding: 86px 24px 44px;
+  }
+
+  .contact-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 34px;
+    min-height: auto;
+  }
+
+  .contact-info,
+  .feedback-card {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .blog-tag {
+    margin-top: 0;
+    transform: none;
+  }
+
+  .company-name {
+    font-size: clamp(44px, 9vw, 58px);
+    white-space: normal;
+  }
+
+  .company-slogan {
+    font-size: clamp(22px, 5vw, 28px);
+  }
+
+  .company-description {
+    max-width: 100%;
+  }
+
+  .map-wrapper iframe {
+    height: 280px;
+  }
+}
+
 @media (max-width: 768px) {
   /* ==========================
    HERO MOBILE
@@ -606,7 +701,7 @@ body {
 .company-name{
     font-size: 44px;
     line-height: 1;
-    white-space: nowrap;
+    white-space: normal;
     margin-bottom: 8px;
 }
 
@@ -645,7 +740,7 @@ body {
 }
 .contact-form{
     grid-template-columns:1fr;
-    gap:12px;
+    gap:16px;
 }
 
 .full-width{
@@ -655,6 +750,81 @@ body {
 .contact-box a{
     font-size: 15px;
 }
+}
+
+@media (max-width: 520px) {
+  .contact-page-wrapper {
+    padding: 82px 14px 38px;
+  }
+
+  .contact-info {
+    padding: 12px 2px;
+  }
+
+  .company-name {
+    font-size: 38px;
+  }
+
+  .company-slogan {
+    font-size: 19px;
+    line-height: 1.35;
+  }
+
+  .feedback-card {
+    padding: 22px 16px;
+    border-radius: 24px;
+  }
+
+  .feedback-card h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    margin-bottom: 7px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    min-height: 52px;
+    padding: 14px 15px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+
+  .phone-wrapper {
+    gap: 10px;
+  }
+
+  .phone-code {
+    width: 82px !important;
+    min-width: 82px;
+    font-size: 15px;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+    padding: 15px 24px;
+    font-size: 16px;
+  }
+
+  .contact-box {
+    align-items: flex-start;
+  }
+
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    font-size: 21px;
+  }
+
+  .map-wrapper iframe {
+    height: 230px;
+  }
 }
 .form-group input,
 .form-group textarea {

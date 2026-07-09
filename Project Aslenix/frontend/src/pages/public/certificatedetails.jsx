@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -9,12 +9,17 @@ import "./certificatedetail.css";
 
 const CertificateDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
 
-  const [certificate, setCertificate] = useState(null);
+  const [certificate, setCertificate] = useState(
+    location.state?.certificate || null,
+  );
 
   useEffect(() => {
-    fetchCertificate();
-  }, []);
+    if (!certificate) {
+      fetchCertificate();
+    }
+  }, [id]);
 
   const fetchCertificate = async () => {
     try {
@@ -28,27 +33,31 @@ const CertificateDetails = () => {
     }
   };
 
-  if (!certificate) return <h2>Loading...</h2>;
-
   return (
     <>
       <HeroNavbar as="section" className="certificate-details-page">
-        <div className="certificate-container">
-          <div className="certificate-left">
-            <img src={certificate.image_url} alt={certificate.title} />
-          </div>
+        {certificate ? (
+          <div className="certificate-container">
+            <div className="certificate-left">
+              <img src={certificate.image_url} alt={certificate.title} />
+            </div>
 
-          <div className="certificate-right">
+            <div className="certificate-right">
+              <span className="certificate-badge">Quality Certification</span>
+
+              <h1>{certificate.title}</h1>
+
+              <p>{certificate.description}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="certificate-loading">
             <span className="certificate-badge">Quality Certification</span>
-
-            <h1>{certificate.title}</h1>
-
-            <p>{certificate.description}</p>
+            <h1>Loading Certificate</h1>
+            <p>Please wait while we prepare the certificate details.</p>
           </div>
-        </div>
+        )}
       </HeroNavbar>
-
-   
     </>
   );
 };

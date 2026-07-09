@@ -1,59 +1,132 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import "../../styles/BlogAdmin.css";
+import "../../styles/AboutAdmin.css";
+import { supabase } from "../../utils/supabase";
 import toast from "react-hot-toast";
 
-const BlogAdmin = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [search, setSearch] = useState("");
+const AboutAdmin = () => {
+  const [loading, setLoading] = useState(false);
+  const [aboutData, setAboutData] = useState({
+    badge: "SUDIISU SPICES",
+    heading: "More than Spices",
+    highlighted_heading: "A Story Of Passion",
+    paragraph1:
+      "Behind every pack of Sudiisu Pride is a team of passionate individuals committed to bringing authentic Nepali flavors to every kitchen.",
+    paragraph2:
+      "The people you see in this photograph are the heart of our journey. From sourcing premium ingredients to carefully preparing every spice blend, each member plays a vital role in preserving the taste, tradition, and trust that define our brand.",
+    paragraph3:
+      "We work closely with local farmers and communities, ensuring that every product reflects Nepal's rich culinary heritage while maintaining the highest standards of quality and purity.",
+    paragraph4:
+      "At Sudiisu Pride, we believe food is more than nourishment—it is a way to connect families, celebrate culture, and create unforgettable memories around the dining table.",
+  });
 
-  const [title, setTitle] = useState("");
-  const [excerpt, setExcerpt] = useState("");
-  const [content, setContent] = useState("");
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
-  const [existingImageUrl, setExistingImageUrl] = useState("");
-  const [status, setStatus] = useState("Published");
+  const [images, setImages] = useState({
+    team: null,
+    reach: null,
+  });
 
-  const [editingId, setEditingId] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedBlog, setSelectedBlog] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [imageFiles, setImageFiles] = useState({
+    team: null,
+    reach: null,
+  });
 
+  // Fetch existing data on load
   useEffect(() => {
-    fetchBlogs();
+    fetchAboutData();
   }, []);
 
-  const fetchBlogs = async () => {
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .order("id", { ascending: false });
+  const fetchAboutData = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("about_page")
+        .select("*")
+        .eq("id", 1)
+        .single();
 
-    if (!error) {
-      setBlogs(data || []);
-    } else {
-      console.error("Error fetching blogs:", error);
+      if (error) throw error;
+
+      if (data) {
+        setAboutData({
+          badge: data.badge || "SUDIISU SPICES",
+          heading: data.heading || "More than Spices",
+          highlighted_heading: data.highlighted_heading || "A Story Of Passion",
+          paragraph1:
+            data.paragraph1 ||
+            "Behind every pack of Sudiisu Pride is a team of passionate individuals committed to bringing authentic Nepali flavors to every kitchen.",
+          paragraph2:
+            data.paragraph2 ||
+            "The people you see in this photograph are the heart of our journey. From sourcing premium ingredients to carefully preparing every spice blend, each member plays a vital role in preserving the taste, tradition, and trust that define our brand.",
+          paragraph3:
+            data.paragraph3 ||
+            "We work closely with local farmers and communities, ensuring that every product reflects Nepal's rich culinary heritage while maintaining the highest standards of quality and purity.",
+          paragraph4:
+            data.paragraph4 ||
+            "At Sudiisu Pride, we believe food is more than nourishment—it is a way to connect families, celebrate culture, and create unforgettable memories around the dining table.",
+        });
+
+        setImages({
+          team: data.team_image || null,
+          reach: data.reach_image || null,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching about data:", error);
     }
   };
 
-  const uploadImageToSupabase = async (file) => {
+  const handleChange = (e) => {
+    setAboutData({
+      ...aboutData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleImageUpload = (e, key) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFiles((prev) => ({
+      ...prev,
+      [key]: file,
+    }));
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImages((prev) => ({
+        ...prev,
+        [key]: e.target.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = (key) => {
+    setImages((prev) => ({
+      ...prev,
+      [key]: null,
+    }));
+    setImageFiles((prev) => ({
+      ...prev,
+      [key]: null,
+    }));
+  };
+
+  const uploadImageToSupabase = async (file, folder) => {
     if (!file) return null;
 
     try {
       const fileExt = file.name.split(".").pop();
-      const fileName = `blog/${Date.now()}.${fileExt}`;
+      const fileName = `${folder}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("blog-images")
+        .from("about-images") // Make sure this matches your bucket name
         .upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
       const {
         data: { publicUrl },
-      } = supabase.storage.from("blog-images").getPublicUrl(fileName);
+      } = supabase.storage.from("about-images").getPublicUrl(fileName);
 
       return publicUrl;
     } catch (error) {
@@ -62,410 +135,248 @@ const BlogAdmin = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setImageFile(file);
-
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImagePreview(e.target.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const removeImage = () => {
-    setImageFile(null);
-    setImagePreview("");
-    setExistingImageUrl("");
-  };
-
-  const saveBlog = async () => {
-    if (!title.trim()) {
-      toast.error("Blog title is required");
-      return;
-    }
-
-    setUploading(true);
-
+  const saveAboutInfo = async () => {
+    setLoading(true);
     try {
-      let imageUrl = existingImageUrl;
+      let teamImageUrl = images.team;
+      let reachImageUrl = images.reach;
 
-      // Upload new image if selected
-      if (imageFile) {
-        imageUrl = await uploadImageToSupabase(imageFile);
+      if (imageFiles.team) {
+        teamImageUrl = await uploadImageToSupabase(imageFiles.team, "team");
       }
 
-      const blogContent = content || "Blog content goes here...";
-
-      let error;
-
-      if (editingId) {
-        ({ error } = await supabase
-          .from("blogs")
-          .update({
-            title,
-            excerpt,
-            content: blogContent,
-            image_url: imageUrl,
-            status,
-          })
-          .eq("id", editingId));
-      } else {
-        ({ error } = await supabase.from("blogs").insert([
-          {
-            title,
-            excerpt,
-            content: blogContent,
-            image_url: imageUrl,
-            status,
-          },
-        ]));
+      if (imageFiles.reach) {
+        reachImageUrl = await uploadImageToSupabase(imageFiles.reach, "reach");
       }
+
+      const { error } = await supabase.from("about_page").upsert(
+        {
+          id: 1,
+          badge: aboutData.badge,
+          heading: aboutData.heading,
+          highlighted_heading: aboutData.highlighted_heading,
+          paragraph1: aboutData.paragraph1,
+          paragraph2: aboutData.paragraph2,
+          paragraph3: aboutData.paragraph3,
+          paragraph4: aboutData.paragraph4,
+          team_image: teamImageUrl,
+          reach_image: reachImageUrl,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "id" },
+      );
 
       if (error) throw error;
 
-      resetForm();
-      await fetchBlogs();
-      toast.success(
-        editingId ? "Blog updated successfully" : "Blog published successfully",
-      );
+      toast.success("About information saved successfully!");
+      await fetchAboutData();
     } catch (error) {
-      console.error("Save error:", error);
-      toast.error(error.message || "Failed to save blog");
+      console.error("Error saving about data:", error);
+      toast.error("Failed to save about information");
     } finally {
-      setUploading(false);
+      setLoading(false);
     }
   };
-
-  const editBlog = (blog) => {
-    setEditingId(blog.id);
-    setTitle(blog.title);
-    setExcerpt(blog.excerpt);
-    setContent(blog.content || "");
-    setExistingImageUrl(blog.image_url || "");
-    setImagePreview(blog.image_url || "");
-    setStatus(blog.status);
-    setImageFile(null);
-  };
-
-  const deleteBlog = async () => {
-    if (!selectedBlog) return;
-
-    const { error } = await supabase
-      .from("blogs")
-      .delete()
-      .eq("id", selectedBlog);
-
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    await fetchBlogs();
-    toast.success("Blog deleted successfully");
-    setShowDeleteModal(false);
-    setSelectedBlog(null);
-  };
-
-  const resetForm = () => {
-    setEditingId(null);
-    setTitle("");
-    setExcerpt("");
-    setContent("");
-    setImageFile(null);
-    setImagePreview("");
-    setExistingImageUrl("");
-    setStatus("Published");
-  };
-
-  const filteredBlogs = blogs.filter((blog) =>
-    blog.title?.toLowerCase().includes(search.toLowerCase()),
-  );
 
   return (
     <AdminLayout>
-      <div className="blog-admin-page">
+      <div className="about-admin-page">
         {/* Header */}
-        <div className="blog-header">
-          <div className="blog-header-left">
-            <span className="blog-badge">✍️ Content Management</span>
-            <h1>Blog Management</h1>
+        <div className="about-header">
+          <div className="about-header-left">
+            <span className="about-badge">🏢 Company Management</span>
+            <h1>About Company</h1>
             <p>
-              Create, edit and publish blog articles for your website from one
-              place.
+              Manage your company information, statistics, branding, images and
+              website content from one place.
             </p>
           </div>
-          <div className="blog-header-right">
-            <button className="preview-blog-btn" type="button">
-              👁 Preview Blogs
-            </button>
-            <button className="new-blog-btn" type="button" onClick={resetForm}>
-              ➕ New Blog
-            </button>
+          <div className="about-header-right">
+            <button className="preview-btn">👁 Preview Website</button>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="blog-stats">
-          <div className="blog-stat-card total-card">
-            <div className="stat-icon">📝</div>
-            <div className="blog-stat-content">
-              <span>Total Posts</span>
-              <h2>{blogs.length}</h2>
-              <small>All blog posts</small>
+        {/* Hero Section Content */}
+        <div className="about-card">
+          <div className="about-card-header">
+            <div className="card-title">
+              <div className="card-icon">📝</div>
+              <div>
+                <h2>Hero Section</h2>
+                <p>Edit the main content displayed on the about page.</p>
+              </div>
             </div>
-          </div>
-          <div className="blog-stat-card published-card">
-            <div className="stat-icon">🚀</div>
-            <div className="blog-stat-content">
-              <span>Published</span>
-              <h2>{blogs.filter((b) => b.status === "Published").length}</h2>
-              <small>Currently live</small>
-            </div>
-          </div>
-          <div className="blog-stat-card draft-card">
-            <div className="stat-icon">📄</div>
-            <div className="blog-stat-content">
-              <span>Draft Posts</span>
-              <h2>{blogs.filter((b) => b.status === "Draft").length}</h2>
-              <small>Not published</small>
-            </div>
-          </div>
-        </div>
-
-        {/* Blog Form */}
-        <div className="blog-form">
-          <div className="blog-form-header">
-            <div>
-              <h2>{editingId ? "Edit Blog Post" : "Create Blog Post"}</h2>
-              <p>Write engaging articles, product updates and company news.</p>
-            </div>
-            <div className="blog-form-icon">📝</div>
           </div>
 
-          <div className="blog-form-grid">
-            <div className="blog-field blog-title-field">
-              <label>Blog Title</label>
+          <div className="about-form-grid">
+            <div className="form-group">
+              <label>Badge/Tag</label>
               <input
-                placeholder="Enter blog title..."
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                type="text"
+                name="badge"
+                placeholder="e.g., SUDIISU SPICES"
+                value={aboutData.badge}
+                onChange={handleChange}
               />
             </div>
 
-            <div className="blog-field blog-status-field">
-              <label>Status</label>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option>Published</option>
-                <option>Draft</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="blog-form-row">
-            <div className="blog-field excerpt-field">
-              <label>Short Excerpt</label>
-              <textarea
-                placeholder="Write a short summary..."
-                value={excerpt}
-                onChange={(e) => setExcerpt(e.target.value)}
+            <div className="form-group">
+              <label>Main Heading</label>
+              <input
+                type="text"
+                name="heading"
+                placeholder="e.g., More than Spices"
+                value={aboutData.heading}
+                onChange={handleChange}
               />
-              <div className="character-count">
-                {excerpt.length} / 250 characters
-              </div>
             </div>
 
-            {/* IMAGE UPLOAD - FILE INPUT INSTEAD OF URL */}
-            <div className="blog-field image-field">
-              <label>Featured Image</label>
-              <div className="image-upload-container">
-                <label className="image-upload-btn">
-                  📤 Choose Image
-                  <input
-                    type="file"
-                    hidden
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                </label>
-                {imagePreview && (
-                  <button className="remove-image-btn" onClick={removeImage}>
-                    ✕
-                  </button>
-                )}
-              </div>
-              {imagePreview && (
-                <div className="image-preview">
-                  <img src={imagePreview} alt="Preview" />
-                </div>
-              )}
-              {!imagePreview && existingImageUrl && (
-                <div className="image-preview">
-                  <img src={existingImageUrl} alt="Existing" />
-                  <p className="existing-image-label">Current image</p>
-                </div>
-              )}
-              <small className="image-hint">
-                Supported: JPG, PNG, WEBP (Max 5MB)
-              </small>
-            </div>
-          </div>
-
-          {/* CONTENT FIELD */}
-          <div className="blog-form-row">
-            <div className="blog-field content-field" style={{ width: "100%" }}>
-              <label>Content (Full Article)</label>
-              <textarea
-                placeholder="Write your full blog content here..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows="8"
-                style={{
-                  width: "100%",
-                  padding: "14px",
-                  borderRadius: "12px",
-                  border: "1px solid #dbeafe",
-                  fontSize: "15px",
-                  fontFamily: "inherit",
-                  resize: "vertical",
-                  background: "#f8fbff",
-                }}
+            <div className="form-group">
+              <label>Highlighted Heading</label>
+              <input
+                type="text"
+                name="highlighted_heading"
+                placeholder="e.g., A Story Of Passion"
+                value={aboutData.highlighted_heading}
+                onChange={handleChange}
               />
-              <div className="character-count">{content.length} characters</div>
             </div>
           </div>
 
-          <button
-            className="publish-blog-btn"
-            onClick={saveBlog}
-            disabled={uploading}
-          >
-            {uploading
-              ? "Uploading..."
-              : editingId
-                ? "Update Blog"
-                : "Publish Blog"}
-          </button>
-        </div>
-
-        {/* Blog List */}
-        <div className="blog-toolbar">
-          <div className="blog-search-box">
-            <span className="search-icon">🔍</span>
-            <input
-              type="text"
-              placeholder="Search blogs..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+          <div className="form-group" style={{ marginTop: "20px" }}>
+            <label>Paragraph 1</label>
+            <textarea
+              className="about-editor"
+              name="paragraph1"
+              value={aboutData.paragraph1}
+              onChange={handleChange}
+              placeholder="First paragraph..."
+              rows="3"
             />
           </div>
-          <div className="blog-toolbar-info">
-            Showing <strong>{filteredBlogs.length}</strong> of{" "}
-            <strong>{blogs.length}</strong> blogs
+
+          <div className="form-group" style={{ marginTop: "20px" }}>
+            <label>Paragraph 2</label>
+            <textarea
+              className="about-editor"
+              name="paragraph2"
+              value={aboutData.paragraph2}
+              onChange={handleChange}
+              placeholder="Second paragraph..."
+              rows="3"
+            />
+          </div>
+
+          <div className="form-group" style={{ marginTop: "20px" }}>
+            <label>Paragraph 3</label>
+            <textarea
+              className="about-editor"
+              name="paragraph3"
+              value={aboutData.paragraph3}
+              onChange={handleChange}
+              placeholder="Third paragraph..."
+              rows="3"
+            />
+          </div>
+
+          <div className="form-group" style={{ marginTop: "20px" }}>
+            <label>Paragraph 4</label>
+            <textarea
+              className="about-editor"
+              name="paragraph4"
+              value={aboutData.paragraph4}
+              onChange={handleChange}
+              placeholder="Fourth paragraph..."
+              rows="3"
+            />
           </div>
         </div>
 
-        <div className="blog-list-card">
-          <div className="blog-list-header">
-            <div>
-              <h2>Published Blogs</h2>
-              <p>Manage all blog posts from one place.</p>
+        {/* Images Section */}
+        <div className="about-card">
+          <div className="about-card-header">
+            <div className="card-title">
+              <div className="card-icon">🖼️</div>
+              <div>
+                <h2>Images</h2>
+                <p>Upload images for the about page.</p>
+              </div>
             </div>
-            <span className="blog-count">{filteredBlogs.length} Posts</span>
           </div>
 
-          {filteredBlogs.length === 0 ? (
-            <div className="empty-blog">
-              <div className="empty-circle">📝</div>
-              <h3>No Blogs Yet</h3>
-              <p>Publish your first article to see it here.</p>
-            </div>
-          ) : (
-            <div className="blog-list">
-              {filteredBlogs.map((blog) => (
-                <div className="blog-item" key={blog.id}>
-                  <div className="blog-thumbnail">
-                    {blog.image_url ? (
-                      <img src={blog.image_url} alt={blog.title} />
-                    ) : (
-                      <div className="blog-placeholder">📰</div>
-                    )}
-                  </div>
-                  <div className="blog-info">
-                    <h3>{blog.title}</h3>
-                    <p>{blog.excerpt}</p>
-                    <small>
-                      {new Date(blog.created_at).toLocaleDateString()}
-                    </small>
-                  </div>
-                  <div className="blog-right">
-                    <span
-                      className={
-                        blog.status === "Published" ? "published" : "draft"
-                      }
+          <div className="image-upload-grid">
+            <div className="upload-card">
+              <div className="upload-preview">
+                {images.team ? (
+                  <>
+                    <img src={images.team} alt="Team" />
+                    <button
+                      type="button"
+                      className="remove-image-btn"
+                      onClick={() => removeImage("team")}
                     >
-                      {blog.status}
-                    </span>
-                    <div className="blog-actions">
-                      <button
-                        className="edit-btn"
-                        onClick={() => editBlog(blog)}
-                      >
-                        ✏ Edit
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => {
-                          setSelectedBlog(blog.id);
-                          setShowDeleteModal(true);
-                        }}
-                      >
-                        🗑 Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                      ✕
+                    </button>
+                  </>
+                ) : (
+                  <span>📷</span>
+                )}
+              </div>
+              <h4>Team Image</h4>
+              <p>{images.team ? "Image uploaded ✓" : "No image uploaded"}</p>
+              <label className="upload-btn">
+                📤 {images.team ? "Change Image" : "Upload Image"}
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, "team")}
+                />
+              </label>
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* Delete Modal */}
-      {showDeleteModal && (
-        <div className="delete-modal-overlay">
-          <div className="delete-modal">
-            <div className="delete-modal-icon">🗑️</div>
-            <h2>Delete Blog?</h2>
-            <p>
-              This action cannot be undone. This blog will be permanently
-              deleted.
-            </p>
-            <div className="delete-modal-actions">
-              <button
-                className="cancel-delete-btn"
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setSelectedBlog(null);
-                }}
-              >
-                Cancel
-              </button>
-              <button className="confirm-delete-btn" onClick={deleteBlog}>
-                Delete
-              </button>
+            <div className="upload-card">
+              <div className="upload-preview">
+                {images.reach ? (
+                  <>
+                    <img src={images.reach} alt="Reach" />
+                    <button
+                      type="button"
+                      className="remove-image-btn"
+                      onClick={() => removeImage("reach")}
+                    >
+                      ✕
+                    </button>
+                  </>
+                ) : (
+                  <span>📷</span>
+                )}
+              </div>
+              <h4>Reach Image</h4>
+              <p>{images.reach ? "Image uploaded ✓" : "No image uploaded"}</p>
+              <label className="upload-btn">
+                📤 {images.reach ? "Change Image" : "Upload Image"}
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, "reach")}
+                />
+              </label>
             </div>
           </div>
         </div>
-      )}
+
+        <button
+          className="save-about-btn"
+          onClick={saveAboutInfo}
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save About Information"}
+        </button>
+      </div>
     </AdminLayout>
   );
 };
 
-export default BlogAdmin;
+export default AboutAdmin;

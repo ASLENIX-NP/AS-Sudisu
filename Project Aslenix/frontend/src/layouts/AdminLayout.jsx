@@ -1,4 +1,5 @@
 import "./AdminLayout.css";
+import "../styles/AdminResponsive.css";
 
 import AdminSidebar from "../components/admin/AdminSidebar";
 import AdminTopbar from "../components/admin/AdminTopbar";
