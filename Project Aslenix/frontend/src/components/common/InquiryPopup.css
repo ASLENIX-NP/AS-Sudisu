@@ -1,493 +1,177 @@
-/* FULL SCREEN OVERLAY */
-
 .popup-overlay {
   position: fixed;
   inset: 0;
-
-  background:
-    radial-gradient(circle at 10% 15%, rgba(255, 199, 44, 0.24), transparent 28%),
-    radial-gradient(circle at 88% 20%, rgba(220, 38, 38, 0.18), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(245, 158, 11, 0.2), transparent 32%),
-    linear-gradient(135deg, #fff8ea 0%, #fff3df 38%, #fffdf8 100%);
-
-  backdrop-filter: blur(6px);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   z-index: 99999;
-
-  animation: fadeIn 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(44, 29, 18, 0.42);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.25s ease;
 }
-
-/* POPUP BOX */
 
 .popup-box {
-  width: 92%;
-  max-width: 950px;
-
-  background: linear-gradient(180deg, #660202 60%, #6e0606 100%);
-
-  border: 1px solid rgba(212, 175, 55, 0.25);
-
-  border-radius: 28px;
-
-  padding: 45px;
-
   position: relative;
-
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65);
-
-  animation: scaleIn 0.35s ease;
+  width: min(950px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 44px;
+  border: 1px solid #ead9b8;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #fffdf8 0%, #fff4df 100%);
+  box-shadow: 0 22px 70px rgba(67, 42, 20, 0.28);
+  animation: scaleIn 0.3s ease;
 }
 
-/* CLOSE BUTTON */
+.popup-close,
+.form-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
 
 .popup-close {
   position: absolute;
-
-  top:2px;
-  right:19px;
-
-  width: 44px;
-  height:44px;
-
-  border: none;
-
+  top: 16px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-
-  background: rgb(250, 189, 5);
-
-  color: #0a0202;
-
-  font-size:24px;
- display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
- z-index: 999999;
-
-  transition: 0.3s;
+  background: #f5c84c;
+  color: #5b3013;
+  font-size: 25px;
 }
 
-.popup-close:hover {
-  background: #f4bc06;
-  color: #000;
-}
+.popup-close:hover,
+.form-close:hover { transform: scale(1.08); background: #eab53a; }
 
-/* TOP CONTENT */
+.popup-top { margin-bottom: 30px; text-align: center; }
+.popup-top h2 { margin: 0 42px 10px; color: #7d241c; font-size: clamp(28px, 4vw, 38px); }
+.popup-top p { margin: 0; color: #765c44; font-size: 17px; line-height: 1.6; }
 
-.popup-top {
-  text-align: center;
-
-  margin-bottom: 35px;
-}
-
-.popup-top h2 {
-  font-size: 38px;
-
-  color: #f5c86a;
-
-  margin-bottom: 12px;
-}
-
-.popup-top p {
-  color: rgba(255, 255, 255, 0.82);
-
-  font-size: 17px;
-
-  line-height: 1.6;
-}
-
-/* OPTION GRID */
-
-.popup-options {
-  display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-
-  gap: 22px;
-
-  margin-top: 25px;
-}
-
-/* CARDS */
-
+.popup-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
 .popup-card {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
-
-  border: 1px solid rgba(212, 175, 55, 0.12);
-
-  border-radius: 22px;
-
-  padding: 28px 22px;
-
+  min-height: 132px;
+  padding: 24px 22px;
+  border: 1px solid #ecdcbf;
+  border-radius: 18px;
+  background: #fffaf1;
+  color: inherit;
+  cursor: pointer;
   text-decoration: none;
-
-  transition: all 0.35s ease;
-
-  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-
-.popup-card:hover {
-  transform: translateY(-6px);
-
-  border-color: #d4af37;
-
-  box-shadow: 0 10px 35px rgba(212, 175, 55, 0.18);
-}
-
-.popup-card h3 {
-  color: #f5c86a;
-
-  font-size: 22px;
-
-  margin-bottom: 12px;
-}
-
-.popup-card p {
-  color: rgba(255, 255, 255, 0.82);
-
-  line-height: 1.5;
-
-  font-size: 15px;
-}
-
-/* WHATSAPP CARD */
-
-.whatsapp-card {
-  background: linear-gradient(135deg, #0f5132, #198754);
-}
-
-/* BUTTON */
-
-.popup-main-btn {
-  margin-top: 35px;
-
-  width: 100%;
-
-  height: 58px;
-
-  border: none;
-
-  border-radius: 16px;
-
-  background: linear-gradient(135deg, #f5c86a, #d4af37);
-
-  color: #1a0000;
-
-  font-size: 18px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.popup-main-btn:hover {
-  transform: translateY(-2px);
-
-  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
-}
-
-/* ANIMATIONS */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-  .popup-box {
-    padding: 28px 20px;
-  }
-
-  .popup-top h2 {
-    font-size: 28px;
-  }
-
-  .popup-card h3 {
-    font-size: 19px;
-  }
-}
-
-.inquiry-form h3 {
-  color: #ffcc4d;
-
-  margin-bottom: 20px;
-}
-
-.inquiry-form input {
-  width: 100%;
-
-  margin-bottom: 15px;
-
-  padding: 14px;
-
-  border-radius: 12px;
-
-  border: none;
-
-  background: rgba(0, 0, 0, 0.35);
-
-  color: white;
-
-  font-size: 15px;
-}
-
-.inquiry-form input:focus {
-  outline: 2px solid #ffcc4d;
-}
-
-.inquiry-form button {
-  background: linear-gradient(135deg, #ffcc4d, #ff9900);
-
-  border: none;
-
-  color: #2a0000;
-
-  padding: 14px 28px;
-
-  border-radius: 30px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.inquiry-form button:hover {
-  transform: scale(1.05);
-}
-/* FORM OVERLAY */
+.popup-card:hover { transform: translateY(-4px); border-color: #d7a63a; box-shadow: 0 12px 24px rgba(113, 70, 24, 0.13); }
+.popup-card h3 { margin: 0 0 10px; color: #7d241c; font-size: 21px; }
+.popup-card p { margin: 0; color: #765c44; font-size: 15px; line-height: 1.5; }
+.whatsapp-card { background: #e8f7ed; border-color: #b7dfc2; }.whatsapp-card h3 { color: #177245; }.whatsapp-card p { color: #37654a; }
 
 .form-overlay {
   position: fixed;
   inset: 0;
-
-  background: rgba(0, 0, 0, 0.7);
-
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  z-index: 999999;
+  padding: 24px;
+  background: rgba(65, 38, 18, 0.3);
+  backdrop-filter: blur(3px);
 }
-
-/* POPUP FORM */
 
 .inquiry-form {
   position: relative;
-
-  width: 420px;
-  max-width: 95%;
-
-  margin-top: 0;
-
-  background: linear-gradient(135deg, #2b0000, #4d0d0d);
-
-  border: 1px solid rgba(212, 175, 55, 0.25);
-
-  padding: 30px;
-
-  border-radius: 24px;
-
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-
-  animation: scaleIn 0.3s ease;
+  width: min(420px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 32px;
+  border: 1px solid #ead9b8;
+  border-radius: 22px;
+  background: #fffdf8;
+  box-shadow: 0 18px 50px rgba(67, 42, 20, 0.25);
+  animation: scaleIn 0.25s ease;
 }
-
-/* FORM CLOSE */
-
-.close-btn,
-.form-close {
-  position: absolute;
-
-  top: 12px;
-  right: 12px;
-
-  width: 44px;
-  height: 44px;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.18);
-
-  color: #ffffff;
-
-  font-size: 28px;
-
-  font-weight: bold;
-
-  display: flex;
+.inquiry-form h3 { margin: 0 52px 22px 0; color: #7d241c; font-size: 21px; }
+.inquiry-form form { display: flex; flex-direction: column; gap: 14px; }
+.inquiry-form input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #e8d9c0;
+  border-radius: 11px;
+  background: #fffaf1;
+  color: #3f2b1e;
+  font: inherit;
+}
+.inquiry-form input::placeholder { color: #927c67; }
+.inquiry-form input:focus { border-color: #c89128; outline: 3px solid rgba(245, 200, 76, 0.28); }
+.product-picker { display: flex; flex-direction: column; gap: 8px; }
+.product-picker > label { color: #6d4324; font-size: 14px; font-weight: 700; }
+.product-picker > input { margin: 0; }
+.selected-product-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.selected-product-tag {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #e8c562;
+  border-radius: 999px;
+  background: #fff0bc;
+  color: #6d4324;
+  font: inherit;
+  font-size: 12px;
   cursor: pointer;
-
-  z-index: 999999;
-
-  backdrop-filter: blur(6px);
-
-  box-shadow:
-    0 0 12px rgba(255, 255, 255, 0.35),
-    0 0 22px rgba(255, 174, 0, 0.35);
-
-  transition: 0.3s ease;
 }
-
-.close-btn,
-.form-close {
-  background: #ffd106fa;
-
-  color: #2b0000;
-
-  transform: scale(1.08);
-
-  box-shadow:
-    0 0 14px #ffbb00,
-    0 0 28px #ffae00;
-}
-
-/* FORM */
-
-.inquiry-form form {
+.selected-product-tag span { font-size: 16px; line-height: 1; }
+.product-options { max-height: 150px; overflow-y: auto; border: 1px solid #e8d9c0; border-radius: 11px; background: #fffdf8; }
+.product-options > p { margin: 0; padding: 13px; color: #927c67; font-size: 13px; }
+.product-options > button {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px;
+  border: 0;
+  border-bottom: 1px solid #f0e6d5;
+  background: transparent;
+  color: #573a28;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
 }
-/* =========================
-   MOBILE POPUP FIX
-========================= */
+.product-options > button:last-child { border-bottom: 0; }
+.product-options > button:hover { background: #fff3d7; }
+.product-options > button > span:last-child { color: #a47629; font-size: 12px; font-weight: 700; }
+.product-options > button.is-selected { background: #fff0bc; color: #6d4324; }
+.product-picker-help { color: #927c67; font-size: 12px; }
+.inquiry-form form > button {
+  margin-top: 4px;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #f6ca50, #e9a82c);
+  color: #542b11;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.inquiry-form form > button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(190, 125, 22, 0.25); }
+.form-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; background: #f7e3a7; color: #6a3715; font-size: 24px; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 @media (max-width: 768px) {
-  .popup-box {
-    width: 92% !important;
-
-    max-height: 88vh !important;
-
-    overflow-y: auto !important;
-
-    padding: 22px 16px !important;
-
-    border-radius: 20px !important;
-  }
-
-  .popup-top h2 {
-    font-size: 34px !important;
-
-    line-height: 1.2 !important;
-
-    text-align: center !important;
-  }
-
-  .popup-top p {
-    font-size: 15px !important;
-
-    text-align: center !important;
-
-    line-height: 1.6 !important;
-  }
-
-  .popup-grid {
-    grid-template-columns: 1fr !important;
-
-    gap: 18px !important;
-  }
-
-  .popup-card {
-    padding: 22px !important;
-
-    min-height: auto !important;
-  }
-
-  .popup-card h3 {
-    font-size: 22px !important;
-  }
-
-  .popup-card p {
-    font-size: 15px !important;
-
-    line-height: 1.5 !important;
-  }
-
-  .close-btn,
-  .form-close {
-    position: absolute;
-
-    top: 12px;
-    right: 12px;
-
-    width: 44px;
-    height: 44px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.18);
-
-    color: #ffffff;
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    z-index: 999999;
-
-    backdrop-filter: blur(6px);
-
-    box-shadow:
-      0 0 12px rgba(255, 255, 255, 0.35),
-      0 0 22px rgba(255, 174, 0, 0.35);
-
-    transition: 0.3s ease;
-  }
-
-  .close-btn:hover,
-  .form-close:hover {
-    background: #ffb300bd;
-
-    color: #2b0000;
-
-    transform: scale(1.08);
-
-    box-shadow:
-      0 0 14px #ffd700,
-      0 0 28px #ffae00;
-  }
+  .popup-overlay, .form-overlay { padding: 16px; }
+  .popup-box { padding: 34px 20px 22px; }
+  .popup-top h2 { margin-right: 30px; margin-left: 30px; }
+  .popup-top p { font-size: 15px; }
+  .popup-options { grid-template-columns: 1fr; }
+  .inquiry-form { padding: 28px 20px 22px; }
 }

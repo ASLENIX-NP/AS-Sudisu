@@ -57,7 +57,7 @@ const About = () => {
         <div className="about-container">
           <div className="about-text">
             {/* Badge - Dynamic with fallback */}
-            <span className="about-tag">{about.badge || "SUDIISU SPICES"}</span>
+            <span className="about-tag">{about.badge || "SUDISU SPICES"}</span>
 
             <h1>
               {/* Heading - Dynamic with fallback */}

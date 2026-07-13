@@ -34,6 +34,8 @@ import Analytics from "./pages/admin/Analytics";
 import Settings from "./pages/admin/Settings";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
+import BusinessInquiries from "./pages/admin/BusinessInquiries";
+import BusinessInquiryDetail from "./pages/admin/BusinessInquiryDetail";
 
 import ScrollToTop from "./components/common/scrolltotop";
 
@@ -163,6 +165,8 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route path="/admin/business-inquiries" element={<AdminRoute><BusinessInquiries /></AdminRoute>} />
+        <Route path="/admin/business-inquiries/:id" element={<AdminRoute><BusinessInquiryDetail /></AdminRoute>} />
 
         <Route
           path="/admin/analytics"

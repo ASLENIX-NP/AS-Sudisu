@@ -1,4 +1,6 @@
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import "./ProductFormModal.css";
 const ProductFormModal = ({
   editingId,
@@ -16,8 +18,8 @@ const ProductFormModal = ({
   origin,
   setOrigin,
 
-  stock,
-  setStock,
+  ingredients,
+  setIngredients,
 
   description,
   setDescription,
@@ -38,7 +40,22 @@ const ProductFormModal = ({
 
   inputStyle,
 }) => {
-  return (
+  useEffect(() => {
+    const { overflow, paddingRight } = document.body.style;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.paddingRight = paddingRight;
+    };
+  }, []);
+
+  return createPortal(
     <div className="product-form-backdrop" onClick={closeProductForm}>
       <div className="product-form-modal" onClick={(e) => e.stopPropagation()}>
         <div className="products-form-card">
@@ -101,10 +118,10 @@ const ProductFormModal = ({
             />
 
             <input
-              placeholder="Stock"
+              placeholder="Ingredients"
               style={inputStyle}
-              value={stock}
-              onChange={(e) => setStock(e.target.value)}
+              value={ingredients}
+              onChange={(e) => setIngredients(e.target.value)}
             />
 
             <textarea
@@ -189,7 +206,8 @@ const ProductFormModal = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 

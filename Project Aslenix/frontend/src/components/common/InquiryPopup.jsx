@@ -1,8 +1,94 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { supabase } from "../../lib/supabase";
+import toast from "react-hot-toast";
 import "./InquiryPopup.css";
 
 export default function InquiryPopup({ isOpen, onClose }) {
   const [selectedOption, setSelectedOption] = useState("");
+  const [products, setProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [productSearch, setProductSearch] = useState("");
+  const [productsLoading, setProductsLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen || selectedOption !== "bulk" || products.length) return;
+
+    const fetchProducts = async () => {
+      setProductsLoading(true);
+      const { data, error } = await supabase
+        .from("products")
+        .select("id, name")
+        .order("name", { ascending: true });
+
+      if (!error) setProducts(data || []);
+      setProductsLoading(false);
+    };
+
+    fetchProducts();
+  }, [isOpen, selectedOption, products.length]);
+
+  const visibleProducts = useMemo(
+    () =>
+      products.filter((product) =>
+        product.name?.toLowerCase().includes(productSearch.toLowerCase()),
+      ),
+    [products, productSearch],
+  );
+
+  const openOption = (option) => {
+    setSelectedOption(option);
+    setProductSearch("");
+  };
+
+  const toggleProduct = (product) => {
+    setSelectedProducts((current) =>
+      current.some((item) => item.id === product.id)
+        ? current.filter((item) => item.id !== product.id)
+        : [...current, product],
+    );
+  };
+
+  const submitBusinessInquiry = async (event) => {
+    event.preventDefault();
+    if (selectedOption === "bulk" && selectedProducts.length === 0) {
+      toast.error("Please choose at least one required product.");
+      return;
+    }
+
+    const form = event.currentTarget;
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const typeMap = {
+      distributor: "Distributor Application",
+      bulk: "Bulk Order Inquiry",
+      retail: "Retail Partnership",
+      catalog: "Catalog Request",
+    };
+    payload.inquiryType = typeMap[selectedOption];
+
+    try {
+      setSubmitting(true);
+      const response = await fetch("http://localhost:5000/api/business-inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.message || "Unable to submit your inquiry.");
+
+      toast.success("Your business inquiry has been submitted successfully. Our team will contact you soon.");
+      form.reset();
+      setSelectedProducts([]);
+      setProductSearch("");
+      setSelectedOption("");
+      onClose();
+      window.dispatchEvent(new Event("business-inquiries-updated"));
+    } catch (error) {
+      toast.error(error.message || "Unable to submit your inquiry. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -27,20 +113,20 @@ export default function InquiryPopup({ isOpen, onClose }) {
         <div className="popup-options">
           <div
             className="popup-card"
-            onClick={() => setSelectedOption("distributor")}
+            onClick={() => openOption("distributor")}
           >
             <h3>Become a Distributor</h3>
             <p>Partner with us and sell premium Nepali spices.</p>
           </div>
 
-          <div className="popup-card" onClick={() => setSelectedOption("bulk")}>
+          <div className="popup-card" onClick={() => openOption("bulk")}>
             <h3>Bulk Order Inquiry</h3>
             <p>Get wholesale pricing for restaurants & businesses.</p>
           </div>
 
           <div
             className="popup-card"
-            onClick={() => setSelectedOption("retail")}
+            onClick={() => openOption("retail")}
           >
             <h3>Retail Shop Partnership</h3>
             <p>Add Sudiisu Pride products to your store.</p>
@@ -58,7 +144,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
 
           <div
             className="popup-card"
-            onClick={() => setSelectedOption("catalog")}
+            onClick={() => openOption("catalog")}
           >
             <h3>Request Product Catalog</h3>
             <p>View all spice collections and product details.</p>
@@ -81,17 +167,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                 <>
                   <h3>Distributor Application</h3>
 
-                  <form
-                    action="https://formsubmit.co/info@fortunegroup.com.np"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="_subject"
-                      value="Distributor Application"
-                    />
-
-                    <input type="hidden" name="_captcha" value="false" />
+                  <form onSubmit={submitBusinessInquiry}>
 
                     <input
                       type="text"
@@ -121,7 +197,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                       required
                     />
 
-                    <button type="submit">Apply Now</button>
+                    <button type="submit" disabled={submitting}>{submitting ? "Submitting..." : "Apply Now"}</button>
                   </form>
                 </>
               )}
@@ -132,17 +208,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                 <>
                   <h3>Bulk Order Inquiry</h3>
 
-                  <form
-                    action="https://formsubmit.co/info@fortunegroup.com.np"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="_subject"
-                      value="Bulk Order Inquiry"
-                    />
-
-                    <input type="hidden" name="_captcha" value="false" />
+                  <form onSubmit={submitBusinessInquiry}>
 
                     <input
                       type="text"
@@ -151,12 +217,59 @@ export default function InquiryPopup({ isOpen, onClose }) {
                       required
                     />
 
-                    <input
-                      type="text"
-                      name="products"
-                      placeholder="Required Products"
-                      required
-                    />
+                    <div className="product-picker">
+                      <input
+                        type="hidden"
+                        name="products"
+                        value={selectedProducts.map((product) => product.name).join(", ")}
+                      />
+                      <label htmlFor="product-search">Required Products</label>
+                      {selectedProducts.length > 0 && (
+                        <div className="selected-product-tags">
+                          {selectedProducts.map((product) => (
+                            <button
+                              key={product.id}
+                              type="button"
+                              className="selected-product-tag"
+                              onClick={() => toggleProduct(product)}
+                              aria-label={`Remove ${product.name}`}
+                            >
+                              {product.name} <span>×</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      <input
+                        id="product-search"
+                        type="search"
+                        value={productSearch}
+                        onChange={(event) => setProductSearch(event.target.value)}
+                        placeholder="Search available products..."
+                        autoComplete="off"
+                      />
+                      <div className="product-options" role="listbox" aria-label="Available products">
+                        {productsLoading && <p>Loading available products…</p>}
+                        {!productsLoading && visibleProducts.length === 0 && (
+                          <p>{products.length ? "No matching products found." : "No products are available right now."}</p>
+                        )}
+                        {visibleProducts.map((product) => {
+                          const isSelected = selectedProducts.some((item) => item.id === product.id);
+                          return (
+                            <button
+                              key={product.id}
+                              type="button"
+                              role="option"
+                              aria-selected={isSelected}
+                              className={isSelected ? "is-selected" : ""}
+                              onClick={() => toggleProduct(product)}
+                            >
+                              <span>{product.name}</span><span>{isSelected ? "Selected" : "Select"}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {selectedProducts.length === 0 && <small className="product-picker-help">Choose one or more products from the website catalog.</small>}
+                    </div>
 
                     <input
                       type="text"
@@ -172,7 +285,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                       required
                     />
 
-                    <button type="submit">Request Pricing</button>
+                    <button type="submit" disabled={submitting}>{submitting ? "Submitting..." : "Request Pricing"}</button>
                   </form>
                 </>
               )}
@@ -183,17 +296,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                 <>
                   <h3>Retail Partnership</h3>
 
-                  <form
-                    action="https://formsubmit.co/info@fortunegroup.com.np"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="_subject"
-                      value="Retail Partnership"
-                    />
-
-                    <input type="hidden" name="_captcha" value="false" />
+                  <form onSubmit={submitBusinessInquiry}>
 
                     <input
                       type="text"
@@ -229,7 +332,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                       placeholder="Estimated Monthly Demand"
                     />
 
-                    <button type="submit">Become Partner</button>
+                    <button type="submit" disabled={submitting}>{submitting ? "Submitting..." : "Become Partner"}</button>
                   </form>
                 </>
               )}
@@ -239,17 +342,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                 <>
                   <h3>Get Product Catalog</h3>
 
-                  <form
-                    action="https://formsubmit.co/info@fortunegroup.com.np"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="_subject"
-                      value="Catalog Request"
-                    />
-
-                    <input type="hidden" name="_captcha" value="false" />
+                  <form onSubmit={submitBusinessInquiry}>
 
                     <input
                       type="email"
@@ -258,7 +351,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
                       required
                     />
 
-                    <button type="submit">Send Catalog</button>
+                    <button type="submit" disabled={submitting}>{submitting ? "Submitting..." : "Send Catalog"}</button>
                   </form>
                 </>
               )}

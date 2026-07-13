@@ -26,7 +26,7 @@ const ProductsManager = () => {
   const [price, setPrice] = useState("");
   const [weight, setWeight] = useState("");
   const [origin, setOrigin] = useState("");
-  const [stock, setStock] = useState("");
+  const [ingredients, setIngredients] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -38,7 +38,7 @@ const ProductsManager = () => {
       price,
       weight,
       origin,
-      stock,
+      ingredients,
       description,
       image,
     };
@@ -82,7 +82,7 @@ const ProductsManager = () => {
     setPrice(product.price);
     setWeight(product.weight);
     setOrigin(product.origin);
-    setStock(product.stock);
+    setIngredients(product.ingredients || "");
     setDescription(product.description || "");
     setImage(product.image);
     setIsFormOpen(true);
@@ -97,7 +97,7 @@ const ProductsManager = () => {
       price,
       weight,
       origin,
-      stock,
+      ingredients,
       description,
       image,
     });
@@ -107,7 +107,7 @@ const ProductsManager = () => {
       price,
       weight,
       origin,
-      stock,
+      ingredients,
       description,
       image,
     });
@@ -128,7 +128,7 @@ const ProductsManager = () => {
     setPrice("");
     setWeight("");
     setOrigin("");
-    setStock("");
+    setIngredients("");
     setDescription("");
     setImage("");
     setSelectedFileName("");
@@ -266,8 +266,8 @@ const ProductsManager = () => {
             setWeight={setWeight}
             origin={origin}
             setOrigin={setOrigin}
-            stock={stock}
-            setStock={setStock}
+            ingredients={ingredients}
+            setIngredients={setIngredients}
             description={description}
             setDescription={setDescription}
             image={image}

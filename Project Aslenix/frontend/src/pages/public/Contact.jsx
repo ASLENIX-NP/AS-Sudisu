@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
@@ -6,7 +6,19 @@ import toast from "react-hot-toast";
 import "./Contact.css";
 import { FaEnvelope, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 
+const defaultCompanyDetails = {
+  contactCompanyName: "SUDISU PRIDE",
+  contactSlogan: "स्वाद र स्वास्थ्य संगै संगै",
+  contactDescription:
+    "Fortune Group of Industries Pvt. Ltd. is committed to delivering authentic Nepali spices crafted with premium ingredients, traditional recipes and uncompromising quality standards.",
+  email: "info@fortunegroup.com.np",
+  whatsapp: "+977 9816259642",
+  address: "Fortune Group of Industries Pvt. Ltd., Manahari-07, Makwanpur, Nepal",
+  contactMapUrl: "https://www.google.com/maps?q=27.539477,84.8075733",
+};
+
 const Contact = () => {
+  const [companyDetails, setCompanyDetails] = useState(defaultCompanyDetails);
   const southAsianCountries = [
     { name: "Nepal", code: "+977" },
     { name: "India", code: "+91" },
@@ -28,6 +40,28 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  useEffect(() => {
+    const fetchCompanyDetails = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/settings");
+        const data = await response.json();
+
+        if (data.success && data.settings) {
+          setCompanyDetails((current) => ({ ...current, ...data.settings }));
+        }
+      } catch (error) {
+        console.error("Failed to load company contact details:", error);
+      }
+    };
+
+    fetchCompanyDetails();
+  }, []);
+
+  const whatsappUrl = `https://wa.me/${companyDetails.whatsapp.replace(/\D/g, "")}`;
+  const mapEmbedUrl = `${companyDetails.contactMapUrl}${
+    companyDetails.contactMapUrl.includes("?") ? "&" : "?"
+  }z=17&output=embed`;
 
   const countryPhoneRules = {
     Nepal: 10,
@@ -119,17 +153,18 @@ const Contact = () => {
             {/* LEFT SIDE */}
             <div className="contact-info">
               <span className="blog-tag">🌶 SUDISU INFORMATION</span>{" "}
-              <h1 className="company-name">SUDISU PRIDE</h1>
+              <h1 className="company-name">{companyDetails.contactCompanyName}</h1>
               <h2 className="company-slogan">
+                “{companyDetails.contactSlogan}”
+                {false && <>
                 “ स्वाद र स्वास्थ्य संगै संगै ”
+                </>}
               </h2>
               <p className="company-description">
-                Fortune Group of Industries Pvt. Ltd. is committed to delivering
-                authentic Nepali spices crafted with premium ingredients,
-                traditional recipes and uncompromising quality standards.
+                {companyDetails.contactDescription}
               </p>
               <div className="contact-box">
-                <a href="mailto:info@fortunegroup.com.np" className="icon-link">
+                <a href={`mailto:${companyDetails.email}`} className="icon-link">
                   <div className="icon-circle">
                     <FaEnvelope />
                   </div>
@@ -137,16 +172,16 @@ const Contact = () => {
                 <div>
                   <h3>Email</h3>
                   <a
-                    href="mailto:info@fortunegroup.com.np"
+                    href={`mailto:${companyDetails.email}`}
                     className="contact-link"
                   >
-                    info@fortunegroup.com.np
+                    {companyDetails.email}
                   </a>
                 </div>
               </div>
               <div className="contact-box">
                 <a
-                  href="https://wa.me/9779816259642"
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-box contact-box-link"
@@ -159,18 +194,18 @@ const Contact = () => {
                 <div>
                   <h3>WhatsApp</h3>
                   <a
-                    href="https://wa.me/9779816259642"
+                    href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="contact-link"
                   >
-                    +977 9816259642
+                    {companyDetails.whatsapp}
                   </a>
                 </div>
               </div>
               <div className="contact-box">
                 <a
-                  href="https://www.google.com/maps?q=27.539477,84.8075733"
+                  href={companyDetails.contactMapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-box contact-box-link"
@@ -183,21 +218,19 @@ const Contact = () => {
                   <h3>Location</h3>
 
                   <a
-                    href="https://maps.google.com/?q=27.539477,84.8075733"
+                    href={companyDetails.contactMapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="contact-link"
                   >
-                    Fortune Group of Industries Pvt. Ltd.
-                    <br />
-                    Manahari-07, Makwanpur, Nepal
+                    {companyDetails.address}
                   </a>
                 </div>
               </div>
               <div className="map-wrapper">
                 <iframe
                   title="Fortune Group Location"
-                  src="https://maps.google.com/maps?q=27.539477,84.8075733&z=17&output=embed"
+                  src={mapEmbedUrl}
                   width="100%"
                   height="350"
                   style={{ border: 0 }}

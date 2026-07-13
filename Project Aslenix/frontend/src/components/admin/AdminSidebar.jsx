@@ -21,6 +21,7 @@ import {
   FaBell,
   FaBars,
   FaTimes,
+  FaBriefcase,
 } from "react-icons/fa";
 
 const AdminSidebar = () => {
@@ -29,6 +30,14 @@ const AdminSidebar = () => {
 
   useEffect(() => {
     fetchNotificationCount();
+
+    window.addEventListener("inquiries-read", fetchNotificationCount);
+    window.addEventListener("business-inquiries-updated", fetchNotificationCount);
+
+    return () => {
+      window.removeEventListener("inquiries-read", fetchNotificationCount);
+      window.removeEventListener("business-inquiries-updated", fetchNotificationCount);
+    };
   }, []);
 
   const fetchNotificationCount = async () => {
@@ -38,19 +47,26 @@ const AdminSidebar = () => {
       .eq("status", "Pending");
 
     let inquiryCount = 0;
+    let businessInquiryCount = 0;
 
     try {
       const response = await fetch("http://localhost:5000/api/inquiries");
       const data = await response.json();
 
       if (data.success) {
-        inquiryCount = data.inquiries.length;
+        inquiryCount = data.inquiries.filter((inquiry) => !inquiry.isRead).length;
       }
     } catch (error) {
       inquiryCount = 0;
     }
 
-    setNotificationCount((pendingReviews || 0) + inquiryCount);
+    try {
+      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const data = await response.json();
+      if (data.success) businessInquiryCount = data.inquiries.filter((inquiry) => !inquiry.isRead).length;
+    } catch (error) { businessInquiryCount = 0; }
+
+    setNotificationCount((pendingReviews || 0) + inquiryCount + businessInquiryCount);
   };
 
   const logoutHandler = async () => {
@@ -144,6 +160,11 @@ const AdminSidebar = () => {
           >
             <FaEnvelope />
             Inquiries
+          </NavLink>
+
+          <NavLink to="/admin/business-inquiries" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
+            <FaBriefcase />
+            Business Inquiries
           </NavLink>
 
           <NavLink

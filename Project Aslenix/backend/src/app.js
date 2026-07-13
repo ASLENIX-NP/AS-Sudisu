@@ -11,6 +11,7 @@ import settingsRoutes from "./routes/settingsRoutes.js";
 import uploadRoutes from "./routes/uploadRoute.js";
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
+import businessInquiryRoutes from "./routes/businessInquiryRoutes.js";
 const app = express();
 
 /* =========================
@@ -32,7 +33,7 @@ app.use(morgan("dev"));
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
 );
@@ -71,6 +72,7 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/admin", adminAuthRoutes);
 /* INQUIRY ROUTE */
 app.use("/api/inquiries", inquiryRoutes);
+app.use("/api/business-inquiries", businessInquiryRoutes);
 /* =========================
    404 HANDLER
 ========================= */

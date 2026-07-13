@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [blogCount, setBlogCount] = useState(0);
   const navigate = useNavigate();
   const [pendingReviews, setPendingReviews] = useState(0);
+  const [businessInquiryStats, setBusinessInquiryStats] = useState({ total: 0, pending: 0, contacted: 0, approved: 0, today: 0 });
 
   const [activities, setActivities] = useState([]);
 
@@ -119,6 +120,21 @@ const Dashboard = () => {
     } catch (error) {
       console.log("Dashboard Error:", error);
     }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const data = await response.json();
+      if (data.success) {
+        const today = new Date().toDateString();
+        setBusinessInquiryStats({
+          total: data.inquiries.length,
+          pending: data.inquiries.filter((item) => item.status === "Pending").length,
+          contacted: data.inquiries.filter((item) => item.status === "Contacted").length,
+          approved: data.inquiries.filter((item) => item.status === "Approved").length,
+          today: data.inquiries.filter((item) => new Date(item.createdAt).toDateString() === today).length,
+        });
+      }
+    } catch (error) { console.log("Business inquiry dashboard error:", error); }
 
     const { count: products } = await supabase
       .from("products")
@@ -372,7 +388,6 @@ const Dashboard = () => {
                   stroke="#2563eb"
                   strokeWidth={3}
                   name="Inquiries"
-                  name="Reviews"
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -415,6 +430,17 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="dashboard-card" style={{ marginTop: "24px" }}>
+          <div className="card-header"><h2>Business Inquiries</h2><button className="delete-btn" onClick={() => navigate("/admin/business-inquiries")}>Manage</button></div>
+          <div className="mini-stats">
+            <div className="mini-card"><h4>Total</h4><span>{businessInquiryStats.total}</span></div>
+            <div className="mini-card"><h4>Pending</h4><span>{businessInquiryStats.pending}</span></div>
+            <div className="mini-card"><h4>Contacted</h4><span>{businessInquiryStats.contacted}</span></div>
+            <div className="mini-card"><h4>Approved</h4><span>{businessInquiryStats.approved}</span></div>
+            <div className="mini-card"><h4>New Today</h4><span>{businessInquiryStats.today}</span></div>
           </div>
         </div>
 

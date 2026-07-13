@@ -378,6 +378,29 @@ input {
   bottom: 48px;
 }
 
+.hero-product-summary {
+  position: absolute;
+  z-index: 3;
+  left: 42px;
+  bottom: 48px;
+  display: grid;
+  gap: 3px;
+  max-width: calc(100% - 84px);
+  padding: 13px 17px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 15px 35px rgba(122, 49, 14, 0.16);
+  backdrop-filter: blur(14px);
+}
+
+.hero-product-summary span,
+.hero-product-summary small { color: #7c2d12; font-size: 12px; font-weight: 700; }
+.hero-product-summary strong { color: #3b1b0b; font-size: 18px; }
+.hero-slider-dots { position: absolute; z-index: 3; right: 42px; bottom: 50px; display: flex; gap: 8px; }
+.hero-slider-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: rgba(124, 45, 18, 0.25); cursor: pointer; }
+.hero-slider-dots button.active { width: 28px; border-radius: 999px; background: #b91c1c; }
+
 @keyframes floatProduct {
   0% {
     transform: translateY(0px) scale(1);

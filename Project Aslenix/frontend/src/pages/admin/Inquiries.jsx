@@ -30,6 +30,15 @@ const Inquiries = () => {
 
       if (data.success) {
         setInquiries(data.inquiries);
+
+        const markReadResponse = await fetch(
+          "http://localhost:5000/api/inquiries/mark-read",
+          { method: "PUT" },
+        );
+
+        if (markReadResponse.ok) {
+          window.dispatchEvent(new Event("inquiries-read"));
+        }
       }
     } catch (error) {
       console.log(error);

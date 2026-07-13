@@ -37,7 +37,7 @@ const ProductTable = ({
 <th className="product-table-header">Price</th>
 <th className="product-table-header">Weight</th>
 <th className="product-table-header">Origin</th>
-<th className="product-table-header">Stock</th>
+<th className="product-table-header">Ingredients</th>
 <th className="product-table-header">Actions</th>
           </tr>
         </thead>
@@ -106,17 +106,7 @@ const ProductTable = ({
                   </td>
 
                   <td className="product-table-cell">
-                    <span
-                      className={`product-stock-badge ${
-                        Number(product.stock || 0) > 50
-                          ? "stock-good"
-                          : Number(product.stock || 0) >= 20
-                          ? "stock-warning"
-                          : "stock-danger"
-                      }`}
-                    >
-                      {product.stock}
-                    </span>
+                    {product.ingredients || "—"}
                   </td>
 
                  <td className="product-table-cell">

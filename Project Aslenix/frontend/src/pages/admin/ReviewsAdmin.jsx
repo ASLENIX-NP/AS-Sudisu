@@ -319,11 +319,11 @@ const filteredReviews = reviews.filter((review) => {
             ).toLocaleDateString()}
           </small>
 
-          <div className="review-actions">
+          {review.status === "Pending" && (
+            <div className="review-actions">
 
             <button
               className="approve-btn"
-              disabled={review.status === "Approved"}
               onClick={() =>
                 approveReview(review.id)
               }
@@ -333,7 +333,6 @@ const filteredReviews = reviews.filter((review) => {
 
             <button
               className="reject-btn"
-              disabled={review.status === "Rejected"}
               onClick={() =>
                 rejectReview(review.id)
               }
@@ -350,7 +349,8 @@ const filteredReviews = reviews.filter((review) => {
   🗑 Delete
 </button>
 
-          </div>
+            </div>
+          )}
 
         </div>
 

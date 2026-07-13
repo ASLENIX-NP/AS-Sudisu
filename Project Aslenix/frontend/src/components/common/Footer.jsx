@@ -117,15 +117,44 @@ export default function Footer() {
   }, []);
 
   // Prepare social links with icons
-  const socialLinks = [
-    { name: "Instagram", url: settings.instagram, icon: FaInstagram },
-    { name: "Facebook", url: settings.facebook, icon: FaFacebook },
-    { name: "WhatsApp", url: settings.whatsapp, icon: FaWhatsapp },
-    { name: "TikTok", url: settings.tiktok, icon: FaTiktok },
-    { name: "LinkedIn", url: settings.linkedin, icon: FaLinkedinIn },
-    { name: "YouTube", url: settings.youtube, icon: FaYoutube },
-  ].filter((social) => social.url && social.url.trim() !== "");
-
+const socialLinks = [
+  {
+    name: "Instagram",
+    url: settings.instagram,
+    icon: FaInstagram,
+    className: "instagram-icon",
+  },
+  {
+    name: "Facebook",
+    url: settings.facebook,
+    icon: FaFacebook,
+    className: "facebook-icon",
+  },
+  {
+    name: "WhatsApp",
+    url: settings.whatsapp,
+    icon: FaWhatsapp,
+    className: "whatsapp-icon",
+  },
+  {
+    name: "TikTok",
+    url: settings.tiktok,
+    icon: FaTiktok,
+    className: "tiktok-icon",
+  },
+  {
+    name: "LinkedIn",
+    url: settings.linkedin,
+    icon: FaLinkedinIn,
+    className: "linkedin-icon",
+  },
+  {
+    name: "YouTube",
+    url: settings.youtube,
+    icon: FaYoutube,
+    className: "youtube-icon",
+  },
+].filter((social) => social.url && social.url.trim() !== "");
   // Prepare quick links
   const quickLinks = [
     { name: settings.quickLink1Name, url: settings.quickLink1Url },
@@ -208,7 +237,7 @@ console.log("Footer Settings:", settings);
                     rel="noreferrer"
                     className="social-link"
                   >
-                    <Icon className="footer-icon" />
+                    <Icon className={`footer-icon ${social.className}`} />{" "}
                     {social.name}
                   </a>
                 );

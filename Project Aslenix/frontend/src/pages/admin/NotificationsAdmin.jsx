@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { FaBell, FaEnvelope, FaServer, FaStar } from "react-icons/fa";
+import { FaBell, FaBriefcase, FaEnvelope, FaServer, FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
 import "../../styles/NotificationsAdmin.css";
 import { useSearchParams } from "react-router-dom";
+
+const BUSINESS_TYPES = [
+  { id: "distributor", title: "Distributor applications", inquiryType: "Distributor Application", action: "Open distributor applications", tone: "green" },
+  { id: "bulk-orders", title: "Bulk order inquiries", inquiryType: "Bulk Order Inquiry", action: "Open bulk orders", tone: "blue" },
+  { id: "retail", title: "Retail partnerships", inquiryType: "Retail Partnership", action: "Open retail partnerships", tone: "amber" },
+  { id: "catalog", title: "Catalog requests", inquiryType: "Catalog Request", action: "Open catalog requests", tone: "green" },
+];
 
 const NotificationsAdmin = () => {
   const navigate = useNavigate();
@@ -14,10 +21,19 @@ const NotificationsAdmin = () => {
 
   const [pendingReviews, setPendingReviews] = useState(0);
   const [inquiryCount, setInquiryCount] = useState(0);
+  const [businessInquiries, setBusinessInquiries] = useState([]);
   const [databaseStatus, setDatabaseStatus] = useState("Checking");
 
   useEffect(() => {
     fetchNotifications();
+
+    window.addEventListener("inquiries-read", fetchNotifications);
+    window.addEventListener("business-inquiries-updated", fetchNotifications);
+
+    return () => {
+      window.removeEventListener("inquiries-read", fetchNotifications);
+      window.removeEventListener("business-inquiries-updated", fetchNotifications);
+    };
   }, []);
 
   const fetchNotifications = async () => {
@@ -33,11 +49,20 @@ const NotificationsAdmin = () => {
       const data = await response.json();
 
       if (data.success) {
-        setInquiryCount(data.inquiries.length);
+        setInquiryCount(
+          data.inquiries.filter((inquiry) => !inquiry.isRead).length,
+        );
       }
     } catch (error) {
       setInquiryCount(0);
     }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const data = await response.json();
+      const unread = data.success ? data.inquiries.filter((inquiry) => !inquiry.isRead) : [];
+      setBusinessInquiries(unread);
+    } catch (error) { setBusinessInquiries([]); }
 
     const { error: dbError } = await supabase
       .from("products")
@@ -49,6 +74,19 @@ const NotificationsAdmin = () => {
 
   const notifications = useMemo(
     () => [
+      ...BUSINESS_TYPES.map((businessType) => {
+        const count = businessInquiries.filter((inquiry) => inquiry.inquiryType === businessType.inquiryType).length;
+        return {
+          id: businessType.id,
+          icon: <FaBriefcase />,
+          title: businessType.title,
+          description: count > 0 ? `${count} unread ${businessType.title.toLowerCase()} need review.` : `No unseen ${businessType.title.toLowerCase()} right now.`,
+          count,
+          action: businessType.action,
+          path: `/admin/business-inquiries?type=${encodeURIComponent(businessType.inquiryType)}`,
+          tone: businessType.tone,
+        };
+      }),
       {
         id: "inquiries",
         icon: <FaEnvelope />,
@@ -89,7 +127,7 @@ const NotificationsAdmin = () => {
         tone: "green",
       },
     ],
-    [databaseStatus, inquiryCount, pendingReviews],
+    [businessInquiries, databaseStatus, inquiryCount, pendingReviews],
   );
 
   const totalPending = notifications.reduce((sum, item) => sum + item.count, 0);

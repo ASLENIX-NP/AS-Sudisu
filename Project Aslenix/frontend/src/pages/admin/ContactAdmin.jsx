@@ -1,228 +1,142 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/ContactAdmin.css";
 import toast from "react-hot-toast";
 
-const ContactAdmin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    phone: "",
-    address: "",
-    whatsapp: "",
-    facebook: "",
-    instagram: "",
-    tiktok: "",
-  });
+const defaultContactDetails = {
+  contactCompanyName: "SUDISU PRIDE",
+  contactSlogan: "स्वाद र स्वास्थ्य संगै संगै",
+  contactDescription:
+    "Fortune Group of Industries Pvt. Ltd. is committed to delivering authentic Nepali spices crafted with premium ingredients, traditional recipes and uncompromising quality standards.",
+  email: "info@fortunegroup.com.np",
+  whatsapp: "+977 9816259642",
+  address: "Fortune Group of Industries Pvt. Ltd., Manahari-07, Makwanpur, Nepal",
+  contactMapUrl: "https://www.google.com/maps?q=27.539477,84.8075733",
+};
 
+const ContactAdmin = () => {
+  const [formData, setFormData] = useState(defaultContactDetails);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/settings");
+        const data = await response.json();
+
+        if (data.success && data.settings) {
+          setFormData((current) => ({ ...current, ...data.settings }));
+        }
+      } catch (error) {
+        console.error("Failed to load contact settings:", error);
+        toast.error("Failed to load contact settings");
+      }
+    };
+
     fetchContact();
   }, []);
 
-  const fetchContact = async () => {
-    const { data, error } = await supabase
-      .from("contact_settings")
-      .select("*")
-      .eq("id", 1)
-      .single();
-
-    if (!error && data) {
-      setFormData(data);
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
   };
 
   const saveSettings = async () => {
-    const { error } = await supabase
-      .from("contact_settings")
-      .update({
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        whatsapp: formData.whatsapp,
-        facebook: formData.facebook,
-        instagram: formData.instagram,
-        tiktok: formData.tiktok,
-      })
-      .eq("id", 1);
+    try {
+      const response = await fetch("http://localhost:5000/api/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contactCompanyName: formData.contactCompanyName,
+          contactSlogan: formData.contactSlogan,
+          contactDescription: formData.contactDescription,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          address: formData.address,
+          contactMapUrl: formData.contactMapUrl,
+        }),
+      });
 
-    if (error) {
-  toast.error("Failed to save contact settings");
-  console.log(error);
-  return;
-}
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message);
 
-    toast.success("Contact settings saved successfully");
-setSaved(true);
-
-    setTimeout(() => {
-      setSaved(false);
-    }, 3000);
+      setFormData((current) => ({ ...current, ...data.settings }));
+      setSaved(true);
+      toast.success("Company contact details saved successfully");
+      setTimeout(() => setSaved(false), 3000);
+    } catch (error) {
+      console.error("Failed to save contact settings:", error);
+      toast.error("Failed to save company contact details");
+    }
   };
 
   return (
     <AdminLayout>
       <div className="contact-page">
-
         <div className="contact-header">
-          <h1 className="contact-title">
-            Contact Settings
-          </h1>
-
+          <h1 className="contact-title">Company Contact Details</h1>
           <p className="contact-subtitle">
-            Manage public contact information and social media links.
+            Manage the information displayed on the public Contact page.
           </p>
         </div>
 
         <div className="contact-stats">
+          <div className="contact-stat-card email-card">
+            <div className="stat-icon">🏢</div>
+            <div>
+              <p className="stat-label">Company Name</p>
+              <h2 className="stat-number">
+                {formData.contactCompanyName || "Not Set"}
+              </h2>
+            </div>
+          </div>
 
- <div className="contact-stat-card email-card">
-  <div className="stat-icon">
-    📧
-  </div>
+          <div className="contact-stat-card phone-card">
+            <div className="stat-icon">📧</div>
+            <div>
+              <p className="stat-label">Business Email</p>
+              <h2 className="stat-number">{formData.email || "Not Set"}</h2>
+            </div>
+          </div>
 
-  <div>
-    <p className="stat-label">
-      Business Email
-    </p>
+          <div className="contact-stat-card social-card">
+            <div className="stat-icon">💬</div>
+            <div>
+              <p className="stat-label">WhatsApp</p>
+              <h2 className="stat-number">{formData.whatsapp || "Not Set"}</h2>
+            </div>
+          </div>
+        </div>
 
-    <h2 className="stat-number">
-      {formData.email || "Not Set"}
-    </h2>
-  </div>
-</div>
-
-<div className="contact-stat-card phone-card">
-  <div className="stat-icon">
-    📱
-  </div>
-
-  <div>
-    <p className="stat-label">
-      Contact Number
-    </p>
-
-    <h2 className="stat-number">
-      {formData.phone || "Not Set"}
-    </h2>
-  </div>
-</div>
-
-<div className="contact-stat-card social-card">
-  <div className="stat-icon">
-    🌐
-  </div>
-
-  <div>
-    <p className="stat-label">
-      Social Platforms
-    </p>
-
-    <h2 className="stat-number">
-      {
-        [
-          formData.whatsapp,
-          formData.facebook,
-          formData.instagram,
-          formData.tiktok,
-        ].filter(Boolean).length
-      }
-    </h2>
-  </div>
-</div>
-
-</div>
         <div className="contact-card">
-
           {saved && (
             <div className="contact-success">
-              Contact settings updated successfully.
+              Company contact details updated successfully.
             </div>
           )}
 
           <div className="contact-section">
-            <h3>Business Contact</h3>
-
+            <h3>Company Information</h3>
             <div className="contact-grid">
-              <input
-                className="contact-input"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-
-              <input
-                className="contact-input"
-                name="phone"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-
-              <input
-                className="contact-input"
-                name="address"
-                placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
-              />
+              <input className="contact-input" name="contactCompanyName" placeholder="Company name" value={formData.contactCompanyName} onChange={handleChange} />
+              <input className="contact-input" name="contactSlogan" placeholder="Company slogan" value={formData.contactSlogan} onChange={handleChange} />
+              <textarea className="contact-input contact-textarea" name="contactDescription" placeholder="Company description" value={formData.contactDescription} onChange={handleChange} />
             </div>
           </div>
 
           <div className="contact-section">
-            <h3>Social Media Links</h3>
-
+            <h3>Contact Information</h3>
             <div className="contact-grid">
-              <input
-                className="contact-input"
-                name="whatsapp"
-                placeholder="WhatsApp"
-                value={formData.whatsapp}
-                onChange={handleChange}
-              />
-
-              <input
-                className="contact-input"
-                name="facebook"
-                placeholder="Facebook"
-                value={formData.facebook}
-                onChange={handleChange}
-              />
-
-              <input
-                className="contact-input"
-                name="instagram"
-                placeholder="Instagram"
-                value={formData.instagram}
-                onChange={handleChange}
-              />
-
-              <input
-                className="contact-input"
-                name="tiktok"
-                placeholder="TikTok"
-                value={formData.tiktok}
-                onChange={handleChange}
-              />
+              <input className="contact-input" name="email" type="email" placeholder="Business email" value={formData.email} onChange={handleChange} />
+              <input className="contact-input" name="whatsapp" placeholder="WhatsApp number" value={formData.whatsapp} onChange={handleChange} />
+              <textarea className="contact-input contact-textarea" name="address" placeholder="Business address" value={formData.address} onChange={handleChange} />
+              <input className="contact-input" name="contactMapUrl" type="url" placeholder="Google Maps link" value={formData.contactMapUrl} onChange={handleChange} />
             </div>
           </div>
 
-          <button
-            className="contact-save-btn"
-            onClick={saveSettings}
-          >
-            Save Contact Settings
+          <button className="contact-save-btn" onClick={saveSettings}>
+            Save Company Details
           </button>
-
         </div>
       </div>
     </AdminLayout>

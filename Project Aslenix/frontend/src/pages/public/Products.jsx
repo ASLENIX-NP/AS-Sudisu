@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getProducts } from "../../services/productService";
+import { supabase } from "../../lib/supabase";
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 
@@ -47,13 +48,51 @@ const ProductsPage = () => {
   const fetchProducts = async () => {
     try {
       const data = await getProducts();
-      setProducts(data || []);
+      const availableProducts = data || [];
+      setProducts(availableProducts);
+
+      const { data: approvedReviews, error: reviewsError } = await supabase
+        .from("reviews")
+        .select("product_id, rating")
+        .eq("status", "Approved");
+
+      if (reviewsError) throw reviewsError;
+
+      const reviewStats = (approvedReviews || []).reduce((stats, review) => {
+        const productId = String(review.product_id);
+        const current = stats[productId] || { totalRating: 0, reviewCount: 0 };
+        current.totalRating += Number(review.rating) || 0;
+        current.reviewCount += 1;
+        stats[productId] = current;
+        return stats;
+      }, {});
+
+      const topProducts = availableProducts
+        .map((product) => {
+          const stats = reviewStats[String(product.id)];
+          return stats ? { ...product, averageRating: stats.totalRating / stats.reviewCount, reviewCount: stats.reviewCount } : null;
+        })
+        .filter(Boolean)
+        .sort((first, second) => second.averageRating - first.averageRating || second.reviewCount - first.reviewCount)
+        .slice(0, 5);
+
+      setSliderProducts(topProducts.length ? topProducts : availableProducts.slice(0, 5));
+      setCurrentSlide(0);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if (sliderProducts.length < 2) return undefined;
+    const slider = window.setInterval(() => {
+      setCurrentSlide((slide) => (slide + 1) % sliderProducts.length);
+    }, 5000);
+    return () => window.clearInterval(slider);
+  }, [sliderProducts.length]);
+
+  const activeSliderProduct = sliderProducts[currentSlide] || null;
   useEffect(() => {
     if (location.hash === "#products-section") {
       const element = document.getElementById("products-section");
@@ -110,10 +149,19 @@ const ProductsPage = () => {
         <div className="products-hero-right">
           <div className="slider-card">
             <img
-              src={heroProducts}
-              alt="Sudisu Products"
+              key={activeSliderProduct?.id || "sudiisu-collection"}
+              src={activeSliderProduct?.image || heroProducts}
+              alt={activeSliderProduct?.name || "Sudiisu Products"}
               className="hero-slider-image"
             />
+            {false && activeSliderProduct && (
+              <div className="hero-product-summary">
+                <span>Top rated product</span>
+                <strong>{activeSliderProduct.name}</strong>
+                {activeSliderProduct.reviewCount ? <small>★ {activeSliderProduct.averageRating.toFixed(1)} · {activeSliderProduct.reviewCount} review{activeSliderProduct.reviewCount === 1 ? "" : "s"}</small> : <small>Featured product</small>}
+              </div>
+            )}
+            {sliderProducts.length > 1 && <div className="hero-slider-dots" aria-label="Top-rated product slides">{sliderProducts.map((product, index) => <button key={product.id} type="button" className={index === currentSlide ? "active" : ""} onClick={() => setCurrentSlide(index)} aria-label={`Show ${product.name}`} />)}</div>}
           </div>
         </div>
       </HeroNavbar>

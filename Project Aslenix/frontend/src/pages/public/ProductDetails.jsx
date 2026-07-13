@@ -62,7 +62,7 @@ const ProductDetails = () => {
               </p>
 
               <p>
-                <strong>Incredients:</strong> {product.stock}
+                <strong>Ingredients:</strong> {product.ingredients || "—"}
               </p>
 
               <button

@@ -2,6 +2,22 @@ import mongoose from "mongoose";
 const settingsSchema = new mongoose.Schema({
   companyName: String,
 
+  contactCompanyName: {
+    type: String,
+    default: "SUDISU PRIDE",
+  },
+
+  contactSlogan: {
+    type: String,
+    default: "स्वाद र स्वास्थ्य संगै संगै",
+  },
+
+  contactDescription: {
+    type: String,
+    default:
+      "Fortune Group of Industries Pvt. Ltd. is committed to delivering authentic Nepali spices crafted with premium ingredients, traditional recipes and uncompromising quality standards.",
+  },
+
   email: {
     type: String,
     default: "info@fortunegroup.com.np",
@@ -9,7 +25,10 @@ const settingsSchema = new mongoose.Schema({
 
   phone: String,
 
-  address: String,
+  address: {
+    type: String,
+    default: "Fortune Group of Industries Pvt. Ltd., Manahari-07, Makwanpur, Nepal",
+  },
 
   heroTitle: String,
 
@@ -21,7 +40,15 @@ const settingsSchema = new mongoose.Schema({
 
   tiktok: String,
 
-  whatsapp: String,
+  whatsapp: {
+    type: String,
+    default: "+977 9816259642",
+  },
+
+  contactMapUrl: {
+    type: String,
+    default: "https://www.google.com/maps?q=27.539477,84.8075733",
+  },
 
   linkedin: String,
 

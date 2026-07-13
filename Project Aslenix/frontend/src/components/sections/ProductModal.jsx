@@ -41,7 +41,7 @@ const ProductModal = ({ product, onClose }) => {
                 </p>
 
                 <p>
-                  <strong>Stock:</strong> {product.stock}
+                  <strong>Ingredients:</strong> {product.ingredients || "—"}
                 </p>
 
                 <button

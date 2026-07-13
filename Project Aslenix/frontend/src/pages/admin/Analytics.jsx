@@ -1,285 +1,197 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
 import "../../styles/analytics.css";
-
 import {
   FaBoxOpen,
+  FaCertificate,
   FaEnvelope,
-  FaUsers,
-  FaChartLine,
+  FaPenNib,
+  FaStar,
+  FaRegClock,
+  FaSyncAlt,
 } from "react-icons/fa";
-
 import {
-  ResponsiveContainer,
-  AreaChart,
   Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  CartesianGrid,
 } from "recharts";
 
-const Analytics = () => {
-const [productCount, setProductCount] = useState(0);
-const [inquiryCount, setInquiryCount] = useState(0);
+const API_URL = "http://localhost:5000/api";
 
-const [visitorCount, setVisitorCount] = useState(0);
-const [growth, setGrowth] = useState(0);
-const [chartData, setChartData] = useState([]);
+const emptyMetrics = {
+  products: [],
+  reviews: [],
+  blogs: [],
+  inquiries: [],
+  certificates: [],
+};
+
+const Analytics = () => {
+  const [metrics, setMetrics] = useState(emptyMetrics);
+  const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [dataError, setDataError] = useState(false);
+
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    setDataError(false);
+
+    const [productsResult, reviewsResult, blogsResult, inquiriesResult, certificatesResult] =
+      await Promise.allSettled([
+        supabase.from("products").select("id, created_at"),
+        supabase.from("reviews").select("id, status, rating, created_at"),
+        supabase.from("blogs").select("id, status, created_at"),
+        fetch(`${API_URL}/inquiries`).then(async (response) => {
+          if (!response.ok) throw new Error("Could not load inquiries");
+          const payload = await response.json();
+          if (!payload.success) throw new Error("Could not load inquiries");
+          return payload.inquiries || [];
+        }),
+        fetch(`${API_URL}/certificates`).then(async (response) => {
+          if (!response.ok) throw new Error("Could not load certificates");
+          return response.json();
+        }),
+      ]);
+
+    const resultData = (result, fallback = []) =>
+      result.status === "fulfilled" && !result.value?.error
+        ? result.value.data ?? result.value
+        : fallback;
+
+    const results = [productsResult, reviewsResult, blogsResult, inquiriesResult, certificatesResult];
+    setDataError(results.some((result) => result.status === "rejected" || result.value?.error));
+    setMetrics({
+      products: resultData(productsResult),
+      reviews: resultData(reviewsResult),
+      blogs: resultData(blogsResult),
+      inquiries: resultData(inquiriesResult),
+      certificates: resultData(certificatesResult),
+    });
+    setLastUpdated(new Date());
+    setLoading(false);
+  };
 
   useEffect(() => {
     fetchAnalytics();
   }, []);
-const fetchAnalytics = async () => {
-  try {
-    // PRODUCTS
 
-    const { data: products } = await supabase
-      .from("products")
-      .select("*");
+  const pendingReviews = metrics.reviews.filter(
+    (review) => review.status?.toLowerCase() === "pending",
+  ).length;
 
-    setProductCount(products?.length || 0);
-
-    // INQUIRIES
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/inquiries"
-      );
-
-      const inquiryData = await response.json();
-
-      if (inquiryData.success) {
-        setInquiryCount(
-          inquiryData.inquiries.length
+  const inquiryTrend = useMemo(() => {
+    const now = new Date();
+    return Array.from({ length: 6 }, (_, position) => {
+      const date = new Date(now.getFullYear(), now.getMonth() - 5 + position, 1);
+      const total = metrics.inquiries.filter((inquiry) => {
+        const createdAt = new Date(inquiry.createdAt || inquiry.created_at);
+        return (
+          !Number.isNaN(createdAt.getTime()) &&
+          createdAt.getFullYear() === date.getFullYear() &&
+          createdAt.getMonth() === date.getMonth()
         );
-      }
-    } catch (err) {
-      console.log(
-        "Inquiry API Failed:",
-        err
-      );
-    }
-
-    // VISITORS
-
-    const { data: visitors } = await supabase
-      .from("Website_Visitors")
-      .select("created_at");
-    console.log("Visitors:", visitors);
-    console.log("Visitor Count:", visitors?.length);
-    setVisitorCount(visitors?.length || 0);
-
-    const monthlyData = [
-      { month: "Jan", visitors: 0 },
-      { month: "Feb", visitors: 0 },
-      { month: "Mar", visitors: 0 },
-      { month: "Apr", visitors: 0 },
-      { month: "May", visitors: 0 },
-      { month: "Jun", visitors: 0 },
-      { month: "Jul", visitors: 0 },
-      { month: "Aug", visitors: 0 },
-      { month: "Sep", visitors: 0 },
-      { month: "Oct", visitors: 0 },
-      { month: "Nov", visitors: 0 },
-      { month: "Dec", visitors: 0 },
-    ];
-
-    visitors?.forEach((v) => {
-      const monthIndex = new Date(
-        v.created_at
-      ).getMonth();
-
-      monthlyData[monthIndex].visitors++;
+      }).length;
+      return {
+        month: date.toLocaleString("en-US", { month: "short" }),
+        inquiries: total,
+      };
     });
+  }, [metrics.inquiries]);
 
-    const currentMonthIndex =
-  new Date().getMonth();
-
-const last6Months = [];
-
-for (let i = 5; i >= 0; i--) {
-  const index =
-    (currentMonthIndex - i + 12) % 12;
-
-  last6Months.push(
-    monthlyData[index]
+  const ratingDistribution = useMemo(
+    () =>
+      [5, 4, 3, 2, 1].map((rating) => ({
+        rating: `${rating} star`,
+        reviews: metrics.reviews.filter((review) => Number(review.rating) === rating).length,
+      })),
+    [metrics.reviews],
   );
-}
 
-setChartData(last6Months);
-    
+  const statCards = [
+    { label: "Total Products", value: metrics.products.length, note: "Products in your catalog", icon: FaBoxOpen, tone: "blue" },
+    { label: "Customer Inquiries", value: metrics.inquiries.length, note: "Messages received", icon: FaEnvelope, tone: "green" },
+    { label: "Total Reviews", value: metrics.reviews.length, note: "Customer feedback received", icon: FaStar, tone: "orange" },
+    { label: "Pending Reviews", value: pendingReviews, note: "Waiting for moderation", icon: FaRegClock, tone: "purple" },
+    { label: "Certificates", value: metrics.certificates.length, note: "Quality documents uploaded", icon: FaCertificate, tone: "teal" },
+    { label: "Blog Posts", value: metrics.blogs.length, note: "Articles in your CMS", icon: FaPenNib, tone: "pink" },
+  ];
 
-const previousMonthIndex =
-  currentMonthIndex === 0
-    ? 11
-    : currentMonthIndex - 1;
-
-const currentMonthVisitors =
-  monthlyData[currentMonthIndex]
-    ?.visitors || 0;
-
-const previousMonthVisitors =
-  monthlyData[previousMonthIndex]
-    ?.visitors || 0;
-
-if (previousMonthVisitors > 0) {
-  setGrowth(
-    Math.round(
-      (
-        (currentMonthVisitors -
-          previousMonthVisitors) /
-        previousMonthVisitors
-      ) * 100
-    )
-  );
-} else {
-  setGrowth(0);
-}
-
-    console.log(
-      "Chart Data:",
-      monthlyData
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-console.log("Chart Data:", chartData);
   return (
-    
     <AdminLayout>
       <div className="analytics-page">
-
         <div className="analytics-header">
-          <h1>Analytics</h1>
-          <p>
-            Business performance and customer engagement overview.
-          </p>
+          <div>
+            <h1>Website Overview</h1>
+            <p>Live catalog, content, and customer engagement data from your application.</p>
+          </div>
+          <button className="analytics-refresh" type="button" onClick={fetchAnalytics} disabled={loading}>
+            <FaSyncAlt className={loading ? "is-spinning" : ""} /> {loading ? "Refreshing" : "Refresh"}
+          </button>
         </div>
 
+        {dataError && (
+          <div className="analytics-notice">
+            Some data could not be loaded. The available figures below are still current.
+          </div>
+        )}
+
         <div className="analytics-stats">
-
-          <div className="analytics-card">
-            <FaBoxOpen className="analytics-icon blue" />
-            <span>Products</span>
-            <h2>{productCount}</h2>
-            <small>Active inventory items</small>
-          </div>
-
-          <div className="analytics-card">
-            <FaEnvelope className="analytics-icon green" />
-            <span>Inquiries</span>
-            <h2>{inquiryCount}</h2>
-            <small>Customer messages</small>
-          </div>
-
-          <div className="analytics-card">
-            <FaUsers className="analytics-icon orange" />
-            <span>Visitors</span>
-            <h2>{visitorCount}</h2>
-            <small>Monthly traffic</small>
-          </div>
-
-          <div className="analytics-card">
-            <FaChartLine className="analytics-icon purple" />
-            <span>Growth</span>
-            <h2>+{growth}%</h2>
-            <small>Compared to last month</small>
-          </div>
+          {statCards.map(({ label, value, note, icon: Icon, tone }) => (
+            <div className={`analytics-card ${tone}`} key={label}>
+              <Icon className="analytics-icon" />
+              <span>{label}</span>
+              <h2>{loading ? "—" : value}</h2>
+              <small>{note}</small>
+            </div>
+          ))}
         </div>
 
         <div className="analytics-grid">
+          <section className="analytics-panel analytics-chart">
+            <div className="chart-header">
+              <div><h3>Monthly Inquiry Trend</h3><p>Customer inquiries received over the last six months.</p></div>
+              <span>Last 6 months</span>
+            </div>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={inquiryTrend}>
+                <defs><linearGradient id="inquiriesGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#2563eb" stopOpacity={0.35} /><stop offset="95%" stopColor="#2563eb" stopOpacity={0} /></linearGradient></defs>
+                <CartesianGrid strokeDasharray="4 4" stroke="#e2e8f0" />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                <YAxis allowDecimals={false} tickLine={false} axisLine={false} />
+                <Tooltip />
+                <Area type="monotone" dataKey="inquiries" name="Inquiries" stroke="#2563eb" strokeWidth={3} fill="url(#inquiriesGradient)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </section>
 
-  <div className="analytics-panel analytics-chart">
-
-  <div className="chart-header">
-    <h3>Analytics Overview</h3>
-
-    <span>Last 6 Months</span>
-  </div>
-
-<ResponsiveContainer width="100%" height={350}>
-  <AreaChart data={chartData}>
-    <defs>
-      <linearGradient
-        id="visitorsGradient"
-        x1="0"
-        y1="0"
-        x2="0"
-        y2="1"
-      >
-        <stop
-          offset="5%"
-          stopColor="#2563eb"
-          stopOpacity={0.35}
-        />
-        <stop
-          offset="95%"
-          stopColor="#2563eb"
-          stopOpacity={0}
-        />
-      </linearGradient>
-    </defs>
-
-    <CartesianGrid
-      strokeDasharray="4 4"
-      stroke="#e2e8f0"
-    />
-   <YAxis
-  tickLine={false}
-  axisLine={false}
-/>
-    <XAxis
-      dataKey="month"
-      tickLine={false}
-      axisLine={false}
-    />
-
-    <Tooltip />
-
-    <Area
-      type="monotone"
-      dataKey="visitors"
-      stroke="#2563eb"
-      strokeWidth={3}
-      fill="url(#visitorsGradient)"
-    />
-  </AreaChart>
-</ResponsiveContainer>
-
-</div>
-          <div className="analytics-panel">
+          <section className="analytics-panel system-overview">
             <h3>System Overview</h3>
+            <div className="system-row"><span>Database</span><div className={`status-pill ${dataError ? "attention" : "connected"}`}>{dataError ? "Check connection" : "Connected"}</div></div>
+            <div className="system-row"><span>Review moderation</span><strong>{pendingReviews} pending</strong></div>
+            <div className="system-row"><span>Published blogs</span><strong>{metrics.blogs.filter((blog) => blog.status?.toLowerCase() === "published").length}</strong></div>
+            <div className="system-row"><span>Last updated</span><strong>{lastUpdated ? lastUpdated.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "—"}</strong></div>
+          </section>
 
-            <div className="system-row">
-              <span>Products</span>
-              <strong>{productCount}</strong>
-            </div>
-
-            <div className="system-row">
-              <span>Inquiries</span>
-              <strong>{inquiryCount}</strong>
-            </div>
-
-            <div className="system-row">
-              <span>Database</span>
-              <div className="status-pill connected">
-                Connected
-              </div>
-            </div>
-
-            <div className="system-row">
-              <span>Status</span>
-              <div className="status-pill online">
-                Online
-              </div>
-            </div>
-          </div>
-
+          <section className="analytics-panel rating-chart">
+            <div className="chart-header"><div><h3>Review Rating Distribution</h3><p>How customers rate your products.</p></div></div>
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={ratingDistribution} layout="vertical" margin={{ left: 10 }}>
+                <CartesianGrid strokeDasharray="4 4" horizontal={false} stroke="#e2e8f0" />
+                <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="rating" width={52} tickLine={false} axisLine={false} />
+                <Tooltip />
+                <Bar dataKey="reviews" name="Reviews" fill="#f59e0b" radius={[0, 6, 6, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </section>
         </div>
-
       </div>
     </AdminLayout>
   );

@@ -2,13 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import "./AdminTopbar.css";
-import { FaBell, FaCheck, FaEnvelope, FaStar } from "react-icons/fa6";
+import { FaBell, FaCheck, FaEnvelope, FaStar, FaBriefcase } from "react-icons/fa6";
 
 const AdminTopbar = () => {
   const navigate = useNavigate();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [pendingReviews, setPendingReviews] = useState(0);
   const [inquiries, setInquiries] = useState(0);
+  const [businessInquiries, setBusinessInquiries] = useState(0);
+  const [latestBusinessInquiryId, setLatestBusinessInquiryId] = useState(null);
   const notificationRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -41,18 +43,43 @@ const AdminTopbar = () => {
         const data = await response.json();
 
         if (data.success) {
-          setInquiries(data.inquiries.length);
+          setInquiries(
+            data.inquiries.filter((inquiry) => !inquiry.isRead).length,
+          );
         }
       } catch (error) {
         setInquiries(0);
       }
+      try {
+        const response = await fetch("http://localhost:5000/api/business-inquiries");
+        const data = await response.json();
+        const unread = data.success ? data.inquiries.filter((inquiry) => !inquiry.isRead) : [];
+        setBusinessInquiries(unread.length);
+        setLatestBusinessInquiryId(unread[0]?._id || null);
+      } catch (error) { setBusinessInquiries(0); setLatestBusinessInquiryId(null); }
     };
 
     fetchNotificationCounts();
+
+    window.addEventListener("inquiries-read", fetchNotificationCounts);
+    window.addEventListener("business-inquiries-updated", fetchNotificationCounts);
+
+    return () => {
+      window.removeEventListener("inquiries-read", fetchNotificationCounts);
+      window.removeEventListener("business-inquiries-updated", fetchNotificationCounts);
+    };
   }, []);
 
   const notifications = useMemo(
     () => [
+      {
+        id: "business-inquiries",
+        icon: <FaBriefcase />,
+        title: "Business inquiries",
+        message: businessInquiries > 0 ? `${businessInquiries} business inquiries need review` : "No new business inquiries",
+        count: businessInquiries,
+        path: latestBusinessInquiryId ? `/admin/business-inquiries/${latestBusinessInquiryId}` : "/admin/business-inquiries",
+      },
       {
         id: "inquiries",
         icon: <FaEnvelope />,
@@ -77,7 +104,7 @@ const AdminTopbar = () => {
         path: "/admin/notifications?type=reviews",
       },
     ],
-    [inquiries, pendingReviews],
+    [businessInquiries, inquiries, latestBusinessInquiryId, pendingReviews],
   );
 
   const unreadCount = notifications.reduce(

@@ -366,7 +366,46 @@
   color: #facc15 !important;
   transform: translateX(8px);
 }
+.footer-icon {
+  font-size: 24px;
+  margin-right: 14px;
+  transition: all 0.3s ease;
+}
 
+/* Instagram */
+.instagram-icon {
+  color: #E1306C;
+}
+
+/* Facebook */
+.facebook-icon {
+  color: #1877F2;
+}
+
+/* WhatsApp */
+.whatsapp-icon {
+  color: #25D366;
+}
+
+/* TikTok */
+.tiktok-icon {
+  color: #ffffff;
+}
+
+/* LinkedIn */
+.linkedin-icon {
+  color: #0A66C2;
+}
+
+/* YouTube */
+.youtube-icon {
+  color: #FF0000;
+}
+
+/* Hover animation */
+.social-link:hover .footer-icon {
+  transform: scale(1.25) rotate(8deg);
+}
 /* =====================================================
    MAP
 ===================================================== */

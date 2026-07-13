@@ -40,3 +40,21 @@ export const getAllInquiries = async (req, res) => {
     });
   }
 };
+
+export const markAllInquiriesRead = async (req, res) => {
+  try {
+    await Inquiry.updateMany(
+      {
+        $or: [{ isRead: false }, { isRead: { $exists: false } }],
+      },
+      { isRead: true },
+    );
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
