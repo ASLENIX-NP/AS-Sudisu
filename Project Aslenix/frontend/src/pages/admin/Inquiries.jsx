@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import "../../styles/inquiries.css";
+import "../../styles/Inquiries.css";
 
 const Inquiries = () => {
   const [inquiries, setInquiries] = useState([]);
