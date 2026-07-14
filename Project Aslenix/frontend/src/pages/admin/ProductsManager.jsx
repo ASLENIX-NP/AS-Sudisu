@@ -277,7 +277,6 @@ const ProductsManager = () => {
             uploading={uploading}
             setUploading={setUploading}
             uploadImage={uploadImage}
-            
             addProduct={handleAddProduct}
             handleUpdate={handleUpdate}
             inputStyle={inputStyle}
