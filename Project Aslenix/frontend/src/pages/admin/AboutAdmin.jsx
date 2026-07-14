@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/AboutAdmin.css";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../lib/supabase";
 import toast from "react-hot-toast";
 
 const AboutAdmin = () => {

@@ -112,49 +112,50 @@ export default function Footer() {
       } catch (error) {
         console.log("Error sync footer configuration settings:", error);
       }
+      console.log("Footer Settings:", settings);
     };
     fetchFooterSettings();
   }, []);
 
   // Prepare social links with icons
-const socialLinks = [
-  {
-    name: "Instagram",
-    url: settings.instagram,
-    icon: FaInstagram,
-    className: "instagram-icon",
-  },
-  {
-    name: "Facebook",
-    url: settings.facebook,
-    icon: FaFacebook,
-    className: "facebook-icon",
-  },
-  {
-    name: "WhatsApp",
-    url: settings.whatsapp,
-    icon: FaWhatsapp,
-    className: "whatsapp-icon",
-  },
-  {
-    name: "TikTok",
-    url: settings.tiktok,
-    icon: FaTiktok,
-    className: "tiktok-icon",
-  },
-  {
-    name: "LinkedIn",
-    url: settings.linkedin,
-    icon: FaLinkedinIn,
-    className: "linkedin-icon",
-  },
-  {
-    name: "YouTube",
-    url: settings.youtube,
-    icon: FaYoutube,
-    className: "youtube-icon",
-  },
-].filter((social) => social.url && social.url.trim() !== "");
+  const socialLinks = [
+    {
+      name: "Instagram",
+      url: settings.instagram,
+      icon: FaInstagram,
+      className: "instagram-icon",
+    },
+    {
+      name: "Facebook",
+      url: settings.facebook,
+      icon: FaFacebook,
+      className: "facebook-icon",
+    },
+    {
+      name: "WhatsApp",
+      url: settings.whatsapp,
+      icon: FaWhatsapp,
+      className: "whatsapp-icon",
+    },
+    {
+      name: "TikTok",
+      url: settings.tiktok,
+      icon: FaTiktok,
+      className: "tiktok-icon",
+    },
+    {
+      name: "LinkedIn",
+      url: settings.linkedin,
+      icon: FaLinkedinIn,
+      className: "linkedin-icon",
+    },
+    {
+      name: "YouTube",
+      url: settings.youtube,
+      icon: FaYoutube,
+      className: "youtube-icon",
+    },
+  ].filter((social) => social.url && social.url.trim() !== "");
   // Prepare quick links
   const quickLinks = [
     { name: settings.quickLink1Name, url: settings.quickLink1Url },
@@ -162,7 +163,6 @@ const socialLinks = [
     { name: settings.quickLink3Name, url: settings.quickLink3Url },
     { name: settings.quickLink4Name, url: settings.quickLink4Url },
   ].filter((link) => link.name && link.name.trim() !== "");
-console.log("Footer Settings:", settings);
   return (
     <>
       <footer className="footer">

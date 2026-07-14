@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../lib/supabase";
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";

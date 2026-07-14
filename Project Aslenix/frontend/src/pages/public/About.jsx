@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./About.css";
 import HeroNavbar from "../../components/common/HeroNavbar";
 import Footer from "../../components/common/Footer";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../lib/supabase";
 import cookingWomen from "../../assets/images/cooking women.jpg";
 import reachImage from "../../assets/images/AboutUS.png";
 

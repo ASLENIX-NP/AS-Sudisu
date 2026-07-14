@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
-import { supabase } from "./lib/supabase";
+import { missingSupabaseConfig, supabase } from "./lib/supabase";
 
 /* Public Pages */
 import Home from "./pages/public/Home";
@@ -47,6 +47,8 @@ function App() {
   useEffect(() => {
     const trackVisitor = async () => {
       try {
+        if (missingSupabaseConfig) return;
+
         const existingVisitor = localStorage.getItem("sudisu_visitor");
         if (existingVisitor) return;
 
