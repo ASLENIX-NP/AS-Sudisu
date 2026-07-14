@@ -6,7 +6,7 @@ import WhyChoose from "../../components/sections/WhyChoose";
 import statsBg from "../../assets/images/herostat.jpg";
 import "./home.css";
 import { useEffect, useRef, useState } from "react";
-import Counter from "../../components/common/Counter";
+import Counter from "../../components/common/counter";
 
 const Home = () => {
   const navigate = useNavigate();
