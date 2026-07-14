@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import ProductSearchBar from "../../components/products/ProductSearchBar";
-import ProductStats from "../../components/products/ProductStats";
-import ProductTable from "../../components/products/ProductTable";
-import ProductFormModal from "../../components/products/ProductFormModal";
+import ProductSearchBar from "../../components/Products/ProductSearchBar";
+import ProductStats from "../../components/Products/ProductStats";
+import ProductTable from "../../components/Products/ProductTable";
+import ProductFormModal from "../../components/Products/ProductFormModal";
 import { useProducts } from "../../hooks/useProducts";
 import toast from "react-hot-toast";
 

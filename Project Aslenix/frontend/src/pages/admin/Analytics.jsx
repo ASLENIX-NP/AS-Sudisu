@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
-import "../../styles/analytics.css";
+import "../../styles/Analytics.css";
 import {
   FaBoxOpen,
   FaCertificate,

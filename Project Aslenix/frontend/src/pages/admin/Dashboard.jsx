@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { supabase } from "../../lib/supabase";
-import "../../styles/dashboard.css";
+import "../../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { FaClock } from "react-icons/fa";
 import {
