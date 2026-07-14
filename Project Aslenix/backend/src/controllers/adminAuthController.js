@@ -1,6 +1,5 @@
 import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
-import { Resend } from "resend";
 import AdminPasswordOtp from "../models/AdminPasswordOtp.js";
 
 const normalizeEmail = (email = "") => email.trim().toLowerCase();
@@ -15,14 +14,42 @@ const hashOtp = (otp) =>
     .update(`${otp}:${process.env.JWT_SECRET}`)
     .digest("hex");
 
-const getResend = () => {
+const getResendConfig = () => {
   if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM) {
     throw new Error(
       "RESEND_API_KEY and RESEND_FROM are required in the backend environment",
     );
   }
 
-  return new Resend(process.env.RESEND_API_KEY);
+  return {
+    apiKey: process.env.RESEND_API_KEY,
+    from: process.env.RESEND_FROM,
+  };
+};
+
+const sendResendEmail = async ({ to, subject, html }) => {
+  const { apiKey, from } = getResendConfig();
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      subject,
+      html,
+    }),
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(result?.message || "Resend could not send the OTP email");
+  }
+
+  return result;
 };
 
 const getSupabaseAdmin = () => {
@@ -139,11 +166,8 @@ export const sendAdminPasswordOtp = async (req, res) => {
       }
     );
 
-    const resend = getResend();
-
-    const { error: resendError } = await resend.emails.send({
-      from: process.env.RESEND_FROM,
-      to: [email],
+    await sendResendEmail({
+      to: email,
       subject: "Sudisu Admin Password Reset OTP",
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
@@ -157,10 +181,6 @@ export const sendAdminPasswordOtp = async (req, res) => {
         </div>
       `,
     });
-
-    if (resendError) {
-      throw new Error(resendError.message || "Resend could not send the OTP email");
-    }
 
     return res.status(200).json({
       success: true,
