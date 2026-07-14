@@ -2,9 +2,6 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import crypto from "crypto";
-import nodemailer from "nodemailer";
-
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 

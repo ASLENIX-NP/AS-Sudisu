@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 import { createClient } from "@supabase/supabase-js";
+import { Resend } from "resend";
 import AdminPasswordOtp from "../models/AdminPasswordOtp.js";
 
 const normalizeEmail = (email = "") => email.trim().toLowerCase();
@@ -15,25 +15,14 @@ const hashOtp = (otp) =>
     .update(`${otp}:${process.env.JWT_SECRET}`)
     .digest("hex");
 
-const getTransporter = () => {
-  if (
-    !process.env.SMTP_HOST ||
-    !process.env.SMTP_PORT ||
-    !process.env.SMTP_USER ||
-    !process.env.SMTP_PASS
-  ) {
-    throw new Error("SMTP details are missing in backend .env file");
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM) {
+    throw new Error(
+      "RESEND_API_KEY and RESEND_FROM are required in the backend environment",
+    );
   }
 
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: Number(process.env.SMTP_PORT) === 465,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
+  return new Resend(process.env.RESEND_API_KEY);
 };
 
 const getSupabaseAdmin = () => {
@@ -150,11 +139,11 @@ export const sendAdminPasswordOtp = async (req, res) => {
       }
     );
 
-    const transporter = getTransporter();
+    const resend = getResend();
 
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: email,
+    const { error: resendError } = await resend.emails.send({
+      from: process.env.RESEND_FROM,
+      to: [email],
       subject: "Sudisu Admin Password Reset OTP",
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
@@ -168,6 +157,10 @@ export const sendAdminPasswordOtp = async (req, res) => {
         </div>
       `,
     });
+
+    if (resendError) {
+      throw new Error(resendError.message || "Resend could not send the OTP email");
+    }
 
     return res.status(200).json({
       success: true,
