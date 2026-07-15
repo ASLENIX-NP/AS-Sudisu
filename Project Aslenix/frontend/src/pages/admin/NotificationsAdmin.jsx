@@ -45,7 +45,7 @@ const NotificationsAdmin = () => {
     setPendingReviews(reviewsCount || 0);
 
     try {
-      const response = await fetch("http://localhost:5000/api/inquiries");
+      const response = await fetch("http://localhost:5001/api/inquiries");
       const data = await response.json();
 
       if (data.success) {
@@ -58,7 +58,7 @@ const NotificationsAdmin = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const response = await fetch("http://localhost:5001/api/business-inquiries");
       const data = await response.json();
       const unread = data.success ? data.inquiries.filter((inquiry) => !inquiry.isRead) : [];
       setBusinessInquiries(unread);

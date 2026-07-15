@@ -68,7 +68,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
 
     try {
       setSubmitting(true);
-      const response = await fetch("http://localhost:5000/api/business-inquiries", {
+      const response = await fetch("http://localhost:5001/api/business-inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -23,7 +23,7 @@ const Inquiries = () => {
   const fetchInquiries = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/inquiries"
+        "http://localhost:5001/api/inquiries"
       );
 
       const data = await response.json();
@@ -32,7 +32,7 @@ const Inquiries = () => {
         setInquiries(data.inquiries);
 
         const markReadResponse = await fetch(
-          "http://localhost:5000/api/inquiries/mark-read",
+          "http://localhost:5001/api/inquiries/mark-read",
           { method: "PUT" },
         );
 
@@ -48,7 +48,7 @@ const Inquiries = () => {
   const deleteInquiry = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/inquiries/${id}`,
+        `http://localhost:5001/api/inquiries/${id}`,
         {
           method: "DELETE",
         }

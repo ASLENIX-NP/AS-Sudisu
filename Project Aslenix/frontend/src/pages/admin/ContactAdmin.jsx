@@ -21,7 +21,7 @@ const ContactAdmin = () => {
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/settings");
+        const response = await fetch("http://localhost:5001/api/settings");
         const data = await response.json();
 
         if (data.success && data.settings) {
@@ -43,7 +43,7 @@ const ContactAdmin = () => {
 
   const saveSettings = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/settings", {
+      const response = await fetch("http://localhost:5001/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

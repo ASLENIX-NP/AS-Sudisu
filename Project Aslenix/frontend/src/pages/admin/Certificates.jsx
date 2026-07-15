@@ -22,7 +22,7 @@ const [selectedCertificate, setSelectedCertificate] = useState(null);
   const fetchCertificates = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/certificates"
+        "http://localhost:5001/api/certificates"
       );
 
       setCertificates(res.data);
@@ -49,7 +49,7 @@ if (!image) {
     formData.append("image", image);
 
     const res = await axios.post(
-      "http://localhost:5000/api/certificates",
+      "http://localhost:5001/api/certificates",
       formData
     );
 
@@ -78,7 +78,7 @@ const deleteCertificate = async () => {
 
   try {
     await axios.delete(
-      `http://localhost:5000/api/certificates/${selectedCertificate}`
+      `http://localhost:5001/api/certificates/${selectedCertificate}`
     );
 
     fetchCertificates();

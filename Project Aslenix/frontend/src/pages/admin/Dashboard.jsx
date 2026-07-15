@@ -72,7 +72,7 @@ const Dashboard = () => {
     let inquiryCountValue = 0;
 
     try {
-      const response = await fetch("http://localhost:5000/api/inquiries");
+      const response = await fetch("http://localhost:5001/api/inquiries");
 
       const data = await response.json();
 
@@ -122,7 +122,7 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const response = await fetch("http://localhost:5001/api/business-inquiries");
       const data = await response.json();
       if (data.success) {
         const today = new Date().toDateString();
