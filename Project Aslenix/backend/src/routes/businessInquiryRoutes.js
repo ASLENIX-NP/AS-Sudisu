@@ -1,5 +1,7 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
+import { protect } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/adminMiddleware.js";
 import { createBusinessInquiry, deleteBusinessInquiry, getBusinessInquiries, getBusinessInquiry, markBusinessInquiryRead, updateBusinessInquiryStatus } from "../controllers/businessInquiryController.js";
 
 const router = express.Router();
@@ -11,9 +13,9 @@ const businessInquiryLimiter = rateLimit({
 });
 
 router.post("/", businessInquiryLimiter, createBusinessInquiry);
-router.get("/", getBusinessInquiries);
-router.get("/:id", getBusinessInquiry);
-router.patch("/:id/read", markBusinessInquiryRead);
-router.patch("/:id/status", updateBusinessInquiryStatus);
-router.delete("/:id", deleteBusinessInquiry);
+router.get("/", protect, adminOnly, getBusinessInquiries);
+router.get("/:id", protect, adminOnly, getBusinessInquiry);
+router.patch("/:id/read", protect, adminOnly, markBusinessInquiryRead);
+router.patch("/:id/status", protect, adminOnly, updateBusinessInquiryStatus);
+router.delete("/:id", protect, adminOnly, deleteBusinessInquiry);
 export default router;

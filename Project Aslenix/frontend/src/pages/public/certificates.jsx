@@ -11,7 +11,7 @@ const Certificates = () => {
 
   const fetchCertificates = async () => {
     try {
-      const res = await fetch("YOUR_API/certificates");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/certificates");
       const data = await res.json();
       setCertificates(data);
     } catch (err) {
@@ -27,9 +27,10 @@ const Certificates = () => {
       <div className="cert-grid">
         {certificates.map((cert) => (
           <div
-            key={cert._id}
-            onClick={() => navigate(`/certificates/${cert._id}`)}
+            key={cert.id}
+            onClick={() => navigate(`/certificates/${cert.id}`)}
             style={{ cursor: "pointer" }}
+            className="cert-card"
           >
             <img src={cert.image} alt={cert.title} />
 

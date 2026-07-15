@@ -26,6 +26,12 @@ const addProduct = async (
     console.log("Type:", typeof productData);
     console.log("JSON:", JSON.stringify(productData));
 
+    // Basic Validation
+    if (!productData.name || !productData.price || !productData.weight || !productData.description || !productData.origin) {
+      toast.error("Please fill in all required product fields.");
+      return;
+    }
+
   const { error } = await supabase
     .from("products")
     .insert([productData]);

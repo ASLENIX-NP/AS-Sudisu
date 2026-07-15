@@ -1,6 +1,8 @@
 import express from "express";
 import multer from "multer";
 import { createClient } from "@supabase/supabase-js";
+import { protect } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/adminMiddleware.js";
 const router = express.Router();
 
 const supabase = createClient(
@@ -15,7 +17,7 @@ const upload = multer({
 /* =========================
    CREATE CERTIFICATE
 ========================= */
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", protect, adminOnly, upload.single("image"), async (req, res) => {
   try {
     const { title, description } = req.body;
     const file = req.file;
@@ -108,7 +110,7 @@ router.get("/", async (req, res) => {
 /* =========================
    DELETE CERTIFICATE
 ========================= */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protect, adminOnly, async (req, res) => {
   try {
     const { id } = req.params;
 

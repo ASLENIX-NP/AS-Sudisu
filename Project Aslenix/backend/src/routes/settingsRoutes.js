@@ -1,4 +1,6 @@
 import express from "express";
+import { protect } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/adminMiddleware.js";
 
 import {
   getSettings,
@@ -11,6 +13,6 @@ const router = express.Router();
 router.get("/", getSettings);
 
 /* UPDATE SETTINGS */
-router.put("/", updateSettings);
+router.put("/", protect, adminOnly, updateSettings);
 
 export default router;

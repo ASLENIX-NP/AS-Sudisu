@@ -454,6 +454,202 @@ const BlogAdmin = () => {
           </button>
         </div>
 
+        {/* ============ SECTION 2: CREATE / EDIT BLOG ============ */}
+        <div className="blog-card">
+          <div className="blog-card-header">
+            <div className="card-title">
+              <div className="card-icon">📝</div>
+              <div>
+                <h2>{editingId ? "Edit Blog Post" : "Create New Blog Post"}</h2>
+                <p>Write and publish a new post to your blog.</p>
+              </div>
+            </div>
+            {editingId && (
+              <button className="cancel-edit-btn" onClick={resetBlogForm}>
+                Cancel Edit
+              </button>
+            )}
+          </div>
+
+          <div className="blog-form-grid">
+            <div className="form-group full-width">
+              <label>Post Title *</label>
+              <input
+                type="text"
+                placeholder="Enter an engaging title..."
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group full-width">
+              <label>Short Excerpt</label>
+              <textarea
+                placeholder="A brief summary for the blog preview card..."
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                rows="2"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Category</label>
+              <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                <option value="">Select Category...</option>
+                <option value="Recipes">Recipes</option>
+                <option value="Spices 101">Spices 101</option>
+                <option value="Health & Wellness">Health & Wellness</option>
+                <option value="Company News">Company News</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Author</label>
+              <input
+                type="text"
+                placeholder="e.g., Sudisu Team"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Status</label>
+              <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+
+            <div className="form-group full-width">
+              <label>Featured Image</label>
+              <div className="image-upload-container">
+                <label className="image-upload-btn">
+                  📤 Choose Image
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={handleBlogImageChange}
+                  />
+                </label>
+                {imagePreview && (
+                  <button className="remove-image-btn" onClick={removeBlogImage}>
+                    ✕ Remove
+                  </button>
+                )}
+              </div>
+              {imagePreview && (
+                <div className="image-preview">
+                  <img src={imagePreview} alt="Blog Featured" />
+                </div>
+              )}
+            </div>
+
+            <div className="form-group full-width">
+              <label>Main Content *</label>
+              <textarea
+                placeholder="Write your amazing blog post here..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows="10"
+                className="content-textarea"
+              />
+            </div>
+          </div>
+
+          <button
+            className="save-blog-btn"
+            onClick={saveBlog}
+            disabled={uploading}
+          >
+            {uploading ? "Saving..." : (editingId ? "Update Blog Post" : "Publish Blog Post")}
+          </button>
+        </div>
+
+        {/* ============ SECTION 3: MANAGE BLOGS ============ */}
+        <div className="blog-card">
+          <div className="blog-card-header">
+            <div className="card-title">
+              <div className="card-icon">📚</div>
+              <div>
+                <h2>Manage Blog Posts</h2>
+                <p>View, edit, or delete your existing blog posts.</p>
+              </div>
+            </div>
+            <input
+              type="text"
+              className="blog-search"
+              placeholder="🔍 Search blogs..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="blogs-table-container">
+            <table className="blogs-table">
+              <thead>
+                <tr>
+                  <th>Post</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredBlogs.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="no-blogs">
+                      No blog posts found.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredBlogs.map((blog) => (
+                    <tr key={blog.id}>
+                      <td className="blog-title-cell">
+                        {blog.image_url && (
+                          <img src={blog.image_url} alt={blog.title} className="blog-thumbnail" />
+                        )}
+                        <div>
+                          <strong>{blog.title}</strong>
+                          <span>{new Date(blog.created_at).toLocaleDateString()}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="blog-tag">{blog.category || "Uncategorized"}</span>
+                      </td>
+                      <td>{blog.author || "Admin"}</td>
+                      <td>
+                        <span className={`status-badge ${blog.status === "Published" ? "status-published" : "status-draft"}`}>
+                          {blog.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button className="edit-btn" onClick={() => editBlog(blog)} title="Edit">
+                            ✏️
+                          </button>
+                          <button
+                            className="delete-btn"
+                            onClick={() => {
+                              setSelectedBlog(blog.id);
+                              setShowDeleteModal(true);
+                            }}
+                            title="Delete"
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
 
       {/* Delete Modal */}
