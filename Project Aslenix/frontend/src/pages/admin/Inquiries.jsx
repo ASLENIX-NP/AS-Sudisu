@@ -25,7 +25,7 @@ const Inquiries = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "http://localhost:5001/api/inquiries"
+        import.meta.env.VITE_API_BASE_URL + "/inquiries"
       );
 
       const data = await response.json();
@@ -34,7 +34,7 @@ const Inquiries = () => {
         setInquiries(data.inquiries);
 
         const markReadResponse = await fetch(
-          "http://localhost:5001/api/inquiries/mark-read",
+          import.meta.env.VITE_API_BASE_URL + "/inquiries/mark-read",
           { method: "PUT" },
         );
 
@@ -52,7 +52,7 @@ const Inquiries = () => {
   const deleteInquiry = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/inquiries/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/inquiries/${id}`,
         {
           method: "DELETE",
         }

@@ -64,7 +64,7 @@ const uploadImage = async (
     const formData = new FormData();
     formData.append("image", file);
 
-    const response = await fetch("http://localhost:5001/api/upload", {
+    const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/upload", {
       method: "POST",
       body: formData,
     });

@@ -44,7 +44,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchCompanyDetails = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/settings");
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/settings");
         const data = await response.json();
 
         if (data.success && data.settings) {
@@ -108,7 +108,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/api/inquiries", {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/inquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

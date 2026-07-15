@@ -68,7 +68,7 @@ export default function InquiryPopup({ isOpen, onClose }) {
 
     try {
       setSubmitting(true);
-      const response = await fetch("http://localhost:5001/api/business-inquiries", {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/business-inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

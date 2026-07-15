@@ -4,7 +4,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import toast from "react-hot-toast";
 import "../../styles/BusinessInquiries.css";
 
-const API = "http://localhost:5001/api/business-inquiries";
+const API = import.meta.env.VITE_API_BASE_URL + "/business-inquiries";
 const statuses = ["Pending", "Contacted", "Approved", "Rejected"];
 const businessTypes = [
   "Distributor Application",

@@ -4,7 +4,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import toast from "react-hot-toast";
 import "../../styles/BusinessInquiries.css";
 
-const API = "http://localhost:5001/api/business-inquiries";
+const API = import.meta.env.VITE_API_BASE_URL + "/business-inquiries";
 const statuses = ["Pending", "Contacted", "Approved", "Rejected"];
 const labels = { inquiryType: "Inquiry Type", name: "Name", business: "Business", company: "Company", owner: "Owner", shop: "Shop", location: "Location", phone: "Phone", email: "Email", products: "Products", quantity: "Quantity", sales: "Estimated Monthly Demand", message: "Notes" };
 const contactValue = (key, value) => {

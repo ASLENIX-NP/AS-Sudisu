@@ -23,7 +23,7 @@ const CertificateDetails = () => {
 
   const fetchCertificate = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/certificates");
+      const res = await axios.get(import.meta.env.VITE_API_BASE_URL + "/certificates");
 
       const found = res.data.find((item) => item.id === Number(id));
 
