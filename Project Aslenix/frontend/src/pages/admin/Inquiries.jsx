@@ -8,11 +8,11 @@ const Inquiries = () => {
 
   const filteredInquiries = inquiries.filter(
     (item) =>
-      item.name
-        ?.toLowerCase()
+      (item.name || "")
+        .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      item.email
-        ?.toLowerCase()
+      (item.email || "")
+        .toLowerCase()
         .includes(searchTerm.toLowerCase())
   );
 

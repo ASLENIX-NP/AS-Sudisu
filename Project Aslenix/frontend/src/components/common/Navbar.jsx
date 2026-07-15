@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./Navbar.css";
 
@@ -21,21 +21,21 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="mobile-nav-right">
-          <Link
+          <NavLink
             to="/"
             className="mobile-nav-link"
             onClick={() => setMenuOpen(false)}
           >
             Home
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/products"
             className="mobile-nav-link"
             onClick={() => setMenuOpen(false)}
           >
             Products
-          </Link>
+          </NavLink>
 
           <div
             className="mobile-menu-btn"
@@ -47,23 +47,23 @@ const Navbar = () => {
         {/* NAV LINKS */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/">Home</NavLink>
           </li>
 
           <li>
-            <Link to="/products">Products</Link>
+            <NavLink to="/products">Products</NavLink>
           </li>
 
           <li>
-            <Link to="/about">About Us</Link>
+            <NavLink to="/about">About Us</NavLink>
           </li>
 
           <li>
-            <Link to="/blog">Blog</Link>
+            <NavLink to="/blog">Blog</NavLink>
           </li>
 
           <li>
-            <Link to="/contact">Contact</Link>
+            <NavLink to="/contact">Contact</NavLink>
           </li>
         </ul>
       </nav>
