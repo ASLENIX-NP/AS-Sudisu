@@ -32,7 +32,12 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [
+      "http://localhost:5173", 
+      "http://localhost:5174",
+      "https://sudiisu.aslenix.tech",
+      process.env.FRONTEND_URL
+    ].filter(Boolean),
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
