@@ -21,17 +21,20 @@ const BusinessInquiries = () => {
   const [status, setStatus] = useState("All");
   const [type, setType] = useState("All");
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setType(searchParams.get("type") || "All");
   }, [searchParams]);
 
   const loadInquiries = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(API);
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error(data.message);
       setInquiries(data.inquiries || []);
-    } catch (error) { toast.error("Could not load business inquiries."); }
+    } catch (error) { toast.error("Could not load business inquiries."); } finally { setIsLoading(false); }
   };
   useEffect(() => {
     loadInquiries();
@@ -58,7 +61,7 @@ const BusinessInquiries = () => {
       })}
     </div>
     <div className="business-toolbar"><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search business inquiries..." /><select value={type} onChange={(event) => setType(event.target.value)}><option>All</option>{[...new Set(inquiries.map((item) => item.inquiryType))].map((item) => <option key={item}>{item}</option>)}</select><select value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option>{statuses.map((item) => <option key={item}>{item}</option>)}</select></div>
-    <div className="business-table-wrap"><table><thead><tr><th>Type</th><th>Name / Business</th><th>Phone</th><th>Email</th><th>Products</th><th>Quantity</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>{filtered.map((item) => <tr key={item._id} className={!item.isRead ? "unread" : ""} onClick={() => navigate(`/admin/business-inquiries/${item._id}`)}><td><span className="type-badge">{item.inquiryType}</span>{!item.isRead && <span className="unread-badge">Unread</span>}</td><td><strong>{item.name}</strong>{(item.business || item.company || item.shop || item.owner) && <small>{item.business || item.company || item.shop || item.owner}</small>}</td><td>{item.phone ? <a className="business-contact-link" href={`tel:${item.phone.replace(/[^\d+]/g, "")}`} onClick={(event) => event.stopPropagation()}>{item.phone}</a> : "—"}</td><td>{item.email ? <a className="business-contact-link" href={`mailto:${item.email}`} onClick={(event) => event.stopPropagation()}>{item.email}</a> : "—"}</td><td>{item.products || "—"}</td><td>{item.quantity || "—"}</td><td><span className={`status-badge status-${item.status.toLowerCase()}`}>{item.status}</span></td><td>{new Date(item.createdAt).toLocaleDateString()}</td><td><button type="button" onClick={(event) => { event.stopPropagation(); navigate(`/admin/business-inquiries/${item._id}`); }}>View</button></td></tr>)}</tbody></table>{!filtered.length && <div className="business-empty">No business inquiries found.</div>}</div>
+    <div className="business-table-wrap"><table><thead><tr><th>Type</th><th>Name / Business</th><th>Phone</th><th>Email</th><th>Products</th><th>Quantity</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>{!isLoading && filtered.map((item) => <tr key={item._id} className={!item.isRead ? "unread" : ""} onClick={() => navigate(`/admin/business-inquiries/${item._id}`)}><td><span className="type-badge">{item.inquiryType}</span>{!item.isRead && <span className="unread-badge">Unread</span>}</td><td><strong>{item.name}</strong>{(item.business || item.company || item.shop || item.owner) && <small>{item.business || item.company || item.shop || item.owner}</small>}</td><td>{item.phone ? <a className="business-contact-link" href={`tel:${item.phone.replace(/[^\d+]/g, "")}`} onClick={(event) => event.stopPropagation()}>{item.phone}</a> : "—"}</td><td>{item.email ? <a className="business-contact-link" href={`mailto:${item.email}`} onClick={(event) => event.stopPropagation()}>{item.email}</a> : "—"}</td><td>{item.products || "—"}</td><td>{item.quantity || "—"}</td><td><span className={`status-badge status-${item.status.toLowerCase()}`}>{item.status}</span></td><td>{new Date(item.createdAt).toLocaleDateString()}</td><td><button type="button" onClick={(event) => { event.stopPropagation(); navigate(`/admin/business-inquiries/${item._id}`); }}>View</button></td></tr>)}</tbody></table>{isLoading ? <div className="business-empty">Loading business inquiries...</div> : !filtered.length && <div className="business-empty">No business inquiries found.</div>}</div>
   </div></AdminLayout>;
 };
 export default BusinessInquiries;

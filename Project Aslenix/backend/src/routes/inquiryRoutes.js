@@ -1,5 +1,5 @@
 import express from "express";
-
+import rateLimit from "express-rate-limit";
 import {
   createInquiry,
   getAllInquiries,
@@ -8,7 +8,13 @@ import {
 
 const router = express.Router();
 
-router.post("/", createInquiry);
+const inquiryLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { success: false, message: "Too many inquiries sent from this IP, please try again later." }
+});
+
+router.post("/", inquiryLimiter, createInquiry);
 
 router.get("/", getAllInquiries);
 
