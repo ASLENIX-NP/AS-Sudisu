@@ -44,7 +44,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchCompanyDetails = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/settings");
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/settings");
         const data = await response.json();
 
         if (data.success && data.settings) {
@@ -108,7 +108,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/inquiries", {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/inquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const Contact = () => {
                 {companyDetails.contactDescription}
               </p>
               <div className="contact-box">
-                <a href={`mailto:${companyDetails.email}`} className="icon-link">
+                <a href={`mailto:${companyDetails.email}`} className="icon-link" aria-label="Send an email to Sudisu">
                   <div className="icon-circle">
                     <FaEnvelope />
                   </div>
@@ -185,6 +185,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-box contact-box-link"
+                  aria-label="Contact Sudisu on WhatsApp"
                 >
                   <div className="icon-circle">
                     <FaWhatsapp />
@@ -209,6 +210,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-box contact-box-link"
+                  aria-label="View Sudisu location on Google Maps"
                 >
                   <div className="icon-circle">
                     <FaMapMarkerAlt />
@@ -246,9 +248,10 @@ const Contact = () => {
               <form className="contact-form" onSubmit={handleSubmit}>
                 {/* KEEP YOUR CURRENT FORM FIELDS HERE */}
                 <div className="form-group">
-                  <label>Full Name</label>
+                  <label htmlFor="fullName">Full Name</label>
 
                   <input
+                    id="fullName"
                     type="text"
                     name="fullName"
                     placeholder="Enter your full name"
@@ -258,9 +261,10 @@ const Contact = () => {
                 </div>
                 {/* COUNTRY */}
                 <div className="form-group">
-                  <label>Country</label>
+                  <label htmlFor="country">Country</label>
 
                   <select
+                    id="country"
                     name="country"
                     value={formData.country}
                     onChange={handleCountryChange}
@@ -277,9 +281,10 @@ const Contact = () => {
                 </div>
                 {/* PROVINCE */}
                 <div className="form-group">
-                  <label>Province / State</label>
+                  <label htmlFor="province">Province / State</label>
 
                   <input
+                    id="province"
                     type="text"
                     name="province"
                     placeholder="Enter your province"
@@ -289,9 +294,10 @@ const Contact = () => {
                 </div>
                 {/* DISTRICT */}
                 <div className="form-group">
-                  <label>District / City</label>
+                  <label htmlFor="district">District / City</label>
 
                   <input
+                    id="district"
                     type="text"
                     name="district"
                     placeholder="Enter your district"
@@ -301,7 +307,7 @@ const Contact = () => {
                 </div>
                 {/* PHONE */}
                 <div className="form-group">
-                  <label>Phone Number</label>
+                  <label htmlFor="phone">Phone Number</label>
 
                   <div className="phone-wrapper">
                     <input
@@ -309,9 +315,11 @@ const Contact = () => {
                       value={formData.phoneCode}
                       readOnly
                       className="phone-code"
+                      aria-label="Country Code"
                     />
 
                     <input
+                      id="phone"
                       type="tel"
                       name="phone"
                       value={formData.phone}
@@ -363,9 +371,10 @@ const Contact = () => {
 
                 {/* EMAIL */}
                 <div className="form-group">
-                  <label>Email Address</label>
+                  <label htmlFor="email">Email Address</label>
 
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     placeholder="Enter your email"
@@ -375,9 +384,10 @@ const Contact = () => {
                 </div>
                 {/* MESSAGE */}
                 <div className="form-group full-width">
-                  <label>Your Message</label>
+                  <label htmlFor="message">Your Message</label>
 
                   <textarea
+                    id="message"
                     rows="5"
                     name="message"
                     placeholder="Write your message here..."

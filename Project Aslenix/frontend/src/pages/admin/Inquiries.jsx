@@ -5,14 +5,15 @@ import "../../styles/Inquiries.css";
 const Inquiries = () => {
   const [inquiries, setInquiries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredInquiries = inquiries.filter(
     (item) =>
-      item.name
-        ?.toLowerCase()
+      (item.name || "")
+        .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      item.email
-        ?.toLowerCase()
+      (item.email || "")
+        .toLowerCase()
         .includes(searchTerm.toLowerCase())
   );
 
@@ -22,8 +23,9 @@ const Inquiries = () => {
 
   const fetchInquiries = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
-        "http://localhost:5000/api/inquiries"
+        import.meta.env.VITE_API_BASE_URL + "/inquiries"
       );
 
       const data = await response.json();
@@ -32,7 +34,7 @@ const Inquiries = () => {
         setInquiries(data.inquiries);
 
         const markReadResponse = await fetch(
-          "http://localhost:5000/api/inquiries/mark-read",
+          import.meta.env.VITE_API_BASE_URL + "/inquiries/mark-read",
           { method: "PUT" },
         );
 
@@ -42,13 +44,15 @@ const Inquiries = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const deleteInquiry = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/inquiries/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/inquiries/${id}`,
         {
           method: "DELETE",
         }
@@ -162,7 +166,12 @@ const Inquiries = () => {
 
         <div className="inquiries-card">
 
-          {filteredInquiries.length === 0 ? (
+          {isLoading ? (
+            <div className="empty-state">
+              <h3>Loading Inquiries...</h3>
+              <p>Please wait while we fetch the latest customer messages.</p>
+            </div>
+          ) : filteredInquiries.length === 0 ? (
 
   <div className="empty-state">
 

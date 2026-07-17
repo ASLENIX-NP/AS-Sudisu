@@ -14,6 +14,24 @@ const supabase = createClient(
   process.env.SUPABASE_KEY,
 );
 
+// TEST SUPABASE CONNECTION
+const testSupabaseConnection = async () => {
+  try {
+    // Attempting to fetch a single row from a non-existent table to test network and auth keys
+    const { error } = await supabase.from("_dummy_connection_test").select("*").limit(1);
+    
+    // If the API responds with "Could not find the table", it means the connection and keys are perfectly valid!
+    if (error && !error.message.includes("Could not find the table")) {
+      console.warn("⚠️ Supabase connection warning:", error.message);
+    } else {
+      console.log("✅ Supabase is connected successfully");
+    }
+  } catch (err) {
+    console.error("❌ Supabase connection error:", err.message);
+  }
+};
+testSupabaseConnection();
+
 // ROOT CHECK
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });

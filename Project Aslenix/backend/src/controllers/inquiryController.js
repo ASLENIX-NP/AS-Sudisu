@@ -58,3 +58,18 @@ export const markAllInquiriesRead = async (req, res) => {
     });
   }
 };
+
+export const deleteInquiry = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const inquiry = await Inquiry.findByIdAndDelete(id);
+    
+    if (!inquiry) {
+      return res.status(404).json({ success: false, message: "Inquiry not found" });
+    }
+    
+    res.json({ success: true, message: "Inquiry deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

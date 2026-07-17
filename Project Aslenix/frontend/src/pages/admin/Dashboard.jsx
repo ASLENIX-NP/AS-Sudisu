@@ -72,7 +72,7 @@ const Dashboard = () => {
     let inquiryCountValue = 0;
 
     try {
-      const response = await fetch("http://localhost:5000/api/inquiries");
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/inquiries");
 
       const data = await response.json();
 
@@ -122,7 +122,7 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/business-inquiries");
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/business-inquiries");
       const data = await response.json();
       if (data.success) {
         const today = new Date().toDateString();

@@ -26,6 +26,12 @@ const addProduct = async (
     console.log("Type:", typeof productData);
     console.log("JSON:", JSON.stringify(productData));
 
+    // Basic Validation
+    if (!productData.name || !productData.price || !productData.weight || !productData.description || !productData.origin) {
+      toast.error("Please fill in all required product fields.");
+      return;
+    }
+
   const { error } = await supabase
     .from("products")
     .insert([productData]);
@@ -64,7 +70,7 @@ const uploadImage = async (
     const formData = new FormData();
     formData.append("image", file);
 
-    const response = await fetch("http://localhost:5000/api/upload", {
+    const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/upload", {
       method: "POST",
       body: formData,
     });

@@ -17,7 +17,9 @@ const AdminRoute = ({ children }) => {
       data: { session },
     } = await supabase.auth.getSession();
 
-    if (session?.user?.email === "alishasaud6@gmail.com") {
+    const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || "alishasaud6@gmail.com").split(",");
+    
+    if (session?.user?.email && adminEmails.includes(session.user.email)) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);

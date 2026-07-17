@@ -39,7 +39,7 @@ const Blog = () => {
 
   const fetchCertificates = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/certificates");
+      const res = await axios.get(import.meta.env.VITE_API_BASE_URL + "/certificates");
       setCertificates(res.data);
     } catch (err) {
       console.log(err);

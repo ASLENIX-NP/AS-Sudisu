@@ -84,7 +84,8 @@
 
   transition: 0.3s ease;
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: #d62828;
 }
 
@@ -104,7 +105,8 @@
   transition: 0.3s;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
   width: 100%;
 }
 /* Hide mobile navigation on desktop */
@@ -249,7 +251,8 @@
     transition:.3s;
 }
 
-.mobile-nav-link:hover{
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
     color:#f6b10a;
 }
 }

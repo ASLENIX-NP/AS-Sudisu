@@ -64,7 +64,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchFooterSettings = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/settings");
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/settings");
         const data = await response.json();
         if (data.success && data.settings) {
           setSettings((prev) => ({
