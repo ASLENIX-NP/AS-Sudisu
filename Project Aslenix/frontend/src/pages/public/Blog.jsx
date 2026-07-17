@@ -26,6 +26,17 @@ const Blog = () => {
     fetchCertificates();
   }, []);
 
+  useEffect(() => {
+    if (!selectedCertificate) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setSelectedCertificate(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [selectedCertificate]);
+
   const fetchCertificates = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/certificates");
@@ -149,11 +160,7 @@ const Blog = () => {
                     <p>{item.description}</p>
                     <button
                       className="cert-view-btn"
-                      onClick={() =>
-                        navigate(`/certificate/${item.id}`, {
-                          state: { certificate: item },
-                        })
-                      }
+                      onClick={() => setSelectedCertificate(item)}
                     >
                       View Certificate
                     </button>
@@ -176,7 +183,9 @@ const Blog = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              type="button"
               className="certificate-close-btn"
+              aria-label="Close certificate preview"
               onClick={() => setSelectedCertificate(null)}
             >
               ×

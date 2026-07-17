@@ -175,12 +175,14 @@
   overflow-y: auto;
 
   padding: 20px;
+  box-sizing: border-box;
 
   z-index: 9999;
 }
 .product-details-modal {
-  max-width: 1200px;
-  margin: 20px auto;
+  width: min(100%, 880px);
+  max-width: 880px;
+  margin: 12px auto;
 
   background: #fff;
   border-radius: 24px;
@@ -188,6 +190,13 @@
   overflow: visible;
 
   position: relative;
+  box-sizing: border-box;
+}
+
+.product-details-modal > .review-section {
+  width: min(100% - 80px, 560px);
+  margin: 0 auto;
+  padding: 0 0 60px;
 }
 
 .product-details-close {
@@ -289,14 +298,28 @@
 ========================= */
 
 @media (max-width: 900px) {
+  .product-details-overlay {
+    padding: 12px;
+  }
+
+  .product-details-modal {
+    margin: 0 auto;
+  }
+
   .product-details-content {
     flex-direction: column;
+    align-items: center;
+    gap: 24px;
     text-align: center;
     padding: 30px;
   }
 
+  .product-details-image {
+    flex: 0 1 auto;
+  }
+
   .product-details-image img {
-    width: 250px;
+    width: min(250px, 70vw);
     height: auto;
   }
 
@@ -304,7 +327,71 @@
     font-size: 32px;
   }
 
+  .product-details-info h2 {
+    margin-bottom: 20px;
+  }
+
+  .product-details-info p {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .product-details-modal > .review-section {
+    width: calc(100% - 48px);
+    padding-bottom: 36px;
+  }
+
   .related-products-section {
     padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-details-overlay {
+    padding: 0;
+  }
+
+  .product-details-modal {
+    width: 100%;
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .product-details-close {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .product-details-content {
+    gap: 18px;
+    padding: 64px 18px 26px;
+  }
+
+  .product-details-image img {
+    width: min(210px, 66vw);
+  }
+
+  .product-details-info h1 {
+    font-size: clamp(26px, 8vw, 32px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .product-details-info h2 {
+    font-size: 22px;
+    margin: 10px 0 20px;
+  }
+
+  .review-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .product-details-modal > .review-section {
+    width: calc(100% - 36px);
+    padding-bottom: 28px;
   }
 }

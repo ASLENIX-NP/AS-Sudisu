@@ -12,18 +12,21 @@
   z-index: 9999;
 
   padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .product-details-modal {
-  width: 90%;
-  max-width: 1000px;
+  width: min(90%, 880px);
+  max-width: 880px;
 
   background: #fff;
   border-radius: 20px;
 
   position: relative;
 
-  margin: 40px auto;
+  margin: 24px auto;
+  box-sizing: border-box;
 
   box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
@@ -68,8 +71,8 @@
 
 .product-details-content {
   display: flex;
-  gap: 40px;
-  padding: 40px;
+  gap: 32px;
+  padding: 32px;
 }
 
 .product-details-image {
@@ -80,7 +83,7 @@
 }
 
 .product-details-image img {
-  width: 280px;
+  width: 250px;
   height: auto;
   object-fit: contain;
 }
@@ -90,7 +93,7 @@
 }
 
 .product-details-info h1 {
-  font-size: 52px;
+  font-size: 40px;
   font-weight: 700;
 
   color: #111;
@@ -99,7 +102,7 @@
 }
 
 .product-details-info h2 {
-  font-size: 34px;
+  font-size: 28px;
 
   color: #c1121f;
 
@@ -107,7 +110,7 @@
 }
 
 .product-details-info p {
-  font-size: 20px;
+  font-size: 17px;
 
   margin-bottom: 15px;
 
@@ -119,7 +122,7 @@
 }
 
 .review-btn {
-  margin-top: 25px;
+  margin-top: 16px;
 
   border: none;
 
@@ -127,7 +130,7 @@
 
   color: white;
 
-  padding: 16px 28px;
+  padding: 14px 24px;
 
   border-radius: 10px;
 
@@ -179,6 +182,16 @@
 }
 
 @media (max-width: 900px) {
+  .product-details-overlay {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .product-details-modal {
+    width: 100%;
+    margin: 0 auto;
+  }
+
   .product-details-content {
     flex-direction: column;
 
@@ -196,10 +209,58 @@
   }
 
   .product-details-image img {
-    width: 260px;
+    width: min(260px, 70vw);
   }
 
   .related-products-section {
     padding: 30px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-details-overlay {
+    padding: 0;
+  }
+
+  .product-details-modal {
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .product-details-close {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .product-details-content {
+    gap: 22px;
+    padding: 66px 18px 28px;
+  }
+
+  .product-details-info h1 {
+    font-size: clamp(26px, 8vw, 34px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .product-details-info h2 {
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+
+  .product-details-info p {
+    font-size: 16px;
+  }
+
+  .product-details-info.review-active {
+    width: 100%;
+  }
+
+  .review-btn {
+    width: 100%;
+    margin-top: 10px;
   }
 }

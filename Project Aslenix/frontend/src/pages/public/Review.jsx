@@ -40,28 +40,31 @@ const Review = ({ productId, productName, onReviewSubmitted }) => {
       return;
     }
 
-    const { error } = await supabase.from("reviews").insert([
-      {
-        name,
-        rating,
-        review,
-        product_id: productId,
-        product_name: productName,
-        status: "Pending",
-      },
-    ]);
-    if (error) {
-      toast.error("Failed to submit review");
-      return;
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.from("reviews").insert([
+        {
+          name,
+          rating,
+          review,
+          product_id: productId,
+          product_name: productName,
+          status: "Pending",
+        },
+      ]);
+      if (error) {
+        toast.error("Failed to submit review");
+        return;
+      }
+
+      toast.success("Thank you! Your review has been submitted for approval.");
+      setName("");
+      setRating(5);
+      setReview("");
+      onReviewSubmitted?.();
+    } finally {
+      setSubmitting(false);
     }
-
-    toast.success("Thank you! Your review has been submitted for approval.");
-
-    setName("");
-    setRating(5);
-    setReview("");
-
-    onReviewSubmitted();
   };
 
   return (
@@ -77,6 +80,7 @@ const Review = ({ productId, productName, onReviewSubmitted }) => {
         {formError && <div className="review-error">{formError}</div>}
         <input
           type="text"
+          aria-label="Your name"
           placeholder="Your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -95,12 +99,15 @@ const Review = ({ productId, productName, onReviewSubmitted }) => {
           />
         </div>
         <textarea
+          aria-label="Your review"
           placeholder="Write your review..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />
 
-        <button type="submit">Submit Review</button>
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Submitting..." : "Submit Review"}
+        </button>
       </form>
     </div>
   );

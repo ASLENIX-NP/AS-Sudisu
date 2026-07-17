@@ -538,6 +538,19 @@
   text-align: center;
 }
 
+  /* Keep Quick Links below both Follow Us and Contact on mobile. */
+  .footer-grid > div:nth-child(3) {
+    order: 1;
+  }
+
+  .footer-grid > div:nth-child(2) {
+    order: 2;
+  }
+
+  .footer-grid > div:nth-child(1) {
+    order: 3;
+  }
+
  .footer-grid h4::after {
     margin-left: auto;
     margin-right: auto;

@@ -190,6 +190,10 @@
 }
 .mobile-menu-btn {
   display: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  line-height: 1;
 }
 @media (max-width: 900px) {
   .mobile-menu-btn {
@@ -204,7 +208,7 @@
   .mobile-nav-right{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:0;
 }
 
 @media (max-width: 520px) {

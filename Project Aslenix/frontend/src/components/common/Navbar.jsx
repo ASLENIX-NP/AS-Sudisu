@@ -21,49 +21,36 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="mobile-nav-right">
-          <Link
-            to="/"
-            className="mobile-nav-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            Home
-          </Link>
-
-          <Link
-            to="/products"
-            className="mobile-nav-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            Products
-          </Link>
-
-          <div
+          <button
+            type="button"
             className="mobile-menu-btn"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? "☰" : "☰"}
-          </div>
+          </button>
         </div>
         {/* NAV LINKS */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           </li>
 
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/products" onClick={() => setMenuOpen(false)}>Products</Link>
           </li>
 
           <li>
-            <Link to="/about">About Us</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
           </li>
 
           <li>
-            <Link to="/blog">Blog</Link>
+            <Link to="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
           </li>
 
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
           </li>
         </ul>
       </nav>
